@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "446728464883",
+    "firebase_url": "https://meu-mengao-900c0-default-rtdb.firebaseio.com",
+    "project_id": "meu-mengao-900c0",
+    "storage_bucket": "meu-mengao-900c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446728464883:android:2fdc9f88ed7581218d0a86",
+        "android_client_info": {
+          "package_name": "xyz.joaopegoraro.meu_mengao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446728464883-0q0q0utv2a2jl61c4t9k8ttft4u006uq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiPdiyKhOEeEPUJk5lmWbyYK_FNFevSko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446728464883-0q0q0utv2a2jl61c4t9k8ttft4u006uq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "446728464883-8im2u80pafrvf870qvgcn2m74n1pg0co.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "xyz.joaopegoraro.meuMengao.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
