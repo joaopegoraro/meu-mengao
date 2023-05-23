@@ -48,7 +48,7 @@ class Noticia {
   factory Noticia.fromMap(Map<String, dynamic> map) {
     return Noticia(
       id: map['id'] ?? "",
-      foto: map['foto'] != null ? map['foto'] as String : null,
+      foto: map['foto'] != null ? map['foto'] ?? "" : null,
       link: map['link'] ?? "",
       titulo: map['titulo'] ?? "",
       siteId: map['siteId'] ?? "",

@@ -40,7 +40,7 @@ class Site {
     return Site(
       id: map['id'] ?? "",
       nome: map['nome'] ?? "",
-      logo: map['logo'] != null ? map['logo'] as String : null,
+      logo: map['logo'] != null ? map['logo'] ?? "" : null,
     );
   }
 
