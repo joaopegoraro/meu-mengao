@@ -24,6 +24,10 @@ class Site {
     );
   }
 
+  bool isCorrupted() {
+    return id.isEmpty || nome.isEmpty;
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
@@ -34,8 +38,8 @@ class Site {
 
   factory Site.fromMap(Map<String, dynamic> map) {
     return Site(
-      id: map['id'] as String,
-      nome: map['nome'] as String,
+      id: map['id'] ?? "",
+      nome: map['nome'] ?? "",
       logo: map['logo'] != null ? map['logo'] as String : null,
     );
   }
@@ -50,11 +54,8 @@ class Site {
   @override
   bool operator ==(covariant Site other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.nome == nome &&
-      other.logo == logo;
+
+    return other.id == id && other.nome == nome && other.logo == logo;
   }
 
   @override

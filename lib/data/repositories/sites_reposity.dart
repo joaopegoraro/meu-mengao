@@ -20,7 +20,8 @@ class SitesRepositoryImpl extends SitesRepository {
           fromFirestore: (snapshot, _) {
             final document = snapshot.data();
             if (document == null) return null;
-            return Site.fromMap(snapshot.data() ?? {});
+            document["id"] = snapshot.id;
+            return Site.fromMap(document);
           },
           toFirestore: (site, _) => site?.toMap() as Map<String, Object?>,
         )
@@ -38,11 +39,14 @@ class SitesRepositoryImpl extends SitesRepository {
           fromFirestore: (snapshot, _) {
             final document = snapshot.data();
             if (document == null) return null;
-            return Site.fromMap(snapshot.data() ?? {});
+            document["id"] = snapshot.id;
+            return Site.fromMap(document);
           },
           toFirestore: (site, _) => site?.toMap() as Map<String, Object?>,
         )
         .get();
+    final site = snapshot.data();
+    if (site?.isCorrupted() != false) return null;
     return snapshot.data();
   }
 }

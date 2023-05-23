@@ -19,12 +19,17 @@ class NoticiasRepositoryImpl extends NoticiasRepository {
           fromFirestore: (snapshot, _) {
             final document = snapshot.data();
             if (document == null) return null;
-            return Noticia.fromMap(snapshot.data() ?? {});
+            document["id"] = snapshot.id;
+            return Noticia.fromMap(document);
           },
           toFirestore: (noticia, _) => noticia?.toMap() as Map<String, Object?>,
         )
         .get();
-    final noticias = snapshot.docs.map((noticiaSnapshot) => noticiaSnapshot.data()).whereNotNull().toList();
+    final noticias = snapshot.docs
+        .map((noticiaSnapshot) => noticiaSnapshot.data())
+        .whereNotNull()
+        .where((noticia) => !noticia.isCorrupted())
+        .toList();
     return noticias;
   }
 }

@@ -31,6 +31,10 @@ class Noticia {
     );
   }
 
+  bool isCorrupted() {
+    return id.isEmpty || link.isEmpty || titulo.isEmpty || siteId.isEmpty;
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
@@ -43,11 +47,11 @@ class Noticia {
 
   factory Noticia.fromMap(Map<String, dynamic> map) {
     return Noticia(
-      id: map['id'] as String,
+      id: map['id'] ?? "",
       foto: map['foto'] != null ? map['foto'] as String : null,
-      link: map['link'] as String,
-      titulo: map['titulo'] as String,
-      siteId: map['siteId'] as String,
+      link: map['link'] ?? "",
+      titulo: map['titulo'] ?? "",
+      siteId: map['siteId'] ?? "",
     );
   }
 
