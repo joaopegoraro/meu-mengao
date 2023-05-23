@@ -7,13 +7,11 @@ abstract class NoticiasRepository {
 }
 
 class NoticiasRepositoryImpl extends NoticiasRepository {
-  NoticiasRepositoryImpl({required this.getFirestore});
-
-  final FirebaseFirestore Function() getFirestore;
+  FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
   @override
   Future<List<Noticia>> getNoticias() async {
-    final snapshot = await getFirestore()
+    final snapshot = await firestore
         .collection("noticias")
         .withConverter(
           fromFirestore: (snapshot, _) {
@@ -24,8 +22,7 @@ class NoticiasRepositoryImpl extends NoticiasRepository {
           toFirestore: (noticia, _) => noticia?.toMap() as Map<String, Object?>,
         )
         .get();
-    final docs = snapshot.docs;
-    final noticias = docs.map((noticiaSnapshot) => noticiaSnapshot.data()).whereNotNull().toList();
+    final noticias = snapshot.docs.map((noticiaSnapshot) => noticiaSnapshot.data()).whereNotNull().toList();
     return noticias;
   }
 }
