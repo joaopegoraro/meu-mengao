@@ -2,24 +2,28 @@ import 'dart:convert';
 
 class Noticia {
   Noticia({
-    this.foto,
+    required this.id,
     required this.link,
     required this.titulo,
     required this.siteId,
+    this.foto,
   });
 
-  String? foto;
-  String link;
-  String titulo;
-  String siteId;
+  final String id;
+  final String? foto;
+  final String link;
+  final String titulo;
+  final String siteId;
 
   Noticia copyWith({
+    String? id,
     String? foto,
     String? link,
     String? titulo,
     String? siteId,
   }) {
     return Noticia(
+      id: id ?? this.id,
       foto: foto ?? this.foto,
       link: link ?? this.link,
       titulo: titulo ?? this.titulo,
@@ -29,6 +33,7 @@ class Noticia {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'foto': foto,
       'link': link,
       'titulo': titulo,
@@ -38,6 +43,7 @@ class Noticia {
 
   factory Noticia.fromMap(Map<String, dynamic> map) {
     return Noticia(
+      id: map['id'] as String,
       foto: map['foto'] != null ? map['foto'] as String : null,
       link: map['link'] as String,
       titulo: map['titulo'] as String,
@@ -58,7 +64,11 @@ class Noticia {
   bool operator ==(covariant Noticia other) {
     if (identical(this, other)) return true;
 
-    return other.foto == foto && other.link == link && other.titulo == titulo && other.siteId == siteId;
+    return other.id == id &&
+        other.foto == foto &&
+        other.link == link &&
+        other.titulo == titulo &&
+        other.siteId == siteId;
   }
 
   @override
