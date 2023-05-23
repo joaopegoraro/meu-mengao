@@ -9,10 +9,12 @@ abstract class NoticiasRepository {
 class NoticiasRepositoryImpl extends NoticiasRepository {
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
+  static const _noticiasCollectionId = "noticias";
+
   @override
   Future<List<Noticia>> getNoticias() async {
     final snapshot = await firestore
-        .collection("noticias")
+        .collection(_noticiasCollectionId)
         .withConverter(
           fromFirestore: (snapshot, _) {
             final document = snapshot.data();
