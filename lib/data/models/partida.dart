@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 class Partida {
   Partida({
     required this.id,
@@ -16,7 +18,20 @@ class Partida {
 
   final String id;
   final String? campeonatoId;
-  final String? data;
+  final DateTime? data;
+
+  String? get readableDate {
+    if (data == null) return null;
+    final now = DateTime.now();
+    final dayDifference = data!.difference(now).inDays;
+    if (dayDifference == -1) return "Ontem";
+    if (dayDifference == 0) return "Hoje - ${DateFormat.Hm().format(data!)}"; // "Hoje - 21:30"
+    if (dayDifference == 1) return "Amanhã - ${DateFormat.Hm().format(data!)}"; // "Amanhã - 21:30"
+    if (dayDifference > 1 && dayDifference <= 6) {
+      return "${DateFormat('EEEE').format(data!)} - ${DateFormat.Hm().format(data!)}"; // "Segunda-feira - 21:30"
+    }
+    return DateFormat.MMMMd().add_Hm().format(data!); // "25 de maio, 22:30"
+  }
 
   final String timeCasa;
   final String? escudoCasa;
@@ -29,7 +44,7 @@ class Partida {
   Partida copyWith({
     String? id,
     String? campeonatoId,
-    String? data,
+    DateTime? data,
     String? timeCasa,
     String? escudoCasa,
     int? golsCasa,
@@ -72,7 +87,7 @@ class Partida {
     return Partida(
       id: map['id'] ?? "",
       campeonatoId: map['campeonatoId'] != null ? map['campeonatoId'] ?? "" : null,
-      data: map['data'] != null ? map['data'] ?? "" : null,
+      data: DateTime.tryParse(map['data'])?.toLocal(),
       timeCasa: map['timeCasa'] ?? "",
       escudoCasa: map['escudoCasa'] != null ? map['escudoCasa'] ?? "" : null,
       golsCasa: map['golsCasa'],

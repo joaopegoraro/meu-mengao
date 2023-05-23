@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:meu_mengao/data/models/noticia.dart';
+import 'package:meu_mengao/data/models/partida.dart';
 import 'package:meu_mengao/data/repositories/noticias_repository.dart';
-import 'package:meu_mengao/data/repositories/sites_reposity.dart';
+import 'package:meu_mengao/data/repositories/partidas_repository.dart';
+import 'package:meu_mengao/data/repositories/sites_repository.dart';
 import 'package:meu_mengao/firebase_options.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -54,51 +57,99 @@ class TestWidget extends StatefulWidget {
 class _TestWidgetState extends State<TestWidget> {
   final NoticiasRepository noticiasRepository = NoticiasRepositoryImpl();
   final SitesRepository sitesRepository = SitesRepositoryImpl();
+  final PartidasRepository partidasRepository = PartidasRepositoryImpl();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: noticiasRepository.getNoticias(),
+      future: Future.wait(
+        [noticiasRepository.getNoticias(), partidasRepository.getProximaPartida()],
+      ),
       builder: (context, snapshot) {
-        final noticias = snapshot.data ?? [];
+        final noticias = snapshot.data?[0] as List<Noticia>? ?? [];
+        final proximaPartida = snapshot.data?[1] as Partida?;
 
         return SingleChildScrollView(
           child: Column(
-            children: noticias.map((noticia) {
-              return GestureDetector(
-                onTap: () {
-                  final Uri url = Uri.parse(noticia.link);
-                  launchUrl(url);
-                },
-                child: Column(
-                  children: [
-                    if (noticia.foto != null)
-                      Image.memory(
-                        base64Decode(noticia.foto!),
-                        width: 40,
-                        height: 40,
+            children: [
+              if (proximaPartida != null)
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          proximaPartida.escudoCasa == "FLAMENGO"
+                              ? Image.asset(
+                                  "assets/icons/flamengo.png",
+                                  width: 40,
+                                  height: 40,
+                                )
+                              : Image.memory(
+                                  base64Decode(proximaPartida.escudoCasa!),
+                                  width: 40,
+                                  height: 40,
+                                ),
+                          Text(proximaPartida.timeCasa),
+                          if (proximaPartida.golsCasa != null && proximaPartida.golsCasa! > 0)
+                            Text("${proximaPartida.golsCasa!}"),
+                          const Text(" - "),
+                          if (proximaPartida.golsFora != null && proximaPartida.golsFora! > 0)
+                            Text("${proximaPartida.golsFora!}"),
+                          Text(proximaPartida.timeFora),
+                          proximaPartida.escudoFora == "FLAMENGO"
+                              ? Image.asset(
+                                  "assets/icons/flamengo.png",
+                                  width: 40,
+                                  height: 40,
+                                )
+                              : Image.memory(
+                                  base64Decode(proximaPartida.escudoFora!),
+                                  width: 40,
+                                  height: 40,
+                                ),
+                        ],
                       ),
-                    Text(noticia.titulo),
-                    FutureBuilder(
-                      future: sitesRepository.getSiteWithId(noticia.siteId),
-                      builder: (context, snapshot) {
-                        final site = snapshot.data;
-
-                        if (site?.logo != null) {
-                          return Image.memory(
-                            width: 20,
-                            height: 20,
-                            base64Decode(site!.logo!),
-                          );
-                        }
-
-                        return const Icon(Icons.error);
-                      },
-                    ),
-                  ],
+                      if (proximaPartida.data != null) Text(proximaPartida.readableDate!),
+                    ],
+                  ),
                 ),
-              );
-            }).toList(),
+              ...noticias.map((noticia) {
+                return GestureDetector(
+                  onTap: () {
+                    final Uri url = Uri.parse(noticia.link);
+                    launchUrl(url);
+                  },
+                  child: Column(
+                    children: [
+                      if (noticia.foto != null)
+                        Image.memory(
+                          base64Decode(noticia.foto!),
+                          width: 40,
+                          height: 40,
+                        ),
+                      Text(noticia.titulo),
+                      FutureBuilder(
+                        future: sitesRepository.getSiteWithId(noticia.siteId),
+                        builder: (context, snapshot) {
+                          final site = snapshot.data;
+
+                          if (site?.logo != null) {
+                            return Image.memory(
+                              width: 20,
+                              height: 20,
+                              base64Decode(site!.logo!),
+                            );
+                          }
+
+                          return const Icon(Icons.error);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ],
           ),
         );
       },
