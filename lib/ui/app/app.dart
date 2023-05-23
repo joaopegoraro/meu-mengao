@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:meu_mengao/data/repositories/noticias_repository.dart';
 import 'package:meu_mengao/firebase_options.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MeuMengaoApp extends StatelessWidget {
   const MeuMengaoApp({super.key});
@@ -27,7 +29,7 @@ class MeuMengaoApp extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
-            return const Placeholder();
+            return const MyWidget();
           }
 
           return const Center(
@@ -35,6 +37,39 @@ class MeuMengaoApp extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  final NoticiasRepository noticiasRepository = NoticiasRepositoryImpl();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: noticiasRepository.getNoticias(),
+      builder: (context, snapshot) {
+        final noticias = snapshot.data ?? [];
+
+        return Column(
+          children: noticias.map((noticia) {
+            return GestureDetector(
+              onTap: () {
+                final Uri url = Uri.parse(noticia.link);
+                launchUrl(url);
+              },
+              child: Text(noticia.titulo),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }
