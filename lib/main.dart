@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -13,16 +14,23 @@ class MeuMengaoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Meu Mengão',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
+        future: Future.wait([
+          Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+          FirebaseAuth.instance.signInAnonymously()
+        ]),
         builder: (context, snapshot) {
+          if (snapshot.error != null) {
+            return Placeholder(
+              child: Text("ERRO: ${snapshot.error}"),
+            );
+          }
+
           if (snapshot.connectionState == ConnectionState.done) {
             return const Placeholder();
           }
