@@ -47,16 +47,6 @@ class Campeonato {
     return Campeonato(
       id: map['id'] ?? "",
       nome: map['nome'] ?? "",
-      mataMata: List<Partida>.from(
-        (map['mataMata'] as List<int>).map<Partida>(
-          (x) => Partida.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      classificacao: List<Time>.from(
-        (map['pontosCorridos'] as List<int>).map<Time>(
-          (x) => Time.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
     );
   }
 

@@ -1,15 +1,14 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/models/noticia.dart';
-import 'package:meu_mengao/data/models/partida.dart';
+import 'package:meu_mengao/data/repositories/campeonato_repository.dart';
 import 'package:meu_mengao/data/repositories/noticias_repository.dart';
 import 'package:meu_mengao/data/repositories/partidas_repository.dart';
 import 'package:meu_mengao/data/repositories/sites_repository.dart';
 import 'package:meu_mengao/firebase_options.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MeuMengaoApp extends StatelessWidget {
   const MeuMengaoApp({super.key});
@@ -58,98 +57,92 @@ class _TestWidgetState extends State<TestWidget> {
   final NoticiasRepository noticiasRepository = NoticiasRepositoryImpl();
   final SitesRepository sitesRepository = SitesRepositoryImpl();
   final PartidasRepository partidasRepository = PartidasRepositoryImpl();
+  final CampeonatoRepository campeonatoRepository = CampeonatoRepositoryImpl();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait(
-        [noticiasRepository.getNoticias(), partidasRepository.getProximaPartida()],
-      ),
+      future: campeonatoRepository.getCampeonatos(),
       builder: (context, snapshot) {
-        final noticias = snapshot.data?[0] as List<Noticia>? ?? [];
-        final proximaPartida = snapshot.data?[1] as Partida?;
+        final campeonatos = snapshot.data;
 
         return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
           child: Column(
-            children: [
-              if (proximaPartida != null)
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          proximaPartida.timeCasa.escudo == "FLAMENGO"
-                              ? Image.asset(
-                                  "assets/icons/flamengo.png",
-                                  width: 40,
-                                  height: 40,
-                                )
-                              : Image.memory(
-                                  base64Decode(proximaPartida.timeCasa.escudo!),
-                                  width: 40,
-                                  height: 40,
-                                ),
-                          Text(proximaPartida.timeCasa.nome),
-                          if (proximaPartida.golsCasa != null && proximaPartida.golsCasa! > 0)
-                            Text("${proximaPartida.golsCasa!}"),
-                          const Text(" - "),
-                          if (proximaPartida.golsFora != null && proximaPartida.golsFora! > 0)
-                            Text("${proximaPartida.golsFora!}"),
-                          Text(proximaPartida.timeFora.nome),
-                          proximaPartida.timeFora.escudo == "FLAMENGO"
-                              ? Image.asset(
-                                  "assets/icons/flamengo.png",
-                                  width: 40,
-                                  height: 40,
-                                )
-                              : Image.memory(
-                                  base64Decode(proximaPartida.timeFora.escudo!),
-                                  width: 40,
-                                  height: 40,
-                                ),
-                        ],
-                      ),
-                      if (proximaPartida.data != null) Text(proximaPartida.readableDate!),
-                    ],
-                  ),
-                ),
-              ...noticias.map((noticia) {
-                return GestureDetector(
-                  onTap: () {
-                    final Uri url = Uri.parse(noticia.link);
-                    launchUrl(url);
-                  },
-                  child: Column(
-                    children: [
-                      if (noticia.foto != null)
-                        Image.memory(
-                          base64Decode(noticia.foto!),
-                          width: 40,
-                          height: 40,
-                        ),
-                      Text(noticia.titulo),
-                      FutureBuilder(
-                        future: sitesRepository.getSiteWithId(noticia.siteId),
-                        builder: (context, snapshot) {
-                          final site = snapshot.data;
-
-                          if (site?.logo != null) {
-                            return Image.memory(
-                              width: 20,
-                              height: 20,
-                              base64Decode(site!.logo!),
-                            );
-                          }
-
-                          return const Icon(Icons.error);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ],
+            children: campeonatos?.map((campeonato) {
+                  return FutureBuilder(
+                    future: campeonatoRepository.getCampeonatoWithId(campeonato.id),
+                    builder: (context, snapshot) {
+                      final campeonato = snapshot.data;
+                      if (campeonato == null) return const Center(child: CircularProgressIndicator());
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: campeonato.classificacao.sortedBy((time) => time.posicao.toString()).map((time) {
+                          return Row(
+                            children: [
+                              Text("${time.posicao}"),
+                              time.escudo != null && time.escudo!.isNotEmpty && time.escudo != "FLAMENGO"
+                                  ? Image.memory(
+                                      base64Decode(time.escudo!),
+                                      width: 40,
+                                      height: 40,
+                                    )
+                                  : Image.asset(
+                                      "assets/icons/flamengo.png",
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                              Text(time.nome),
+                              Column(
+                                children: [
+                                  const Text("P"),
+                                  Text("${time.pontos}"),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  const Text("V"),
+                                  Text("${time.vitorias}"),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  const Text("E"),
+                                  Text("${time.empates}"),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  const Text("D"),
+                                  Text("${time.derrotas}"),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  const Text("GM"),
+                                  Text("${time.golsFeitos}"),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  const Text("GC"),
+                                  Text("${time.golsSofridos}"),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  const Text("SG"),
+                                  Text("${time.saldoGols}"),
+                                ],
+                              ),
+                            ],
+                          );
+                        }).toList(),
+                      );
+                    },
+                  );
+                }).toList() ??
+                [],
           ),
         );
       },

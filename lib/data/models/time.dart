@@ -1,7 +1,7 @@
 class Time {
   Time({
-    this.posicao,
     required this.nome,
+    this.posicao,
     this.escudo,
     this.pontos = 0,
     this.vitorias = 0,
@@ -24,8 +24,6 @@ class Time {
   final int saldoGols;
 
   bool get isCorrupted => nome.isEmpty;
-
-  factory Time.corrupted() => Time(nome: "");
 
   Time copyWith({
     int? posicao,
@@ -56,8 +54,8 @@ class Time {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'posicao': posicao,
-      'time': nome,
-      'escudoTime': escudo,
+      'nome': nome,
+      'escudo': escudo,
       'pontos': pontos,
       'vitorias': vitorias,
       'empates': empates,
@@ -71,8 +69,8 @@ class Time {
   factory Time.fromMap(Map<String, dynamic> map) {
     return Time(
       posicao: map['posicao'],
-      nome: map['time'] ?? "",
-      escudo: map['escudoTime'],
+      nome: map['nome'] ?? "",
+      escudo: map['escudo'],
       pontos: map['pontos'] ?? 0,
       vitorias: map['vitorias'] ?? 0,
       empates: map['empates'] ?? 0,
@@ -85,7 +83,7 @@ class Time {
 
   @override
   String toString() {
-    return 'Posicao(posicao: $posicao, time: $nome, escudoTime: $escudo, pontos: $pontos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols)';
+    return 'Posicao(posicao: $posicao, nome: $nome, escudo: $escudo, pontos: $pontos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols)';
   }
 
   @override

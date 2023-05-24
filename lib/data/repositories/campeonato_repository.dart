@@ -12,7 +12,7 @@ abstract class CampeonatoRepository {
 class CampeonatoRepositoryImpl extends CampeonatoRepository {
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
-  static const _campeonatosCollectionId = "partidas";
+  static const _campeonatosCollectionId = "campeonatos";
 
   @override
   Future<List<Campeonato>> getCampeonatos() async {
@@ -45,7 +45,9 @@ class CampeonatoRepositoryImpl extends CampeonatoRepository {
     final classificacaoSnapshot = await firestore
         .collection(_campeonatosCollectionId)
         .doc(id)
-        .collection("grupo")
+        .collection("2023")
+        .doc("grupo")
+        .collection("times")
         .withConverter(fromFirestore: _classificacaofromFirestore, toFirestore: (_, __) => {})
         .get();
     final classificacao = classificacaoSnapshot.docs
@@ -88,7 +90,7 @@ class CampeonatoRepositoryImpl extends CampeonatoRepository {
   ) {
     final document = snapshot.data();
     if (document == null) return null;
-    document["id"] = snapshot.id;
+    document["nome"] = snapshot.id;
     return Time.fromMap(document);
   }
 }
