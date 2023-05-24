@@ -11,13 +11,13 @@ abstract class PartidasRepository {
 class PartidasRepositoryImpl extends PartidasRepository {
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
-  static const _partidasCollectionId = "partidas";
+  static const _partidasCollectionId = "campeonatos";
 
   @override
   Future<List<Partida>> getPartidas() async {
     final snapshot = await firestore
         .collection(_partidasCollectionId)
-        .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
+        .withConverter(fromFirestore: _fromFirestore, toFirestore: (_, __) => {})
         .get();
     final partidas = snapshot.docs
         .map((partidaSnapshot) => partidaSnapshot.data())
@@ -36,7 +36,7 @@ class PartidasRepositoryImpl extends PartidasRepository {
         .where("data", isGreaterThanOrEqualTo: dateFormatted)
         .orderBy("data", descending: true)
         .limit(1)
-        .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
+        .withConverter(fromFirestore: _fromFirestore, toFirestore: (_, __) => {})
         .get();
     final partida = snapshot.docs.firstOrNull?.data();
     if (partida?.isCorrupted != false) return null;
@@ -51,9 +51,5 @@ class PartidasRepositoryImpl extends PartidasRepository {
     if (document == null) return null;
     document["id"] = snapshot.id;
     return Partida.fromMap(document);
-  }
-
-  Map<String, Object?> _toFirestore(Partida? partida, SetOptions? options) {
-    return partida?.toMap() as Map<String, Object?>;
   }
 }

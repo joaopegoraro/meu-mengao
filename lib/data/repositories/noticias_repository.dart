@@ -15,7 +15,7 @@ class NoticiasRepositoryImpl extends NoticiasRepository {
   Future<List<Noticia>> getNoticias() async {
     final snapshot = await firestore
         .collection(_noticiasCollectionId)
-        .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
+        .withConverter(fromFirestore: _fromFirestore, toFirestore: (_, __) => {})
         .get();
     final noticias = snapshot.docs
         .map((noticiaSnapshot) => noticiaSnapshot.data())
@@ -33,9 +33,5 @@ class NoticiasRepositoryImpl extends NoticiasRepository {
     if (document == null) return null;
     document["id"] = snapshot.id;
     return Noticia.fromMap(document);
-  }
-
-  Map<String, Object?> _toFirestore(Noticia? noticia, SetOptions? options) {
-    return noticia?.toMap() as Map<String, Object?>;
   }
 }

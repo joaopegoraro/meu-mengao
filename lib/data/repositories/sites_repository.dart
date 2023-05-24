@@ -16,7 +16,7 @@ class SitesRepositoryImpl extends SitesRepository {
   Future<List<Site>> getSites() async {
     final snapshot = await firestore
         .collection(_sitesCollectionId)
-        .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
+        .withConverter(fromFirestore: _fromFirestore, toFirestore: (_, __) => {})
         .get();
     final sites = snapshot.docs
         .map((siteSnapshot) => siteSnapshot.data())
@@ -31,7 +31,7 @@ class SitesRepositoryImpl extends SitesRepository {
     final snapshot = await firestore
         .collection(_sitesCollectionId)
         .doc(id)
-        .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
+        .withConverter(fromFirestore: _fromFirestore, toFirestore: (_, __) => {})
         .get();
     final site = snapshot.data();
     if (site?.isCorrupted != false) return null;
@@ -46,9 +46,5 @@ class SitesRepositoryImpl extends SitesRepository {
     if (document == null) return null;
     document["id"] = snapshot.id;
     return Site.fromMap(document);
-  }
-
-  Map<String, Object?> _toFirestore(Site? site, SetOptions? options) {
-    return site?.toMap() as Map<String, Object?>;
   }
 }

@@ -7,19 +7,17 @@ class Campeonato {
   Campeonato({
     required this.id,
     required this.nome,
-    required this.edicao,
     this.mataMata = const [],
     this.classificacao = const [],
   });
 
   final String id;
   final String nome;
-  final String edicao;
 
   final List<Partida> mataMata;
   final List<Time> classificacao;
 
-  bool get isCorrupted => id.isEmpty || nome.isEmpty || edicao.isEmpty;
+  bool get isCorrupted => id.isEmpty || nome.isEmpty;
 
   Campeonato copyWith({
     String? id,
@@ -31,7 +29,6 @@ class Campeonato {
     return Campeonato(
       id: id ?? this.id,
       nome: nome ?? this.nome,
-      edicao: edicao ?? this.edicao,
       mataMata: mataMata ?? this.mataMata,
       classificacao: classificacao ?? this.classificacao,
     );
@@ -41,7 +38,6 @@ class Campeonato {
     return <String, dynamic>{
       'id': id,
       'nome': nome,
-      'edicao': edicao,
       'mataMata': mataMata.map((x) => x.toMap()).toList(),
       'pontosCorridos': classificacao.map((x) => x.toMap()).toList(),
     };
@@ -51,7 +47,6 @@ class Campeonato {
     return Campeonato(
       id: map['id'] ?? "",
       nome: map['nome'] ?? "",
-      edicao: map['edicao'] ?? "",
       mataMata: List<Partida>.from(
         (map['mataMata'] as List<int>).map<Partida>(
           (x) => Partida.fromMap(x as Map<String, dynamic>),
@@ -67,7 +62,7 @@ class Campeonato {
 
   @override
   String toString() {
-    return 'Campeonato(id: $id, nome: $nome, edicao: $edicao, mataMata: $mataMata, pontosCorridos: $classificacao)';
+    return 'Campeonato(id: $id, nome: $nome, mataMata: $mataMata, pontosCorridos: $classificacao)';
   }
 
   @override
@@ -76,13 +71,12 @@ class Campeonato {
 
     return other.id == id &&
         other.nome == nome &&
-        other.edicao == edicao &&
         listEquals(other.mataMata, mataMata) &&
         listEquals(other.classificacao, classificacao);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ nome.hashCode ^ edicao.hashCode ^ mataMata.hashCode ^ classificacao.hashCode;
+    return id.hashCode ^ nome.hashCode ^ mataMata.hashCode ^ classificacao.hashCode;
   }
 }
