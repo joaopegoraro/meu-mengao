@@ -7,13 +7,11 @@ class TelaNoticias extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
-        children: [
-          TopBar(),
-          ListaNoticias(),
-        ],
-      ),
+    return const Column(
+      children: [
+        TopBar(),
+        ListaNoticias(),
+      ],
     );
   }
 }

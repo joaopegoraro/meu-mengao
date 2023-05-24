@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/repositories/noticias_repository.dart';
 import 'package:meu_mengao/ui/noticias/widgets/noticia.dart';
@@ -18,19 +19,21 @@ class _ListaNoticiasState extends State<ListaNoticias> {
     return FutureBuilder(
       future: _noticiasRepository.getNoticias(),
       builder: (context, snapshot) {
-        final noticias = snapshot.data ?? [];
+        final noticias = List.filled(10, snapshot.data!.first).whereNotNull().toList();
 
         if (noticias.isEmpty || snapshot.hasError) return const Placeholder();
 
-        return ListView.builder(
-          itemCount: noticias.length + 1,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return const ProximaPartida();
-            }
-            return NoticiaItem(noticia: noticias[index - 1]);
-          },
+        return Expanded(
+          child: ListView.builder(
+            itemCount: noticias.length + 1,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return const ProximaPartida();
+              }
+              return NoticiaItem(noticia: noticias[index - 1]);
+            },
+          ),
         );
       },
     );
