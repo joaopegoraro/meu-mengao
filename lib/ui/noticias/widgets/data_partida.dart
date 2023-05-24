@@ -45,8 +45,10 @@ class _DataPartidaState extends State<DataPartida> {
           final nomeCampeonatoValido = nomeCampeonato != null && nomeCampeonato.isNotEmpty && !snapshot.hasError;
 
           return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.calendar_month),
                   Text(" ${widget.data}", style: textStyle),

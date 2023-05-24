@@ -21,7 +21,7 @@ class _ProximaPartidaState extends State<ProximaPartida> {
     return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: FutureBuilder(
           future: _partidasRepository.getProximaPartida(),
           builder: (context, snapshot) {

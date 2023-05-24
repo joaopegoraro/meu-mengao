@@ -30,7 +30,7 @@ class TopBar extends StatelessWidget {
               ),
             ),
             Icon(
-              Icons.settings,
+              Icons.menu,
               color: colorScheme.onPrimary,
             ),
           ],

@@ -21,7 +21,7 @@ class Placar extends StatelessWidget {
       fontWeight: FontWeight.w600,
     );
 
-    final subtextStyle = theme.textTheme.bodyMedium?.copyWith(
+    final subtextStyle = theme.textTheme.bodySmall?.copyWith(
       color: colorScheme.onBackground,
       fontWeight: FontWeight.w600,
     );
