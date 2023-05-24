@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meu_mengao/ui/noticias/widgets/proxima_partida.dart';
 import 'package:meu_mengao/ui/noticias/widgets/topbar.dart';
 
 class TelaNoticias extends StatelessWidget {
@@ -6,15 +7,11 @@ class TelaNoticias extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         children: [
-          const TopBar(),
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-            ),
-          ),
+          TopBar(),
+          ProximaPartida(),
         ],
       ),
     );

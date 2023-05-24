@@ -7,6 +7,7 @@ class TopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.primary,
@@ -23,7 +24,7 @@ class TopBar extends StatelessWidget {
           children: [
             Text(
               "Notícias",
-              style: theme.textTheme.titleLarge?.copyWith(
+              style: theme.textTheme.headlineSmall?.copyWith(
                 color: colorScheme.onPrimary,
                 fontWeight: FontWeight.w600,
               ),
