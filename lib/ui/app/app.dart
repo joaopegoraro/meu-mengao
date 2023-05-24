@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +6,7 @@ import 'package:meu_mengao/data/repositories/noticias_repository.dart';
 import 'package:meu_mengao/data/repositories/partidas_repository.dart';
 import 'package:meu_mengao/data/repositories/sites_repository.dart';
 import 'package:meu_mengao/firebase_options.dart';
+import 'package:meu_mengao/ui/noticias/tela_noticias.dart';
 
 class MeuMengaoApp extends StatelessWidget {
   const MeuMengaoApp({super.key});
@@ -18,7 +16,11 @@ class MeuMengaoApp extends StatelessWidget {
     return MaterialApp(
       title: 'Meu Mengão',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFc22a1e),
+          onPrimary: Colors.white,
+        ),
+        fontFamily: "Poppins",
         useMaterial3: true,
       ),
       home: FutureBuilder(
@@ -61,91 +63,6 @@ class _TestWidgetState extends State<TestWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: campeonatoRepository.getCampeonatos(),
-      builder: (context, snapshot) {
-        final campeonatos = snapshot.data;
-
-        return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Column(
-            children: campeonatos?.map((campeonato) {
-                  return FutureBuilder(
-                    future: campeonatoRepository.getCampeonatoWithId(campeonato.id),
-                    builder: (context, snapshot) {
-                      final campeonato = snapshot.data;
-                      if (campeonato == null) return const Center(child: CircularProgressIndicator());
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: campeonato.classificacao.sortedBy((time) => time.posicao.toString()).map((time) {
-                          return Row(
-                            children: [
-                              Text("${time.posicao}"),
-                              time.escudo != null && time.escudo!.isNotEmpty && time.escudo != "FLAMENGO"
-                                  ? Image.memory(
-                                      base64Decode(time.escudo!),
-                                      width: 40,
-                                      height: 40,
-                                    )
-                                  : Image.asset(
-                                      "assets/icons/flamengo.png",
-                                      width: 40,
-                                      height: 40,
-                                    ),
-                              Text(time.nome),
-                              Column(
-                                children: [
-                                  const Text("P"),
-                                  Text("${time.pontos}"),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  const Text("V"),
-                                  Text("${time.vitorias}"),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  const Text("E"),
-                                  Text("${time.empates}"),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  const Text("D"),
-                                  Text("${time.derrotas}"),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  const Text("GM"),
-                                  Text("${time.golsFeitos}"),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  const Text("GC"),
-                                  Text("${time.golsSofridos}"),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  const Text("SG"),
-                                  Text("${time.saldoGols}"),
-                                ],
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      );
-                    },
-                  );
-                }).toList() ??
-                [],
-          ),
-        );
-      },
-    );
+    return const TelaNoticias();
   }
 }
