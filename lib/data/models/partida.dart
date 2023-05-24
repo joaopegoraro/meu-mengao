@@ -41,6 +41,8 @@ class Partida {
   final String? escudoFora;
   final int? golsFora;
 
+  bool get isCorrupted => id.isEmpty || timeCasa.isEmpty || timeFora.isEmpty;
+
   Partida copyWith({
     String? id,
     String? campeonatoId,
@@ -63,10 +65,6 @@ class Partida {
       escudoFora: escudoFora ?? this.escudoFora,
       golsFora: golsFora ?? this.golsFora,
     );
-  }
-
-  bool isCorrupted() {
-    return id.isEmpty || timeCasa.isEmpty || timeFora.isEmpty;
   }
 
   Map<String, dynamic> toMap() {

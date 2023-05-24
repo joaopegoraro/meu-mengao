@@ -21,7 +21,7 @@ class SitesRepositoryImpl extends SitesRepository {
     final sites = snapshot.docs
         .map((siteSnapshot) => siteSnapshot.data())
         .whereNotNull()
-        .where((site) => !site.isCorrupted())
+        .where((site) => !site.isCorrupted)
         .toList();
     return sites;
   }
@@ -34,7 +34,7 @@ class SitesRepositoryImpl extends SitesRepository {
         .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
         .get();
     final site = snapshot.data();
-    if (site?.isCorrupted() != false) return null;
+    if (site?.isCorrupted != false) return null;
     return snapshot.data();
   }
 

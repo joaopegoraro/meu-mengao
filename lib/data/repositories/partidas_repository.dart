@@ -22,7 +22,7 @@ class PartidasRepositoryImpl extends PartidasRepository {
     final partidas = snapshot.docs
         .map((partidaSnapshot) => partidaSnapshot.data())
         .whereNotNull()
-        .where((partida) => !partida.isCorrupted())
+        .where((partida) => !partida.isCorrupted)
         .toList();
     return partidas;
   }
@@ -39,7 +39,7 @@ class PartidasRepositoryImpl extends PartidasRepository {
         .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
         .get();
     final partida = snapshot.docs.firstOrNull?.data();
-    if (partida?.isCorrupted() != false) return null;
+    if (partida?.isCorrupted != false) return null;
     return partida;
   }
 

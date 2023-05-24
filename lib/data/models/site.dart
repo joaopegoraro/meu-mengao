@@ -12,6 +12,8 @@ class Site {
   final String nome;
   final String? logo;
 
+  bool get isCorrupted => id.isEmpty || nome.isEmpty;
+
   Site copyWith({
     String? id,
     String? nome,
@@ -22,10 +24,6 @@ class Site {
       nome: nome ?? this.nome,
       logo: logo ?? this.logo,
     );
-  }
-
-  bool isCorrupted() {
-    return id.isEmpty || nome.isEmpty;
   }
 
   Map<String, dynamic> toMap() {

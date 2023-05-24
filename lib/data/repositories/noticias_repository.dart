@@ -20,7 +20,7 @@ class NoticiasRepositoryImpl extends NoticiasRepository {
     final noticias = snapshot.docs
         .map((noticiaSnapshot) => noticiaSnapshot.data())
         .whereNotNull()
-        .where((noticia) => !noticia.isCorrupted())
+        .where((noticia) => !noticia.isCorrupted)
         .toList();
     return noticias;
   }

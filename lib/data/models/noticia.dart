@@ -15,6 +15,8 @@ class Noticia {
   final String titulo;
   final String siteId;
 
+  bool get isCorrupted => id.isEmpty || link.isEmpty || titulo.isEmpty || siteId.isEmpty;
+
   Noticia copyWith({
     String? id,
     String? foto,
@@ -29,10 +31,6 @@ class Noticia {
       titulo: titulo ?? this.titulo,
       siteId: siteId ?? this.siteId,
     );
-  }
-
-  bool isCorrupted() {
-    return id.isEmpty || link.isEmpty || titulo.isEmpty || siteId.isEmpty;
   }
 
   Map<String, dynamic> toMap() {
