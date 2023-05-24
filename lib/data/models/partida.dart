@@ -75,8 +75,8 @@ class Partida {
       id: map['id'] ?? "",
       campeonatoId: map['campeonatoId'] != null ? map['campeonatoId'] ?? "" : null,
       data: DateTime.tryParse(map['data'])?.toLocal(),
-      timeCasa: map['timeCasa'] != null ? Time.fromMap(map['timeCasa']) : Time.corrupted(),
-      timeFora: map['timeFora'] != null ? Time.fromMap(map['timeFora']) : Time.corrupted(),
+      timeCasa: Time(nome: map['timeCasa'], escudo: map['escudoCasa']),
+      timeFora: Time(nome: map['timeFora'], escudo: map['escudoFora']),
       golsCasa: map['golsCasa'],
       golsFora: map['golsFora'],
     );

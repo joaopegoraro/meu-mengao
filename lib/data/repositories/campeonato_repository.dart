@@ -12,7 +12,7 @@ abstract class CampeonatoRepository {
 class CampeonatoRepositoryImpl extends CampeonatoRepository {
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
-  static const _campeonatosCollectionId = "sites";
+  static const _campeonatosCollectionId = "partidas";
 
   @override
   Future<List<Campeonato>> getCampeonatos() async {

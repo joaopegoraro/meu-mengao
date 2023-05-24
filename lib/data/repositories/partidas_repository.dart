@@ -11,7 +11,7 @@ abstract class PartidasRepository {
 class PartidasRepositoryImpl extends PartidasRepository {
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
-  static const _partidasCollectionId = "campeonatos";
+  static const _partidasCollectionId = "partidas";
 
   @override
   Future<List<Partida>> getPartidas() async {
