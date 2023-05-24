@@ -7,6 +7,7 @@ import 'package:meu_mengao/data/models/time.dart';
 abstract class CampeonatoRepository {
   Future<List<Campeonato>> getCampeonatos();
   Future<Campeonato?> getCampeonatoWithId(String id);
+  Future<String?> getNomeCampeonatoWithId(String id);
 }
 
 class CampeonatoRepositoryImpl extends CampeonatoRepository {
@@ -62,6 +63,17 @@ class CampeonatoRepositoryImpl extends CampeonatoRepository {
       classificacao: classificacao,
       mataMata: mataMata,
     );
+  }
+
+  @override
+  Future<String?> getNomeCampeonatoWithId(String id) async {
+    final snapshot = await firestore
+        .collection(_campeonatosCollectionId)
+        .doc(id)
+        .withConverter(fromFirestore: _campeonatofromFirestore, toFirestore: (_, __) => {})
+        .get();
+    final nome = snapshot.data()?.nome;
+    return nome;
   }
 
   Campeonato? _campeonatofromFirestore(

@@ -19,7 +19,7 @@ class EscudoTime extends StatelessWidget {
       height: height,
       errorBuilder: (_, __, ___) {
         return Image.asset(
-          escudo == "FLAMENGO" ? "assets/icons/flamengo.png" : "assets/icons/escudo-generico.png",
+          escudo == "FLAMENGO" ? "assets/images/flamengo.png" : "assets/images/escudo-generico.png",
           height: height,
         );
       },

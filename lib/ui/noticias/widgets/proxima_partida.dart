@@ -45,7 +45,10 @@ class _ProximaPartidaState extends State<ProximaPartida> {
                     child: Column(
                       children: [
                         Placar(partida: partida),
-                        DataPartida(data: partida.readableDate ?? ""),
+                        DataPartida(
+                          data: partida.readableDate ?? "",
+                          campeonatoId: partida.campeonatoId,
+                        ),
                       ],
                     ),
                   ),

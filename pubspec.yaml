@@ -30,8 +30,15 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/images/
 
   fonts:
+    # ICONS
+    - family: TrophyIcon
+      fonts:
+        - asset: assets/icons/TrophyIcon.ttf
+
+    # FONTS
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins/Poppins-Thin.ttf
