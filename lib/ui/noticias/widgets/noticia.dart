@@ -46,6 +46,12 @@ class _NoticiaItemState extends State<NoticiaItem> {
               Image.memory(
                 base64Decode(widget.noticia.foto!),
                 fit: BoxFit.fill,
+                errorBuilder: (_, __, ___) {
+                  return Image.asset(
+                    "assets/images/maracana.jpg",
+                    fit: BoxFit.fill,
+                  );
+                },
               ),
               Container(
                 padding: const EdgeInsets.all(20),
