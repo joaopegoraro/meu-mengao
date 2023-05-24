@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/repositories/partidas_repository.dart';
-import 'package:meu_mengao/ui/noticias/widgets/escudo_time.dart';
+import 'package:meu_mengao/ui/noticias/widgets/data_partida.dart';
+import 'package:meu_mengao/ui/noticias/widgets/placar.dart';
 
 class ProximaPartida extends StatefulWidget {
   const ProximaPartida({super.key});
@@ -39,66 +40,14 @@ class _ProximaPartidaState extends State<ProximaPartida> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          EscudoTime(escudo: partida.timeCasa.escudo),
-                          const Spacer(),
-                          Text(
-                            partida.timeCasa.nome,
-                            style: theme.textTheme.bodyLarge?.copyWith(
-                              color: colorScheme.onBackground,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const Spacer(),
-                          if (partida.golsCasa == null || partida.golsCasa! < 0)
-                            Text(
-                              "vs",
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: colorScheme.onBackground,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            )
-                          else ...[
-                            Text(
-                              "${partida.golsCasa}",
-                              style: theme.textTheme.bodyLarge?.copyWith(
-                                color: colorScheme.onBackground,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              '-',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: colorScheme.onBackground,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              "${partida.golsFora}",
-                              style: theme.textTheme.bodyLarge?.copyWith(
-                                color: colorScheme.onBackground,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                          const Spacer(),
-                          Text(
-                            partida.timeFora.nome,
-                            style: theme.textTheme.bodyLarge?.copyWith(
-                              color: colorScheme.onBackground,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const Spacer(),
-                          EscudoTime(escudo: partida.timeFora.escudo),
-                        ],
-                      ),
-                    ],
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Placar(partida: partida),
+                        DataPartida(data: partida.readableDate ?? ""),
+                      ],
+                    ),
                   ),
                 ),
               ],
