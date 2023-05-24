@@ -79,32 +79,32 @@ class _TestWidgetState extends State<TestWidget> {
                     children: [
                       Row(
                         children: [
-                          proximaPartida.escudoCasa == "FLAMENGO"
+                          proximaPartida.timeCasa.escudo == "FLAMENGO"
                               ? Image.asset(
                                   "assets/icons/flamengo.png",
                                   width: 40,
                                   height: 40,
                                 )
                               : Image.memory(
-                                  base64Decode(proximaPartida.escudoCasa!),
+                                  base64Decode(proximaPartida.timeCasa.escudo!),
                                   width: 40,
                                   height: 40,
                                 ),
-                          Text(proximaPartida.timeCasa),
+                          Text(proximaPartida.timeCasa.nome),
                           if (proximaPartida.golsCasa != null && proximaPartida.golsCasa! > 0)
                             Text("${proximaPartida.golsCasa!}"),
                           const Text(" - "),
                           if (proximaPartida.golsFora != null && proximaPartida.golsFora! > 0)
                             Text("${proximaPartida.golsFora!}"),
-                          Text(proximaPartida.timeFora),
-                          proximaPartida.escudoFora == "FLAMENGO"
+                          Text(proximaPartida.timeFora.nome),
+                          proximaPartida.timeFora.escudo == "FLAMENGO"
                               ? Image.asset(
                                   "assets/icons/flamengo.png",
                                   width: 40,
                                   height: 40,
                                 )
                               : Image.memory(
-                                  base64Decode(proximaPartida.escudoFora!),
+                                  base64Decode(proximaPartida.timeFora.escudo!),
                                   width: 40,
                                   height: 40,
                                 ),

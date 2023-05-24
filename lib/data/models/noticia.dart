@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Noticia {
   Noticia({
     required this.id,
@@ -52,10 +50,6 @@ class Noticia {
       siteId: map['siteId'] ?? "",
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Noticia.fromJson(String source) => Noticia.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {

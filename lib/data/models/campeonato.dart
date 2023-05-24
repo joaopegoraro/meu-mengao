@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:meu_mengao/data/models/partida.dart';
-import 'package:meu_mengao/data/models/posicao.dart';
+import 'package:meu_mengao/data/models/time.dart';
 
 class Campeonato {
   Campeonato({
@@ -11,7 +9,7 @@ class Campeonato {
     required this.nome,
     required this.edicao,
     this.mataMata = const [],
-    this.pontosCorridos = const [],
+    this.classificacao = const [],
   });
 
   final String id;
@@ -19,7 +17,7 @@ class Campeonato {
   final String edicao;
 
   final List<Partida> mataMata;
-  final List<Posicao> pontosCorridos;
+  final List<Time> classificacao;
 
   bool get isCorrupted => id.isEmpty || nome.isEmpty || edicao.isEmpty;
 
@@ -28,14 +26,14 @@ class Campeonato {
     String? nome,
     String? edicao,
     List<Partida>? mataMata,
-    List<Posicao>? pontosCorridos,
+    List<Time>? classificacao,
   }) {
     return Campeonato(
       id: id ?? this.id,
       nome: nome ?? this.nome,
       edicao: edicao ?? this.edicao,
       mataMata: mataMata ?? this.mataMata,
-      pontosCorridos: pontosCorridos ?? this.pontosCorridos,
+      classificacao: classificacao ?? this.classificacao,
     );
   }
 
@@ -45,7 +43,7 @@ class Campeonato {
       'nome': nome,
       'edicao': edicao,
       'mataMata': mataMata.map((x) => x.toMap()).toList(),
-      'pontosCorridos': pontosCorridos.map((x) => x.toMap()).toList(),
+      'pontosCorridos': classificacao.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -59,21 +57,17 @@ class Campeonato {
           (x) => Partida.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      pontosCorridos: List<Posicao>.from(
-        (map['pontosCorridos'] as List<int>).map<Posicao>(
-          (x) => Posicao.fromMap(x as Map<String, dynamic>),
+      classificacao: List<Time>.from(
+        (map['pontosCorridos'] as List<int>).map<Time>(
+          (x) => Time.fromMap(x as Map<String, dynamic>),
         ),
       ),
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory Campeonato.fromJson(String source) => Campeonato.fromMap(json.decode(source) as Map<String, dynamic>);
-
   @override
   String toString() {
-    return 'Campeonato(id: $id, nome: $nome, edicao: $edicao, mataMata: $mataMata, pontosCorridos: $pontosCorridos)';
+    return 'Campeonato(id: $id, nome: $nome, edicao: $edicao, mataMata: $mataMata, pontosCorridos: $classificacao)';
   }
 
   @override
@@ -84,11 +78,11 @@ class Campeonato {
         other.nome == nome &&
         other.edicao == edicao &&
         listEquals(other.mataMata, mataMata) &&
-        listEquals(other.pontosCorridos, pontosCorridos);
+        listEquals(other.classificacao, classificacao);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ nome.hashCode ^ edicao.hashCode ^ mataMata.hashCode ^ pontosCorridos.hashCode;
+    return id.hashCode ^ nome.hashCode ^ edicao.hashCode ^ mataMata.hashCode ^ classificacao.hashCode;
   }
 }

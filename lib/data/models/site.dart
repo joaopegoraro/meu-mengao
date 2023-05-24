@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class Site {
   Site({
     required this.id,
@@ -38,13 +35,9 @@ class Site {
     return Site(
       id: map['id'] ?? "",
       nome: map['nome'] ?? "",
-      logo: map['logo'] != null ? map['logo'] ?? "" : null,
+      logo: map['logo'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Site.fromJson(String source) => Site.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'Site(id: $id, nome: $nome, logo: $logo)';

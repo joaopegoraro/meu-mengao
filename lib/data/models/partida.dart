@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:intl/intl.dart';
+import 'package:meu_mengao/data/models/time.dart';
 
 class Partida {
   Partida({
@@ -10,9 +9,7 @@ class Partida {
     required this.timeFora,
     this.campeonatoId,
     this.data,
-    this.escudoCasa,
     this.golsCasa,
-    this.escudoFora,
     this.golsFora,
   });
 
@@ -33,25 +30,21 @@ class Partida {
     return DateFormat.MMMMd().add_Hm().format(data!); // "25 de maio, 22:30"
   }
 
-  final String timeCasa;
-  final String? escudoCasa;
+  final Time timeCasa;
   final int? golsCasa;
 
-  final String timeFora;
-  final String? escudoFora;
+  final Time timeFora;
   final int? golsFora;
 
-  bool get isCorrupted => id.isEmpty || timeCasa.isEmpty || timeFora.isEmpty;
+  bool get isCorrupted => id.isEmpty || timeCasa.isCorrupted || timeFora.isCorrupted;
 
   Partida copyWith({
     String? id,
     String? campeonatoId,
     DateTime? data,
-    String? timeCasa,
-    String? escudoCasa,
+    Time? timeCasa,
+    Time? timeFora,
     int? golsCasa,
-    String? timeFora,
-    String? escudoFora,
     int? golsFora,
   }) {
     return Partida(
@@ -59,10 +52,8 @@ class Partida {
       campeonatoId: campeonatoId ?? this.campeonatoId,
       data: data ?? this.data,
       timeCasa: timeCasa ?? this.timeCasa,
-      escudoCasa: escudoCasa ?? this.escudoCasa,
-      golsCasa: golsCasa ?? this.golsCasa,
       timeFora: timeFora ?? this.timeFora,
-      escudoFora: escudoFora ?? this.escudoFora,
+      golsCasa: golsCasa ?? this.golsCasa,
       golsFora: golsFora ?? this.golsFora,
     );
   }
@@ -73,10 +64,8 @@ class Partida {
       'campeonatoId': campeonatoId,
       'data': data,
       'timeCasa': timeCasa,
-      'escudoCasa': escudoCasa,
       'golsCasa': golsCasa,
       'timeFora': timeFora,
-      'escudoFora': escudoFora,
       'golsFora': golsFora,
     };
   }
@@ -86,22 +75,16 @@ class Partida {
       id: map['id'] ?? "",
       campeonatoId: map['campeonatoId'] != null ? map['campeonatoId'] ?? "" : null,
       data: DateTime.tryParse(map['data'])?.toLocal(),
-      timeCasa: map['timeCasa'] ?? "",
-      escudoCasa: map['escudoCasa'] != null ? map['escudoCasa'] ?? "" : null,
+      timeCasa: map['timeCasa'] != null ? Time.fromMap(map['timeCasa']) : Time.corrupted(),
+      timeFora: map['timeFora'] != null ? Time.fromMap(map['timeFora']) : Time.corrupted(),
       golsCasa: map['golsCasa'],
-      timeFora: map['timeFora'] ?? "",
-      escudoFora: map['escudoFora'] != null ? map['escudoFora'] ?? "" : null,
       golsFora: map['golsFora'],
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory Partida.fromJson(String source) => Partida.fromMap(json.decode(source) as Map<String, dynamic>);
-
   @override
   String toString() {
-    return 'Partida(id: $id, campeonatoId: $campeonatoId, data: $data, timeCasa: $timeCasa, escudoCasa: $escudoCasa, golsCasa: $golsCasa, timeFora: $timeFora, escudoFora: $escudoFora, golsFora: $golsFora)';
+    return 'Partida(id: $id, campeonatoId: $campeonatoId, data: $data, timeCasa: $timeCasa, golsCasa: $golsCasa, timeFora: $timeFora, golsFora: $golsFora)';
   }
 
   @override
@@ -112,10 +95,8 @@ class Partida {
         other.campeonatoId == campeonatoId &&
         other.data == data &&
         other.timeCasa == timeCasa &&
-        other.escudoCasa == escudoCasa &&
         other.golsCasa == golsCasa &&
         other.timeFora == timeFora &&
-        other.escudoFora == escudoFora &&
         other.golsFora == golsFora;
   }
 
@@ -125,10 +106,8 @@ class Partida {
         campeonatoId.hashCode ^
         data.hashCode ^
         timeCasa.hashCode ^
-        escudoCasa.hashCode ^
         golsCasa.hashCode ^
         timeFora.hashCode ^
-        escudoFora.hashCode ^
         golsFora.hashCode;
   }
 }

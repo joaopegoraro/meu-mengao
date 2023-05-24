@@ -1,10 +1,8 @@
-import 'dart:convert';
-
-class Posicao {
-  Posicao({
-    required this.posicao,
-    required this.time,
-    this.escudoTime,
+class Time {
+  Time({
+    this.posicao,
+    required this.nome,
+    this.escudo,
     this.pontos = 0,
     this.vitorias = 0,
     this.empates = 0,
@@ -14,9 +12,9 @@ class Posicao {
     this.saldoGols = 0,
   });
 
-  final int posicao;
-  final String time;
-  final String? escudoTime;
+  final int? posicao;
+  final String nome;
+  final String? escudo;
   final int pontos;
   final int vitorias;
   final int empates;
@@ -25,12 +23,14 @@ class Posicao {
   final int golsSofridos;
   final int saldoGols;
 
-  bool get isCorrupted => posicao <= 0 || time.isEmpty;
+  bool get isCorrupted => nome.isEmpty;
 
-  Posicao copyWith({
+  factory Time.corrupted() => Time(nome: "");
+
+  Time copyWith({
     int? posicao,
-    String? time,
-    String? escudoTime,
+    String? nome,
+    String? escudo,
     int? pontos,
     int? vitorias,
     int? empates,
@@ -39,10 +39,10 @@ class Posicao {
     int? golsSofridos,
     int? saldoGols,
   }) {
-    return Posicao(
+    return Time(
       posicao: posicao ?? this.posicao,
-      time: time ?? this.time,
-      escudoTime: escudoTime ?? this.escudoTime,
+      nome: nome ?? this.nome,
+      escudo: escudo ?? this.escudo,
       pontos: pontos ?? this.pontos,
       vitorias: vitorias ?? this.vitorias,
       empates: empates ?? this.empates,
@@ -56,8 +56,8 @@ class Posicao {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'posicao': posicao,
-      'time': time,
-      'escudoTime': escudoTime,
+      'time': nome,
+      'escudoTime': escudo,
       'pontos': pontos,
       'vitorias': vitorias,
       'empates': empates,
@@ -68,11 +68,11 @@ class Posicao {
     };
   }
 
-  factory Posicao.fromMap(Map<String, dynamic> map) {
-    return Posicao(
-      posicao: map['posicao'] ?? 0,
-      time: map['time'] ?? "",
-      escudoTime: map['escudoTime'] != null ? map['escudoTime'] ?? "" : null,
+  factory Time.fromMap(Map<String, dynamic> map) {
+    return Time(
+      posicao: map['posicao'],
+      nome: map['time'] ?? "",
+      escudo: map['escudoTime'],
       pontos: map['pontos'] ?? 0,
       vitorias: map['vitorias'] ?? 0,
       empates: map['empates'] ?? 0,
@@ -83,22 +83,18 @@ class Posicao {
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory Posicao.fromJson(String source) => Posicao.fromMap(json.decode(source) as Map<String, dynamic>);
-
   @override
   String toString() {
-    return 'Posicao(posicao: $posicao, time: $time, escudoTime: $escudoTime, pontos: $pontos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols)';
+    return 'Posicao(posicao: $posicao, time: $nome, escudoTime: $escudo, pontos: $pontos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols)';
   }
 
   @override
-  bool operator ==(covariant Posicao other) {
+  bool operator ==(covariant Time other) {
     if (identical(this, other)) return true;
 
     return other.posicao == posicao &&
-        other.time == time &&
-        other.escudoTime == escudoTime &&
+        other.nome == nome &&
+        other.escudo == escudo &&
         other.pontos == pontos &&
         other.vitorias == vitorias &&
         other.empates == empates &&
@@ -111,8 +107,8 @@ class Posicao {
   @override
   int get hashCode {
     return posicao.hashCode ^
-        time.hashCode ^
-        escudoTime.hashCode ^
+        nome.hashCode ^
+        escudo.hashCode ^
         pontos.hashCode ^
         vitorias.hashCode ^
         empates.hashCode ^
