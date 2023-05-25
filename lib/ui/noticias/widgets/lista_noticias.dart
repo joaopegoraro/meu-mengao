@@ -11,11 +11,12 @@ class ListaNoticias extends StatefulWidget {
   State<ListaNoticias> createState() => _ListaNoticiasState();
 }
 
-class _ListaNoticiasState extends State<ListaNoticias> {
+class _ListaNoticiasState extends State<ListaNoticias> with AutomaticKeepAliveClientMixin<ListaNoticias> {
   final NoticiasRepository _noticiasRepository = NoticiasRepositoryImpl();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FutureBuilder(
       future: _noticiasRepository.getNoticias(),
       builder: (context, snapshot) {
@@ -38,4 +39,7 @@ class _ListaNoticiasState extends State<ListaNoticias> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
