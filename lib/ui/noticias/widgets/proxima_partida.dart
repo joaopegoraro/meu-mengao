@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/repositories/partidas_repository.dart';
-import 'package:meu_mengao/ui/noticias/widgets/data_partida.dart';
-import 'package:meu_mengao/ui/noticias/widgets/placar.dart';
+import 'package:meu_mengao/ui/widgets/partida/partida_item.dart';
 
 class ProximaPartida extends StatefulWidget {
   const ProximaPartida({super.key});
@@ -41,16 +40,9 @@ class _ProximaPartidaState extends State<ProximaPartida> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Placar(partida: partida),
-                        DataPartida(
-                          data: partida.readableDate ?? "",
-                          campeonatoId: partida.campeonatoId,
-                        ),
-                      ],
-                    ),
+                  child: PartidaItem(
+                    partida: partida,
+                    mostrarCampeonato: true,
                   ),
                 ),
               ],

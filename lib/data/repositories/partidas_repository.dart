@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:meu_mengao/data/models/partida.dart';
 
 abstract class PartidasRepository {
-  Future<List<Partida>> getPartidas();
+  Future<List<Partida>> getProximasPartidas();
+  Future<List<Partida>> getResultados();
   Future<Partida?> getProximaPartida();
 }
 
@@ -14,9 +15,31 @@ class PartidasRepositoryImpl extends PartidasRepository {
   static const _partidasCollectionId = "partidas";
 
   @override
-  Future<List<Partida>> getPartidas() async {
+  Future<List<Partida>> getProximasPartidas() async {
+    final now = DateTime.now();
+    final dateFormatted = DateFormat("yyyy-MM-ddTHH:mm:ssZ").format(now);
     final snapshot = await firestore
         .collection(_partidasCollectionId)
+        .where("data", isGreaterThanOrEqualTo: dateFormatted)
+        .orderBy("data", descending: false)
+        .withConverter(fromFirestore: _fromFirestore, toFirestore: (_, __) => {})
+        .get();
+    final partidas = snapshot.docs
+        .map((partidaSnapshot) => partidaSnapshot.data())
+        .whereNotNull()
+        .where((partida) => !partida.isCorrupted)
+        .toList();
+    return partidas;
+  }
+
+  @override
+  Future<List<Partida>> getResultados() async {
+    final now = DateTime.now();
+    final dateFormatted = DateFormat("yyyy-MM-ddTHH:mm:ssZ").format(now);
+    final snapshot = await firestore
+        .collection(_partidasCollectionId)
+        .where("data", isLessThanOrEqualTo: dateFormatted)
+        .orderBy("data", descending: false)
         .withConverter(fromFirestore: _fromFirestore, toFirestore: (_, __) => {})
         .get();
     final partidas = snapshot.docs

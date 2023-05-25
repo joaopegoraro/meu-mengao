@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/repositories/noticias_repository.dart';
-import 'package:meu_mengao/ui/noticias/widgets/noticia.dart';
 import 'package:meu_mengao/ui/noticias/widgets/proxima_partida.dart';
+
+import 'widgets/noticia_item.dart';
 
 class TelaNoticias extends StatefulWidget {
   const TelaNoticias({super.key});
