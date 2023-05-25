@@ -17,15 +17,15 @@ class _ListaNoticiasState extends State<ListaNoticias> with AutomaticKeepAliveCl
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return FutureBuilder(
-      future: _noticiasRepository.getNoticias(),
-      builder: (context, snapshot) {
-        final noticias = List.filled(10, snapshot.data!.first).whereNotNull().toList();
+    return Expanded(
+      child: FutureBuilder(
+        future: _noticiasRepository.getNoticias(),
+        builder: (context, snapshot) {
+          final noticias = snapshot.data != null ? List.filled(10, snapshot.data!.first).whereNotNull().toList() : [];
 
-        if (noticias.isEmpty || snapshot.hasError) return const Placeholder();
+          if (noticias.isEmpty || snapshot.hasError) return const Center(child: CircularProgressIndicator());
 
-        return Expanded(
-          child: ListView.builder(
+          return ListView.builder(
             itemCount: noticias.length + 1,
             shrinkWrap: true,
             itemBuilder: (context, index) {
@@ -34,9 +34,9 @@ class _ListaNoticiasState extends State<ListaNoticias> with AutomaticKeepAliveCl
               }
               return NoticiaItem(noticia: noticias[index - 1]);
             },
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

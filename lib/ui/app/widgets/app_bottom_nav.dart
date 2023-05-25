@@ -37,6 +37,7 @@ class AppBottomNav extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 MaterialButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                   minWidth: 40,
                   onPressed: () => clicarBotao(_noticiasIndex),
@@ -58,6 +59,7 @@ class AppBottomNav extends StatelessWidget {
                   ),
                 ),
                 MaterialButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                   minWidth: 40,
                   onPressed: () => clicarBotao(_jogosIndex),
@@ -69,7 +71,7 @@ class AppBottomNav extends StatelessWidget {
                         color: buttonColor(_jogosIndex),
                       ),
                       Text(
-                        "Jogos",
+                        "Calendário",
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: buttonColor(_jogosIndex),
                           fontWeight: FontWeight.w500,
@@ -84,6 +86,29 @@ class AppBottomNav extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 MaterialButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                  minWidth: 40,
+                  onPressed: () => clicarBotao(_maisIndex),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.sports_soccer,
+                        color: buttonColor(_maisIndex),
+                      ),
+                      Text(
+                        "Resultados",
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: buttonColor(_maisIndex),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                MaterialButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                   minWidth: 40,
                   onPressed: () => clicarBotao(_tabelasIndex),
@@ -100,27 +125,6 @@ class AppBottomNav extends StatelessWidget {
                           color: buttonColor(_tabelasIndex),
                           fontWeight: FontWeight.w500,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                MaterialButton(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  minWidth: 40,
-                  onPressed: () => clicarBotao(_maisIndex),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.menu,
-                        color: buttonColor(_maisIndex),
-                      ),
-                      Text(
-                        "Mais",
-                        style: theme.textTheme.bodySmall?.copyWith(
-                        color: buttonColor(_maisIndex),
-                              fontWeight: FontWeight.w500,
-                            ),
                       ),
                     ],
                   ),

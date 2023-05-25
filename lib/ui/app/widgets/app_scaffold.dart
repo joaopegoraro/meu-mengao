@@ -53,7 +53,10 @@ class _AppScaffoldState extends State<AppScaffold> {
       ),
       body: PageView(
         controller: _pagerController,
-        physics: const NeverScrollableScrollPhysics(),
+        //physics: const NeverScrollableScrollPhysics(),
+        onPageChanged: (index) => setState(() {
+          _pageIndex = index;
+        }),
         children: const [
           TelaNoticias(),
           Placeholder(color: Colors.red),
