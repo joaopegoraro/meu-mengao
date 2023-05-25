@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 import 'package:meu_mengao/data/models/time.dart';
 
@@ -25,9 +27,9 @@ class Partida {
     if (dayDifference == 0) return "Hoje - ${DateFormat.Hm().format(data!)}"; // "Hoje - 21:30"
     if (dayDifference == 1) return "Amanhã - ${DateFormat.Hm().format(data!)}"; // "Amanhã - 21:30"
     if (dayDifference > 1 && dayDifference <= 6) {
-      return "${DateFormat('EEEE').format(data!)} - ${DateFormat.Hm().format(data!)}"; // "Segunda-feira - 21:30"
+      return "${DateFormat('EEEE').format(data!)} - ${DateFormat.Hm(Platform.localeName).format(data!)}"; // "Segunda-feira - 21:30"
     }
-    return DateFormat.MMMMd().add_Hm().format(data!); // "25 de maio, 22:30"
+    return DateFormat.MMMMd(Platform.localeName).add_Hm().format(data!); // "25 de maio, 22:30"
   }
 
   final Time timeCasa;

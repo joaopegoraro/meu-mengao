@@ -8,9 +8,9 @@ class AppBottomNav extends StatelessWidget {
   });
 
   static const int _noticiasIndex = 0;
-  static const int _jogosIndex = 1;
-  static const int _tabelasIndex = 2;
-  static const int _maisIndex = 3;
+  static const int _calendarioIndex = 1;
+  static const int _resultadosIndex = 2;
+  static const int _tabelasIndex = 3;
 
   final int currentIndex;
   final void Function(int) clicarBotao;
@@ -62,18 +62,18 @@ class AppBottomNav extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                   minWidth: 40,
-                  onPressed: () => clicarBotao(_jogosIndex),
+                  onPressed: () => clicarBotao(_calendarioIndex),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.calendar_month,
-                        color: buttonColor(_jogosIndex),
+                        color: buttonColor(_calendarioIndex),
                       ),
                       Text(
                         "Calendário",
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: buttonColor(_jogosIndex),
+                          color: buttonColor(_calendarioIndex),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -89,18 +89,18 @@ class AppBottomNav extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                   minWidth: 40,
-                  onPressed: () => clicarBotao(_maisIndex),
+                  onPressed: () => clicarBotao(_resultadosIndex),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.sports_soccer,
-                        color: buttonColor(_maisIndex),
+                        color: buttonColor(_resultadosIndex),
                       ),
                       Text(
                         "Resultados",
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: buttonColor(_maisIndex),
+                          color: buttonColor(_resultadosIndex),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
