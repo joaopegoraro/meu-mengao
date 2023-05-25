@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/ui/app/widgets/app_bottom_nav.dart';
+import 'package:meu_mengao/ui/calendario/tela_calendario.dart';
 import 'package:meu_mengao/ui/noticias/tela_noticias.dart';
+import 'package:meu_mengao/ui/widgets/topbar.dart';
 
 class AppScaffold extends StatefulWidget {
   const AppScaffold({super.key});
@@ -33,6 +35,10 @@ class _AppScaffoldState extends State<AppScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(120),
+        child: TopBar(titulo: "Notícias"),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 1,
@@ -59,7 +65,7 @@ class _AppScaffoldState extends State<AppScaffold> {
         }),
         children: const [
           TelaNoticias(),
-          Placeholder(color: Colors.red),
+          TelaCalendario(),
           Placeholder(color: Colors.blue),
           Placeholder(color: Colors.green),
         ],

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
-class NoticiasTopBar extends StatelessWidget {
-  const NoticiasTopBar({super.key});
+class TopBar extends StatelessWidget {
+  const TopBar({
+    super.key,
+    required this.titulo,
+  });
+
+  final String titulo;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,7 @@ class NoticiasTopBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Notícias",
+              titulo,
               style: theme.textTheme.headlineSmall?.copyWith(
                 color: colorScheme.onPrimary,
                 fontWeight: FontWeight.w600,
