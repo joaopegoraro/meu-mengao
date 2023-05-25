@@ -15,6 +15,19 @@ class _AppScaffoldState extends State<AppScaffold> {
   int _pageIndex = 0;
   late final PageController _pagerController;
 
+  String get _titulo {
+    switch (_pageIndex) {
+      case 0:
+        return "Notícias";
+      case 1:
+        return "Calendário";
+      case 2:
+        return "Resultados";
+      default:
+        return "Tabelas";
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -35,9 +48,9 @@ class _AppScaffoldState extends State<AppScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(120),
-        child: TopBar(titulo: "Notícias"),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(120),
+        child: TopBar(titulo: _titulo),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.background,
