@@ -27,7 +27,8 @@ class Partida {
     if (dayDifference == 0) return "Hoje - ${DateFormat.Hm().format(data!)}"; // "Hoje - 21:30"
     if (dayDifference == 1) return "Amanhã - ${DateFormat.Hm().format(data!)}"; // "Amanhã - 21:30"
     if (dayDifference > 1 && dayDifference <= 6) {
-      return "${DateFormat('EEEE').format(data!)} - ${DateFormat.Hm(Platform.localeName).format(data!)}"; // "Segunda-feira - 21:30"
+      // "Segunda-feira - 21:30"
+      return "${DateFormat('EEEE').format(data!)} - ${DateFormat.Hm(Platform.localeName).format(data!)}";
     }
     return DateFormat.MMMMd(Platform.localeName).add_Hm().format(data!); // "25 de maio, 22:30"
   }
