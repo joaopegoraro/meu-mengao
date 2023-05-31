@@ -6,7 +6,7 @@ import 'package:meu_mengao/data/models/time.dart';
 
 abstract class CampeonatoRepository {
   Future<List<Campeonato>> getCampeonatos();
-  Future<Campeonato?> getCampeonatoWithId(String id);
+  Future<Campeonato?> getCampeonatoWithId(String id, {String? nome});
   Future<String?> getNomeCampeonatoWithId(String id);
 }
 
@@ -30,7 +30,7 @@ class CampeonatoRepositoryImpl extends CampeonatoRepository {
   }
 
   @override
-  Future<Campeonato?> getCampeonatoWithId(String id) async {
+  Future<Campeonato?> getCampeonatoWithId(String id, {String? nome}) async {
     final mataMataSnapshot = await firestore
         .collection(_campeonatosCollectionId)
         .doc(id)
@@ -57,12 +57,14 @@ class CampeonatoRepositoryImpl extends CampeonatoRepository {
         .where((time) => !time.isCorrupted)
         .toList();
 
-    return Campeonato(
+    final campeonato = Campeonato(
       id: id,
-      nome: "",
+      nome: nome ?? "",
       classificacao: classificacao,
       mataMata: mataMata,
     );
+
+    return campeonato.hasData ? campeonato : null;
   }
 
   @override

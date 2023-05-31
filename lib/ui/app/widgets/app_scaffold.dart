@@ -3,7 +3,7 @@ import 'package:meu_mengao/ui/app/widgets/app_bottom_nav.dart';
 import 'package:meu_mengao/ui/calendario/tela_calendario.dart';
 import 'package:meu_mengao/ui/noticias/tela_noticias.dart';
 import 'package:meu_mengao/ui/resultados/tela_resultados.dart';
-import 'package:meu_mengao/ui/tabelas/tabelas_screen.dart';
+import 'package:meu_mengao/ui/tabelas/tela_tabelas.dart';
 import 'package:meu_mengao/ui/widgets/topbar.dart';
 
 class AppScaffold extends StatefulWidget {

@@ -18,6 +18,7 @@ class Campeonato {
   final List<Time> classificacao;
 
   bool get isCorrupted => id.isEmpty || nome.isEmpty;
+  bool get hasData => mataMata.isNotEmpty || classificacao.isNotEmpty;
 
   Campeonato copyWith({
     String? id,
