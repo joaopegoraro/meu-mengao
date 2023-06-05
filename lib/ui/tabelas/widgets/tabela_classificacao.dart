@@ -17,17 +17,19 @@ class TabelaClassificacao extends StatelessWidget {
       columnWidths: const {
         0: FractionColumnWidth(0.1),
         1: FractionColumnWidth(0.4),
-        2: FractionColumnWidth(0.1),
-        3: FractionColumnWidth(0.1),
-        4: FractionColumnWidth(0.1),
-        5: FractionColumnWidth(0.1),
-        6: FractionColumnWidth(0.1),
+        2: FractionColumnWidth(0.08),
+        3: FractionColumnWidth(0.08),
+        4: FractionColumnWidth(0.08),
+        5: FractionColumnWidth(0.08),
+        6: FractionColumnWidth(0.08),
+        7: FractionColumnWidth(0.1),
       },
       children: [
         TableRow(
           children: const [
             Text("POS", textAlign: TextAlign.start),
             Text("CLUBE", textAlign: TextAlign.start),
+            Text("J", textAlign: TextAlign.center),
             Text("V", textAlign: TextAlign.center),
             Text("E", textAlign: TextAlign.center),
             Text("D", textAlign: TextAlign.center),
@@ -50,6 +52,7 @@ class TabelaClassificacao extends StatelessWidget {
                 Text("\t${time.nome}"),
               ],
             ),
+            Text("${time.jogos}", textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
             Text("${time.vitorias}", textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
             Text("${time.empates}", textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
             Text("${time.derrotas}", textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
@@ -59,6 +62,7 @@ class TabelaClassificacao extends StatelessWidget {
 
           const double spacing = 1.5;
           const spacingRow = TableRow(children: [
+            SizedBox(height: spacing),
             SizedBox(height: spacing),
             SizedBox(height: spacing),
             SizedBox(height: spacing),

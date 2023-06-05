@@ -4,6 +4,7 @@ class Time {
     this.posicao,
     this.escudo,
     this.pontos = 0,
+    this.jogos = 0,
     this.vitorias = 0,
     this.empates = 0,
     this.derrotas = 0,
@@ -16,6 +17,7 @@ class Time {
   final String nome;
   final String? escudo;
   final int pontos;
+  final int jogos;
   final int vitorias;
   final int empates;
   final int derrotas;
@@ -30,6 +32,7 @@ class Time {
     String? nome,
     String? escudo,
     int? pontos,
+    int? jogos,
     int? vitorias,
     int? empates,
     int? derrotas,
@@ -42,6 +45,7 @@ class Time {
       nome: nome ?? this.nome,
       escudo: escudo ?? this.escudo,
       pontos: pontos ?? this.pontos,
+      jogos: jogos ?? this.jogos,
       vitorias: vitorias ?? this.vitorias,
       empates: empates ?? this.empates,
       derrotas: derrotas ?? this.derrotas,
@@ -57,6 +61,7 @@ class Time {
       'nome': nome,
       'escudo': escudo,
       'pontos': pontos,
+      'jogos': jogos,
       'vitorias': vitorias,
       'empates': empates,
       'derrotas': derrotas,
@@ -72,6 +77,7 @@ class Time {
       nome: map['nome'] ?? "",
       escudo: map['escudo'],
       pontos: map['pontos'] ?? 0,
+      jogos: map['jogos'] ?? 0,
       vitorias: map['vitorias'] ?? 0,
       empates: map['empates'] ?? 0,
       derrotas: map['derrotas'] ?? 0,
@@ -83,7 +89,7 @@ class Time {
 
   @override
   String toString() {
-    return 'Posicao(posicao: $posicao, nome: $nome, escudo: $escudo, pontos: $pontos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols)';
+    return 'Posicao(posicao: $posicao, nome: $nome, escudo: $escudo, pontos: $pontos, jogos: $jogos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols)';
   }
 
   @override
@@ -94,6 +100,7 @@ class Time {
         other.nome == nome &&
         other.escudo == escudo &&
         other.pontos == pontos &&
+        other.jogos == jogos &&
         other.vitorias == vitorias &&
         other.empates == empates &&
         other.derrotas == derrotas &&
@@ -108,6 +115,7 @@ class Time {
         nome.hashCode ^
         escudo.hashCode ^
         pontos.hashCode ^
+        jogos.hashCode ^
         vitorias.hashCode ^
         empates.hashCode ^
         derrotas.hashCode ^
