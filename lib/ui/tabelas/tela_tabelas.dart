@@ -24,19 +24,14 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
       padding: const EdgeInsets.all(20),
       child: Expanded(
         child: FutureBuilder(
-          future: _campeonatoRepository.getCampeonatos(),
+          future: _campeonatoRepository.getCampeonatos().then((campeonatos) {
+            campeonatoSelecionadoId = campeonatos.first.id;
+            return campeonatos;
+          }),
           builder: (context, snapshot) {
             final campeonatos = snapshot.data;
             if (campeonatos?.isEmpty != false) {
               return const Placeholder();
-            }
-
-            if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                setState(() {
-                  campeonatoSelecionadoId = campeonatos!.first.id;
-                });
-              });
             }
 
             return SingleChildScrollView(
