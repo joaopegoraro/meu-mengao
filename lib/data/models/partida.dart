@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:intl/intl.dart';
@@ -11,6 +12,8 @@ class Partida {
     required this.timeFora,
     this.campeonatoId,
     this.data,
+    this.mataMataName,
+    this.mataMataIndex,
     this.golsCasa,
     this.golsFora,
   });
@@ -18,6 +21,9 @@ class Partida {
   final String id;
   final String? campeonatoId;
   final DateTime? data;
+
+  final String? mataMataName;
+  final String? mataMataIndex;
 
   String? get readableDate {
     if (data == null) return null;
@@ -45,18 +51,22 @@ class Partida {
     String? id,
     String? campeonatoId,
     DateTime? data,
+    String? mataMataName,
+    String? mataMataIndex,
     Time? timeCasa,
-    Time? timeFora,
     int? golsCasa,
+    Time? timeFora,
     int? golsFora,
   }) {
     return Partida(
       id: id ?? this.id,
       campeonatoId: campeonatoId ?? this.campeonatoId,
       data: data ?? this.data,
+      mataMataName: mataMataName ?? this.mataMataName,
+      mataMataIndex: mataMataIndex ?? this.mataMataIndex,
       timeCasa: timeCasa ?? this.timeCasa,
-      timeFora: timeFora ?? this.timeFora,
       golsCasa: golsCasa ?? this.golsCasa,
+      timeFora: timeFora ?? this.timeFora,
       golsFora: golsFora ?? this.golsFora,
     );
   }
@@ -65,29 +75,33 @@ class Partida {
     return <String, dynamic>{
       'id': id,
       'campeonatoId': campeonatoId,
-      'data': data,
-      'timeCasa': timeCasa,
+      'data': data?.millisecondsSinceEpoch,
+      'mataMataName': mataMataName,
+      'mataMataIndex': mataMataIndex,
+      'timeCasa': timeCasa.toMap(),
       'golsCasa': golsCasa,
-      'timeFora': timeFora,
+      'timeFora': timeFora.toMap(),
       'golsFora': golsFora,
     };
   }
 
   factory Partida.fromMap(Map<String, dynamic> map) {
     return Partida(
-      id: map['id'] ?? "",
-      campeonatoId: map['campeonatoId'] != null ? map['campeonatoId'] ?? "" : null,
-      data: DateTime.tryParse(map['data'])?.toLocal(),
-      timeCasa: Time(nome: map['timeCasa'], escudo: map['escudoCasa']),
-      timeFora: Time(nome: map['timeFora'], escudo: map['escudoFora']),
-      golsCasa: map['golsCasa'],
-      golsFora: map['golsFora'],
+      id: map['id'] as String,
+      campeonatoId: map['campeonatoId'] != null ? map['campeonatoId'] as String : null,
+      data: map['data'] != null ? DateTime.fromMillisecondsSinceEpoch(map['data'] as int) : null,
+      mataMataName: map['mataMataName'] != null ? map['mataMataName'] as String : null,
+      mataMataIndex: map['mataMataIndex'] != null ? map['mataMataIndex'] as String : null,
+      timeCasa: Time.fromMap(map['timeCasa'] as Map<String, dynamic>),
+      golsCasa: map['golsCasa'] != null ? map['golsCasa'] as int : null,
+      timeFora: Time.fromMap(map['timeFora'] as Map<String, dynamic>),
+      golsFora: map['golsFora'] != null ? map['golsFora'] as int : null,
     );
   }
 
   @override
   String toString() {
-    return 'Partida(id: $id, campeonatoId: $campeonatoId, data: $data, timeCasa: $timeCasa, golsCasa: $golsCasa, timeFora: $timeFora, golsFora: $golsFora)';
+    return 'Partida(id: $id, campeonatoId: $campeonatoId, data: $data, mataMataName: $mataMataName, mataMataIndex: $mataMataIndex, timeCasa: $timeCasa, golsCasa: $golsCasa, timeFora: $timeFora, golsFora: $golsFora)';
   }
 
   @override
@@ -97,6 +111,8 @@ class Partida {
     return other.id == id &&
         other.campeonatoId == campeonatoId &&
         other.data == data &&
+        other.mataMataName == mataMataName &&
+        other.mataMataIndex == mataMataIndex &&
         other.timeCasa == timeCasa &&
         other.golsCasa == golsCasa &&
         other.timeFora == timeFora &&
@@ -108,9 +124,15 @@ class Partida {
     return id.hashCode ^
         campeonatoId.hashCode ^
         data.hashCode ^
+        mataMataName.hashCode ^
+        mataMataIndex.hashCode ^
         timeCasa.hashCode ^
         golsCasa.hashCode ^
         timeFora.hashCode ^
         golsFora.hashCode;
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory Partida.fromJson(String source) => Partida.fromMap(json.decode(source) as Map<String, dynamic>);
 }
