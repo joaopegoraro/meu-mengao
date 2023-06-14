@@ -1,37 +1,32 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/foundation.dart';
-import 'package:meu_mengao/data/models/partida.dart';
-import 'package:meu_mengao/data/models/time.dart';
+import 'dart:convert';
 
 class Campeonato {
   Campeonato({
     required this.id,
     required this.nome,
-    this.mataMata = const [],
-    this.classificacao = const [],
+    required this.ano,
+    required this.logo,
   });
 
   final String id;
   final String nome;
-
-  final List<Partida> mataMata;
-  final List<Time> classificacao;
+  final String ano;
+  final String logo;
 
   bool get isCorrupted => id.isEmpty || nome.isEmpty;
-  bool get hasData => mataMata.isNotEmpty || classificacao.isNotEmpty;
 
   Campeonato copyWith({
     String? id,
     String? nome,
-    String? edicao,
-    List<Partida>? mataMata,
-    List<Time>? classificacao,
+    String? ano,
+    String? logo,
   }) {
     return Campeonato(
       id: id ?? this.id,
       nome: nome ?? this.nome,
-      mataMata: mataMata ?? this.mataMata,
-      classificacao: classificacao ?? this.classificacao,
+      ano: ano ?? this.ano,
+      logo: logo ?? this.logo,
     );
   }
 
@@ -39,35 +34,38 @@ class Campeonato {
     return <String, dynamic>{
       'id': id,
       'nome': nome,
-      'mataMata': mataMata.map((x) => x.toMap()).toList(),
-      'pontosCorridos': classificacao.map((x) => x.toMap()).toList(),
+      'ano': ano,
+      'logo': logo,
     };
   }
 
   factory Campeonato.fromMap(Map<String, dynamic> map) {
     return Campeonato(
-      id: map['id'] ?? "",
-      nome: map['nome'] ?? "",
+      id: map['id'] as String,
+      nome: map['nome'] as String,
+      ano: map['ano'] as String,
+      logo: map['logo'] as String,
     );
   }
 
   @override
   String toString() {
-    return 'Campeonato(id: $id, nome: $nome, mataMata: $mataMata, pontosCorridos: $classificacao)';
+    return 'Campeonato(id: $id, nome: $nome, ano: $ano, logo: $logo)';
   }
 
   @override
   bool operator ==(covariant Campeonato other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
-        other.nome == nome &&
-        listEquals(other.mataMata, mataMata) &&
-        listEquals(other.classificacao, classificacao);
+    return other.id == id && other.nome == nome && other.ano == ano && other.logo == logo;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ nome.hashCode ^ mataMata.hashCode ^ classificacao.hashCode;
+    return id.hashCode ^ nome.hashCode ^ ano.hashCode ^ logo.hashCode;
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory Campeonato.fromJson(String source) => Campeonato.fromMap(json.decode(source) as Map<String, dynamic>);
 }

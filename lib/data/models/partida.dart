@@ -3,27 +3,29 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:intl/intl.dart';
-import 'package:meu_mengao/data/models/time.dart';
+import 'package:meu_mengao/data/models/posicao.dart';
 
 class Partida {
   Partida({
     required this.id,
-    required this.timeCasa,
-    required this.timeFora,
-    this.campeonatoId,
+    required this.campeonatoName,
     this.data,
-    this.mataMataName,
-    this.mataMataIndex,
+    this.rodadaName,
+    this.rodadaIndex,
+    required this.timeCasa,
     this.golsCasa,
+    required this.timeFora,
     this.golsFora,
+    required this.escudoCasa,
+    required this.escudoFora,
   });
 
   final String id;
-  final String? campeonatoId;
+  final String campeonatoName;
   final DateTime? data;
 
-  final String? mataMataName;
-  final String? mataMataIndex;
+  final String? rodadaName;
+  final String? rodadaIndex;
 
   String? get readableDate {
     if (data == null) return null;
@@ -39,69 +41,80 @@ class Partida {
     return DateFormat.MMMMd(Platform.localeName).add_Hm().format(data!); // "25 de maio, 22:30"
   }
 
-  final Time timeCasa;
+  final Posicao timeCasa;
   final int? golsCasa;
 
-  final Time timeFora;
+  final Posicao timeFora;
   final int? golsFora;
+
+  final String escudoCasa;
+  final String escudoFora;
 
   bool get isCorrupted => id.isEmpty || timeCasa.isCorrupted || timeFora.isCorrupted;
 
   Partida copyWith({
     String? id,
-    String? campeonatoId,
+    String? campeonatoName,
     DateTime? data,
-    String? mataMataName,
-    String? mataMataIndex,
-    Time? timeCasa,
+    String? rodadaName,
+    String? rodadaIndex,
+    Posicao? timeCasa,
     int? golsCasa,
-    Time? timeFora,
+    Posicao? timeFora,
     int? golsFora,
+    String? escudoCasa,
+    String? escudoFora,
   }) {
     return Partida(
       id: id ?? this.id,
-      campeonatoId: campeonatoId ?? this.campeonatoId,
+      campeonatoName: campeonatoName ?? this.campeonatoName,
       data: data ?? this.data,
-      mataMataName: mataMataName ?? this.mataMataName,
-      mataMataIndex: mataMataIndex ?? this.mataMataIndex,
+      rodadaName: rodadaName ?? this.rodadaName,
+      rodadaIndex: rodadaIndex ?? this.rodadaIndex,
       timeCasa: timeCasa ?? this.timeCasa,
       golsCasa: golsCasa ?? this.golsCasa,
       timeFora: timeFora ?? this.timeFora,
       golsFora: golsFora ?? this.golsFora,
+      escudoCasa: escudoCasa ?? this.escudoCasa,
+      escudoFora: escudoFora ?? this.escudoFora,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'campeonatoId': campeonatoId,
+      'campeonatoName': campeonatoName,
       'data': data?.millisecondsSinceEpoch,
-      'mataMataName': mataMataName,
-      'mataMataIndex': mataMataIndex,
+      'rodadaName': rodadaName,
+      'rodadaIndex': rodadaIndex,
       'timeCasa': timeCasa.toMap(),
       'golsCasa': golsCasa,
       'timeFora': timeFora.toMap(),
       'golsFora': golsFora,
+      'escudoCasa': escudoCasa,
+      'escudoFora': escudoFora,
     };
   }
 
   factory Partida.fromMap(Map<String, dynamic> map) {
     return Partida(
       id: map['id'] as String,
-      campeonatoId: map['campeonatoId'] != null ? map['campeonatoId'] as String : null,
+      campeonatoName: map['campeonatoName'] as String,
       data: map['data'] != null ? DateTime.fromMillisecondsSinceEpoch(map['data'] as int) : null,
-      mataMataName: map['mataMataName'] != null ? map['mataMataName'] as String : null,
-      mataMataIndex: map['mataMataIndex'] != null ? map['mataMataIndex'] as String : null,
-      timeCasa: Time.fromMap(map['timeCasa'] as Map<String, dynamic>),
+      rodadaName: map['rodadaName'] != null ? map['rodadaName'] as String : null,
+      rodadaIndex: map['rodadaIndex'] != null ? map['rodadaIndex'] as String : null,
+      timeCasa: Posicao.fromMap(map['timeCasa'] as Map<String, dynamic>),
       golsCasa: map['golsCasa'] != null ? map['golsCasa'] as int : null,
-      timeFora: Time.fromMap(map['timeFora'] as Map<String, dynamic>),
+      timeFora: Posicao.fromMap(map['timeFora'] as Map<String, dynamic>),
       golsFora: map['golsFora'] != null ? map['golsFora'] as int : null,
+      escudoCasa: map['escudoCasa'] as String,
+      escudoFora: map['escudoFora'] as String,
     );
   }
 
   @override
   String toString() {
-    return 'Partida(id: $id, campeonatoId: $campeonatoId, data: $data, mataMataName: $mataMataName, mataMataIndex: $mataMataIndex, timeCasa: $timeCasa, golsCasa: $golsCasa, timeFora: $timeFora, golsFora: $golsFora)';
+    return 'Partida(id: $id, campeonatoName: $campeonatoName, data: $data, rodadaName: $rodadaName, rodadaIndex: $rodadaIndex, timeCasa: $timeCasa, golsCasa: $golsCasa, timeFora: $timeFora, golsFora: $golsFora, escudoCasa: $escudoCasa, escudoFora: $escudoFora)';
   }
 
   @override
@@ -109,27 +122,31 @@ class Partida {
     if (identical(this, other)) return true;
 
     return other.id == id &&
-        other.campeonatoId == campeonatoId &&
+        other.campeonatoName == campeonatoName &&
         other.data == data &&
-        other.mataMataName == mataMataName &&
-        other.mataMataIndex == mataMataIndex &&
+        other.rodadaName == rodadaName &&
+        other.rodadaIndex == rodadaIndex &&
         other.timeCasa == timeCasa &&
         other.golsCasa == golsCasa &&
         other.timeFora == timeFora &&
-        other.golsFora == golsFora;
+        other.golsFora == golsFora &&
+        other.escudoCasa == escudoCasa &&
+        other.escudoFora == escudoFora;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        campeonatoId.hashCode ^
+        campeonatoName.hashCode ^
         data.hashCode ^
-        mataMataName.hashCode ^
-        mataMataIndex.hashCode ^
+        rodadaName.hashCode ^
+        rodadaIndex.hashCode ^
         timeCasa.hashCode ^
         golsCasa.hashCode ^
         timeFora.hashCode ^
-        golsFora.hashCode;
+        golsFora.hashCode ^
+        escudoCasa.hashCode ^
+        escudoFora.hashCode;
   }
 
   String toJson() => json.encode(toMap());

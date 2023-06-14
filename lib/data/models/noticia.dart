@@ -1,33 +1,36 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 class Noticia {
   Noticia({
     required this.id,
     required this.link,
     required this.titulo,
-    required this.siteId,
+    required this.logoSite,
     this.foto,
   });
 
   final String id;
-  final String? foto;
   final String link;
   final String titulo;
-  final String siteId;
+  final String logoSite;
+  final String? foto;
 
-  bool get isCorrupted => id.isEmpty || link.isEmpty || titulo.isEmpty || siteId.isEmpty;
+  bool get isCorrupted => id.isEmpty || link.isEmpty || titulo.isEmpty;
 
   Noticia copyWith({
     String? id,
     String? foto,
     String? link,
     String? titulo,
-    String? siteId,
+    String? logoSite,
   }) {
     return Noticia(
       id: id ?? this.id,
       foto: foto ?? this.foto,
       link: link ?? this.link,
       titulo: titulo ?? this.titulo,
-      siteId: siteId ?? this.siteId,
+      logoSite: logoSite ?? this.logoSite,
     );
   }
 
@@ -37,23 +40,23 @@ class Noticia {
       'foto': foto,
       'link': link,
       'titulo': titulo,
-      'siteId': siteId,
+      'logoSite': logoSite,
     };
   }
 
   factory Noticia.fromMap(Map<String, dynamic> map) {
     return Noticia(
-      id: map['id'] ?? "",
-      foto: map['foto'] != null ? map['foto'] ?? "" : null,
-      link: map['link'] ?? "",
-      titulo: map['titulo'] ?? "",
-      siteId: map['siteId'] ?? "",
+      id: map['id'] as String,
+      foto: map['foto'] != null ? map['foto'] as String : null,
+      link: map['link'] as String,
+      titulo: map['titulo'] as String,
+      logoSite: map['logoSite'] as String,
     );
   }
 
   @override
   String toString() {
-    return 'Noticia(foto: $foto, link: $link, titulo: $titulo, siteId: $siteId)';
+    return 'Noticia(id: $id, foto: $foto, link: $link, titulo: $titulo, logoSite: $logoSite)';
   }
 
   @override
@@ -64,11 +67,15 @@ class Noticia {
         other.foto == foto &&
         other.link == link &&
         other.titulo == titulo &&
-        other.siteId == siteId;
+        other.logoSite == logoSite;
   }
 
   @override
   int get hashCode {
-    return foto.hashCode ^ link.hashCode ^ titulo.hashCode ^ siteId.hashCode;
+    return id.hashCode ^ foto.hashCode ^ link.hashCode ^ titulo.hashCode ^ logoSite.hashCode;
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory Noticia.fromJson(String source) => Noticia.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/models/time.dart';
+import 'package:meu_mengao/data/models/posicao.dart';
 import 'package:meu_mengao/ui/widgets/partida/escudo_time.dart';
 
 class TabelaClassificacao extends StatelessWidget {
@@ -9,7 +9,7 @@ class TabelaClassificacao extends StatelessWidget {
     required this.times,
   });
 
-  final List<Time> times;
+  final List<Posicao> times;
 
   @override
   Widget build(BuildContext context) {
