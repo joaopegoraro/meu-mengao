@@ -31,13 +31,18 @@ class Partida {
     final now = DateTime.now();
     final dayDifference = data!.difference(now).inDays;
     if (dayDifference == -1) return "Ontem";
-    if (dayDifference == 0) return "Hoje - ${DateFormat.Hm().format(data!)}"; // "Hoje - 21:30"
-    if (dayDifference == 1) return "Amanhã - ${DateFormat.Hm().format(data!)}"; // "Amanhã - 21:30"
+    if (dayDifference == 0) return "Hoje";
+    if (dayDifference == 1) return "Amanhã";
     if (dayDifference > 1 && dayDifference <= 6) {
-      // "Segunda-feira - 21:30"
-      return "${DateFormat('EEEE').format(data!)} - ${DateFormat.Hm(Platform.localeName).format(data!)}";
+      // "Segunda-feira"
+      return DateFormat('EEEE').format(data!);
     }
-    return DateFormat.MMMd(Platform.localeName).add_Hm().format(data!); // "25 de maio, 22:30"
+    return DateFormat.MMMd(Platform.localeName).format(data!); // "25 de maio"
+  }
+
+  String? get horario {
+    if (data == null) return null;
+    return DateFormat.Hm().format(data!);
   }
 
   final String timeCasa;

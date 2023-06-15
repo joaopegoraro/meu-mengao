@@ -21,6 +21,7 @@ class PartidaItem extends StatelessWidget {
           Placar(partida: partida),
           DataPartida(
             data: partida.readableDate ?? "",
+            horario: partida.horario ?? "",
             nomeCampeonato: mostrarCampeonato ? partida.campeonato : null,
             nomeRodada: mostrarCampeonato ? partida.rodadaName : null,
           ),

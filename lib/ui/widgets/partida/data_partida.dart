@@ -6,9 +6,11 @@ class DataPartida extends StatefulWidget {
     required this.data,
     this.nomeCampeonato,
     this.nomeRodada,
+    required this.horario,
   });
 
   final String data;
+  final String horario;
   final String? nomeCampeonato;
   final String? nomeRodada;
 
@@ -40,9 +42,10 @@ class _DataPartidaState extends State<DataPartida> {
         children: [
           if (widget.nomeCampeonato != null && widget.nomeCampeonato!.isNotEmpty) ...[
             Expanded(
-              flex: 6,
+              flex: 18,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Icon(IconData(0xe800, fontFamily: "TrophyIcon")),
                   const SizedBox(width: 10),
@@ -70,15 +73,30 @@ class _DataPartidaState extends State<DataPartida> {
             ),
             const Spacer(),
             Expanded(
-              flex: 6,
+              flex: 13,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const Spacer(),
                   const Icon(Icons.calendar_month),
+                  const SizedBox(width: 10),
                   Expanded(
-                    child: Text(
-                      "\t${widget.data}",
-                      style: textStyle,
+                    flex: 4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.data,
+                          textAlign: TextAlign.start,
+                          style: textStyle,
+                        ),
+                        Text(
+                          widget.horario,
+                          textAlign: TextAlign.start,
+                          style: textStyle,
+                        ),
+                      ],
                     ),
                   ),
                 ],
