@@ -56,14 +56,28 @@ class _NoticiaItemState extends State<NoticiaItem> {
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                   ),
-                  color: Colors.black.withOpacity(0.6),
+                  color: Colors.black.withOpacity(0.9),
                 ),
-                child: Text(
-                  widget.noticia.titulo,
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: colorScheme.onSecondary,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: Stack(
+                  children: [
+                    Text(
+                      widget.noticia.titulo,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1
+                          ..color = Colors.black,
+                      ),
+                    ),
+                    Text(
+                      widget.noticia.titulo,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.onSecondary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
