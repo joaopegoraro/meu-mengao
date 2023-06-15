@@ -60,6 +60,7 @@ class _NoticiaItemState extends State<NoticiaItem> {
                 ),
                 child: Stack(
                   children: [
+                    // Borda
                     Text(
                       widget.noticia.titulo,
                       style: theme.textTheme.bodyLarge?.copyWith(
@@ -70,6 +71,7 @@ class _NoticiaItemState extends State<NoticiaItem> {
                           ..color = Colors.black,
                       ),
                     ),
+                    // Texto
                     Text(
                       widget.noticia.titulo,
                       style: theme.textTheme.bodyLarge?.copyWith(
