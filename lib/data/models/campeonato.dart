@@ -7,12 +7,14 @@ class Campeonato {
     required this.nome,
     required this.ano,
     required this.logo,
+    required this.possuiClassificacao,
   });
 
   final String id;
   final String nome;
   final String ano;
   final String logo;
+  final bool possuiClassificacao;
 
   bool get isCorrupted => id.isEmpty || nome.isEmpty;
 
@@ -21,12 +23,14 @@ class Campeonato {
     String? nome,
     String? ano,
     String? logo,
+    bool? possuiClassificacao,
   }) {
     return Campeonato(
       id: id ?? this.id,
       nome: nome ?? this.nome,
       ano: ano ?? this.ano,
       logo: logo ?? this.logo,
+      possuiClassificacao: possuiClassificacao ?? this.possuiClassificacao,
     );
   }
 
@@ -36,6 +40,7 @@ class Campeonato {
       'nome': nome,
       'ano': ano,
       'logo': logo,
+      'possuiClassificacao': possuiClassificacao,
     };
   }
 
@@ -45,24 +50,29 @@ class Campeonato {
       nome: map['nome'] as String,
       ano: map['ano'] as String,
       logo: map['logo'] as String,
+      possuiClassificacao: map['possuiClassificacao'] as bool,
     );
   }
 
   @override
   String toString() {
-    return 'Campeonato(id: $id, nome: $nome, ano: $ano, logo: $logo)';
+    return 'Campeonato(id: $id, nome: $nome, ano: $ano, logo: $logo, possuiClassificacao: $possuiClassificacao)';
   }
 
   @override
   bool operator ==(covariant Campeonato other) {
     if (identical(this, other)) return true;
 
-    return other.id == id && other.nome == nome && other.ano == ano && other.logo == logo;
+    return other.id == id &&
+        other.nome == nome &&
+        other.ano == ano &&
+        other.logo == logo &&
+        other.possuiClassificacao == possuiClassificacao;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ nome.hashCode ^ ano.hashCode ^ logo.hashCode;
+    return id.hashCode ^ nome.hashCode ^ ano.hashCode ^ logo.hashCode ^ possuiClassificacao.hashCode;
   }
 
   String toJson() => json.encode(toMap());

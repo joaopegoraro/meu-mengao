@@ -4,7 +4,7 @@ import 'dart:convert';
 class Posicao {
   Posicao({
     required this.id,
-    this.posicao,
+    required this.posicao,
     required this.nomeTime,
     this.escudoTime,
     required this.pontos,
@@ -20,7 +20,7 @@ class Posicao {
   });
 
   final String id;
-  final String? posicao;
+  final int posicao;
   final String nomeTime;
   final String? escudoTime;
   final String pontos;
@@ -38,7 +38,7 @@ class Posicao {
 
   Posicao copyWith({
     String? id,
-    String? posicao,
+    int? posicao,
     String? nomeTime,
     String? escudoTime,
     String? pontos,
@@ -92,7 +92,7 @@ class Posicao {
   factory Posicao.fromMap(Map<String, dynamic> map) {
     return Posicao(
       id: map['id'] as String,
-      posicao: map['posicao'] != null ? map['posicao'] as String : null,
+      posicao: int.tryParse(map['posicao']) ?? 0,
       nomeTime: map['nomeTime'] as String,
       escudoTime: map['escudoTime'] != null ? map['escudoTime'] as String : null,
       pontos: map['pontos'] as String,

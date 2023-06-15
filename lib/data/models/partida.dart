@@ -37,14 +37,14 @@ class Partida {
       // "Segunda-feira - 21:30"
       return "${DateFormat('EEEE').format(data!)} - ${DateFormat.Hm(Platform.localeName).format(data!)}";
     }
-    return DateFormat.MMMMd(Platform.localeName).add_Hm().format(data!); // "25 de maio, 22:30"
+    return DateFormat.MMMd(Platform.localeName).add_Hm().format(data!); // "25 de maio, 22:30"
   }
 
   final String timeCasa;
-  final String? golsCasa;
+  final int? golsCasa;
 
   final String timeFora;
-  final String? golsFora;
+  final int? golsFora;
 
   final String escudoCasa;
   final String escudoFora;
@@ -58,9 +58,9 @@ class Partida {
     String? rodadaName,
     String? rodadaIndex,
     String? timeCasa,
-    String? golsCasa,
+    int? golsCasa,
     String? timeFora,
-    String? golsFora,
+    int? golsFora,
     String? escudoCasa,
     String? escudoFora,
   }) {
@@ -99,13 +99,13 @@ class Partida {
     return Partida(
       id: map['id'] as String,
       campeonato: map['campeonato'] as String,
-      data: map['data'] != null ? DateTime.fromMillisecondsSinceEpoch(int.parse(map['data'])) : null,
+      data: map['data'] != null ? DateTime.fromMillisecondsSinceEpoch(int.tryParse(map['data']) ?? 0) : null,
       rodadaName: map['rodadaName'] != null ? map['rodadaName'] as String : null,
       rodadaIndex: map['rodadaIndex'] != null ? map['rodadaIndex'] as String : null,
       timeCasa: map['timeCasa'] as String,
-      golsCasa: map['golsCasa'] != null ? map['golsCasa'] as String : null,
+      golsCasa: int.tryParse(map['golsCasa']),
       timeFora: map['timeFora'] as String,
-      golsFora: map['golsFora'] != null ? map['golsFora'] as String : null,
+      golsFora: int.tryParse(map['golsFora']),
       escudoCasa: map['escudoCasa'] as String,
       escudoFora: map['escudoFora'] as String,
     );

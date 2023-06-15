@@ -21,11 +21,6 @@ class Placar extends StatelessWidget {
       fontWeight: FontWeight.w600,
     );
 
-    final subtextStyle = theme.textTheme.bodySmall?.copyWith(
-      color: colorScheme.onBackground,
-      fontWeight: FontWeight.w600,
-    );
-
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xFFF3F3F3),
@@ -35,20 +30,27 @@ class Placar extends StatelessWidget {
         ),
       ),
       padding: const EdgeInsets.all(15),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
+        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          EscudoTime(escudo: partida.escudoCasa),
-          const Spacer(),
-          Text(partida.timeCasa, style: textStyle),
-          const Spacer(),
-          Text("${partida.golsCasa}", style: textStyle),
-          Text('-', style: subtextStyle),
-          Text("${partida.golsFora}", style: textStyle),
-          const Spacer(),
-          Text(partida.timeFora, style: textStyle),
-          const Spacer(),
-          EscudoTime(escudo: partida.escudoFora),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              EscudoTime(escudo: partida.escudoCasa),
+              Text("\t${partida.timeCasa}", style: textStyle),
+              const Spacer(),
+              if (partida.golsCasa != null) Text("${partida.golsCasa}", style: textStyle),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              EscudoTime(escudo: partida.escudoFora),
+              Text("\t${partida.timeFora}", style: textStyle),
+              const Spacer(),
+              if (partida.golsFora != null) Text("${partida.golsFora}", style: textStyle),
+            ],
+          ),
         ],
       ),
     );
