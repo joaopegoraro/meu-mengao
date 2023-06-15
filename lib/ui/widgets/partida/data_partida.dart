@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/repositories/campeonato_repository.dart';
 
 class DataPartida extends StatefulWidget {
   const DataPartida({
     super.key,
     required this.data,
-    this.campeonatoId,
+    this.nomeCampeonato,
   });
 
   final String data;
-  final String? campeonatoId;
+  final String? nomeCampeonato;
 
   @override
   State<DataPartida> createState() => _DataPartidaState();
 }
 
 class _DataPartidaState extends State<DataPartida> {
-  final CampeonatoRepository _campeonatoRepository = CampeonatoRepositoryImpl();
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -37,35 +34,26 @@ class _DataPartidaState extends State<DataPartida> {
         ),
       ),
       padding: const EdgeInsets.all(15),
-      child: FutureBuilder(
-        future:
-            widget.campeonatoId == null ? null : _campeonatoRepository.getNomeCampeonatoWithId(widget.campeonatoId!),
-        builder: (context, snapshot) {
-          final nomeCampeonato = snapshot.data;
-          final nomeCampeonatoValido = nomeCampeonato != null && nomeCampeonato.isNotEmpty && !snapshot.hasError;
-
-          return Row(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.calendar_month),
-                  Text(" ${widget.data}", style: textStyle),
-                ],
-              ),
-              if (nomeCampeonatoValido) ...[
-                const Spacer(),
-                Row(
-                  children: [
-                    const Icon(IconData(0xe800, fontFamily: "TrophyIcon")),
-                    Text(" $nomeCampeonato", style: textStyle),
-                  ],
-                ),
-              ]
+              const Icon(Icons.calendar_month),
+              Text(" ${widget.data}", style: textStyle),
             ],
-          );
-        },
+          ),
+          if (widget.nomeCampeonato != null && widget.nomeCampeonato!.isNotEmpty) ...[
+            const Spacer(),
+            Row(
+              children: [
+                const Icon(IconData(0xe800, fontFamily: "TrophyIcon")),
+                Text(" ${widget.nomeCampeonato}", style: textStyle),
+              ],
+            ),
+          ]
+        ],
       ),
     );
   }

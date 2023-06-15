@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/models/noticia.dart';
-import 'package:meu_mengao/data/repositories/sites_repository.dart';
+import 'package:meu_mengao/utils/image_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NoticiaItem extends StatefulWidget {
@@ -18,8 +16,6 @@ class NoticiaItem extends StatefulWidget {
 }
 
 class _NoticiaItemState extends State<NoticiaItem> {
-  final SitesRepository _sitesRepository = SitesRepositoryImpl();
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -44,7 +40,7 @@ class _NoticiaItemState extends State<NoticiaItem> {
             alignment: Alignment.bottomCenter,
             children: [
               Image.memory(
-                base64Decode(widget.noticia.foto!),
+                ImageUtils.safeBase64Decode(widget.noticia.foto!),
                 fit: BoxFit.fill,
                 errorBuilder: (_, __, ___) {
                   return Image.asset(
@@ -74,22 +70,11 @@ class _NoticiaItemState extends State<NoticiaItem> {
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
                   alignment: Alignment.bottomRight,
-                  child: FutureBuilder(
-                    future: _sitesRepository.getSiteWithId(widget.noticia.siteId),
-                    builder: (context, snapshot) {
-                      final site = snapshot.data;
-
-                      if (site?.logo?.isNotEmpty != true || snapshot.hasError) {
-                        return const SizedBox.shrink();
-                      }
-
-                      return Image.memory(
-                        base64Decode(site?.logo ?? ""),
-                        height: 25,
-                        errorBuilder: (_, __, ___) {
-                          return const SizedBox.shrink();
-                        },
-                      );
+                  child: Image.memory(
+                    ImageUtils.safeBase64Decode(widget.noticia.logoSite),
+                    height: 25,
+                    errorBuilder: (_, __, ___) {
+                      return const SizedBox.shrink();
                     },
                   ),
                 ),

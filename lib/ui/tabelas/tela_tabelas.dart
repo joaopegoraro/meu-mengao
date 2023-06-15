@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/repositories/campeonato_repository.dart';
+import 'package:meu_mengao/data/models/campeonato.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/campeonato_item.dart';
 
 class TelaTabelas extends StatefulWidget {
@@ -10,7 +10,6 @@ class TelaTabelas extends StatefulWidget {
 }
 
 class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClientMixin<TelaTabelas> {
-  final CampeonatoRepository _campeonatoRepository = CampeonatoRepositoryImpl();
   String? campeonatoSelecionadoId;
 
   @override
@@ -24,12 +23,9 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
       padding: const EdgeInsets.all(20),
       child: Expanded(
         child: FutureBuilder(
-          future: _campeonatoRepository.getCampeonatos().then((campeonatos) {
-            campeonatoSelecionadoId = campeonatos.first.id;
-            return campeonatos;
-          }),
+          future: null,
           builder: (context, snapshot) {
-            final campeonatos = snapshot.data;
+            final List<Campeonato> campeonatos = [];
             if (campeonatos?.isEmpty != false) {
               return const Placeholder();
             }

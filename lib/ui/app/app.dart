@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl_standalone.dart';
+import 'package:meu_mengao/data/repositories/auth_repository.dart';
 import 'package:meu_mengao/firebase_options.dart';
 import 'package:meu_mengao/ui/app/widgets/app_scaffold.dart';
 
@@ -25,7 +26,14 @@ class MeuMengaoApp extends StatelessWidget {
       home: FutureBuilder(
         future: Future(() async {
           await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-          await FirebaseAuth.instance.signInAnonymously();
+          final authData = await FirebaseAuth.instance.signInAnonymously();
+          final token = await authData.user?.getIdToken();
+          if (token != null) {
+            print("SALVANDO TOKEN: $token");
+            await AuthRepository().saveToken(token);
+          } else {
+            print("TOKEN NULO: $token");
+          }
           await initializeDateFormatting(await findSystemLocale(), null);
         }),
         builder: (context, snapshot) {

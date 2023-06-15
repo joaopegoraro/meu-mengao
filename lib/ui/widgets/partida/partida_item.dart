@@ -22,7 +22,7 @@ class PartidaItem extends StatelessWidget {
           Placar(partida: partida),
           DataPartida(
             data: partida.readableDate ?? "",
-            campeonatoId: mostrarCampeonato ? partida.campeonatoId : null,
+            nomeCampeonato: mostrarCampeonato ? partida.campeonato : null,
           ),
         ],
       ),

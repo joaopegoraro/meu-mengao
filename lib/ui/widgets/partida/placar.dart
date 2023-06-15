@@ -38,21 +38,17 @@ class Placar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          EscudoTime(escudo: partida.timeCasa.escudo),
+          EscudoTime(escudo: partida.escudoCasa),
           const Spacer(),
-          Text(partida.timeCasa.nome, style: textStyle),
+          Text(partida.timeCasa, style: textStyle),
           const Spacer(),
-          if (partida.golsCasa == null || partida.golsCasa! < 0)
-            Text("vs", style: subtextStyle)
-          else ...[
-            Text("${partida.golsCasa}", style: textStyle),
-            Text('-', style: subtextStyle),
-            Text("${partida.golsFora}", style: textStyle),
-          ],
+          Text("${partida.golsCasa}", style: textStyle),
+          Text('-', style: subtextStyle),
+          Text("${partida.golsFora}", style: textStyle),
           const Spacer(),
-          Text(partida.timeFora.nome, style: textStyle),
+          Text(partida.timeFora, style: textStyle),
           const Spacer(),
-          EscudoTime(escudo: partida.timeFora.escudo),
+          EscudoTime(escudo: partida.escudoFora),
         ],
       ),
     );

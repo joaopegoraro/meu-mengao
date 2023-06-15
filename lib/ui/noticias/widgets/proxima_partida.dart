@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/repositories/partidas_repository.dart';
-import 'package:meu_mengao/ui/widgets/partida/partida_item.dart';
+
+import '../../../data/api/api_service.dart';
+import '../../widgets/partida/partida_item.dart';
 
 class ProximaPartida extends StatefulWidget {
   const ProximaPartida({super.key});
@@ -10,7 +11,8 @@ class ProximaPartida extends StatefulWidget {
 }
 
 class _ProximaPartidaState extends State<ProximaPartida> {
-  final PartidasRepository _partidasRepository = PartidasRepositoryImpl();
+
+  final ApiService _apiService = ApiService();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class _ProximaPartidaState extends State<ProximaPartida> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: FutureBuilder(
-          future: _partidasRepository.getProximaPartida(),
+          future: _apiService.getProximaPartida(),
           builder: (context, snapshot) {
             final partida = snapshot.data;
 
@@ -38,13 +40,13 @@ class _ProximaPartidaState extends State<ProximaPartida> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: PartidaItem(
-                    partida: partida,
-                    mostrarCampeonato: true,
-                  ),
-                ),
+                 Padding(
+                   padding: const EdgeInsets.only(top: 20.0),
+                   child: PartidaItem(
+                     partida: partida,
+                     mostrarCampeonato: true,
+                   ),
+                 ),
               ],
             );
           },
