@@ -13,23 +13,17 @@ class ApiService {
     try {
       final url = Uri.parse("${_baseUrl}noticias");
       final token = await _authRepository.getToken();
-      print("URL: $url");
       final response = await http.get(url, headers: {
         'Authorization': 'Bearer $token',
       });
       if (response.statusCode == 200) {
-        print("PEGANDO NOTICIAS");
         final List jsonList = jsonDecode(response.body);
         List<Noticia> noticias = jsonList.map((noticia) => Noticia.fromMap(noticia)).toList();
-        print(noticias);
         return noticias;
       }
 
-      print("ERRO: ${response.statusCode}");
       return null;
     } catch (e) {
-      print("ERRO: $e");
-
       return null;
     }
   }
@@ -38,22 +32,54 @@ class ApiService {
     try {
       final url = Uri.parse("${_baseUrl}partidas/proxima");
       final token = await _authRepository.getToken();
-      print("URL: $url");
       final response = await http.get(url, headers: {
         'Authorization': 'Bearer $token',
       });
       if (response.statusCode == 200) {
-        print("PEGANDO PROXIMA PARTIDA");
         final Partida partida = Partida.fromJson(response.body);
-        print(partida);
         return partida;
       }
 
-      print("ERRO: ${response.statusCode}");
       return null;
     } catch (e) {
-      print("ERRO: $e");
+      return null;
+    }
+  }
 
+  Future<List<Partida>?> getResultados() async {
+    try {
+      final url = Uri.parse("${_baseUrl}partidas/resultados");
+      final token = await _authRepository.getToken();
+      final response = await http.get(url, headers: {
+        'Authorization': 'Bearer $token',
+      });
+      if (response.statusCode == 200) {
+        final List jsonList = jsonDecode(response.body);
+        final List<Partida> partidas = jsonList.map((e) => Partida.fromMap(e)).toList();
+        return partidas;
+      }
+
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<Partida>?> getCalendario() async {
+    try {
+      final url = Uri.parse("${_baseUrl}partidas/calendario");
+      final token = await _authRepository.getToken();
+      final response = await http.get(url, headers: {
+        'Authorization': 'Bearer $token',
+      });
+      if (response.statusCode == 200) {
+        final List jsonList = jsonDecode(response.body);
+        final List<Partida> partidas = jsonList.map((e) => Partida.fromMap(e)).toList();
+        return partidas;
+      }
+
+      return null;
+    } catch (e) {
       return null;
     }
   }

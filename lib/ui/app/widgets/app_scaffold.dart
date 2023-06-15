@@ -3,6 +3,9 @@ import 'package:meu_mengao/ui/app/widgets/app_bottom_nav.dart';
 import 'package:meu_mengao/ui/noticias/tela_noticias.dart';
 import 'package:meu_mengao/ui/widgets/topbar.dart';
 
+import '../../calendario/tela_calendario.dart';
+import '../../resultados/tela_resultados.dart';
+
 class AppScaffold extends StatefulWidget {
   const AppScaffold({super.key});
 
@@ -77,8 +80,8 @@ class _AppScaffoldState extends State<AppScaffold> {
         }),
         children: const [
           TelaNoticias(),
-//          TelaCalendario(),
-//          TelaResultados(),
+          TelaCalendario(),
+          TelaResultados(),
 //          TelaTabelas(),
         ],
       ),

@@ -99,7 +99,7 @@ class Partida {
     return Partida(
       id: map['id'] as String,
       campeonato: map['campeonato'] as String,
-      data: map['data'] != null ? DateTime.fromMicrosecondsSinceEpoch(int.parse(map['data'])) : null,
+      data: map['data'] != null ? DateTime.fromMillisecondsSinceEpoch(int.parse(map['data'])) : null,
       rodadaName: map['rodadaName'] != null ? map['rodadaName'] as String : null,
       rodadaIndex: map['rodadaIndex'] != null ? map['rodadaIndex'] as String : null,
       timeCasa: map['timeCasa'] as String,

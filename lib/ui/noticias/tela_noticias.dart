@@ -13,6 +13,7 @@ class TelaNoticias extends StatefulWidget {
 
 class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClientMixin<TelaNoticias> {
   final ApiService _apiService = ApiService();
+
   @override
   bool get wantKeepAlive => true;
 
