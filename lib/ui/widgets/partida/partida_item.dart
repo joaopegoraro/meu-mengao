@@ -13,7 +13,6 @@ class PartidaItem extends StatelessWidget {
 
   final Partida partida;
   final bool mostrarCampeonato;
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,6 +22,7 @@ class PartidaItem extends StatelessWidget {
           DataPartida(
             data: partida.readableDate ?? "",
             nomeCampeonato: mostrarCampeonato ? partida.campeonato : null,
+            nomeRodada: mostrarCampeonato ? partida.rodadaName : null,
           ),
         ],
       ),

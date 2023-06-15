@@ -5,10 +5,12 @@ class DataPartida extends StatefulWidget {
     super.key,
     required this.data,
     this.nomeCampeonato,
+    this.nomeRodada,
   });
 
   final String data;
   final String? nomeCampeonato;
+  final String? nomeRodada;
 
   @override
   State<DataPartida> createState() => _DataPartidaState();
@@ -35,22 +37,41 @@ class _DataPartidaState extends State<DataPartida> {
       ),
       padding: const EdgeInsets.all(15),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.calendar_month),
-              Text(" ${widget.data}", style: textStyle),
-            ],
+          Expanded(
+            child: Row(
+              children: [
+                const Icon(Icons.calendar_month),
+                Expanded(child: Text("\t${widget.data}", style: textStyle)),
+              ],
+            ),
           ),
           if (widget.nomeCampeonato != null && widget.nomeCampeonato!.isNotEmpty) ...[
-            const Spacer(),
-            Row(
-              children: [
-                const Icon(IconData(0xe800, fontFamily: "TrophyIcon")),
-                Text(" ${widget.nomeCampeonato}", style: textStyle),
-              ],
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Spacer(),
+                  const Icon(IconData(0xe800, fontFamily: "TrophyIcon")),
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      children: [
+                        Text(
+                          "\t${widget.nomeCampeonato}",
+                          textAlign: TextAlign.center,
+                          style: textStyle,
+                        ),
+                        Text(
+                          "\t${widget.nomeRodada}",
+                          textAlign: TextAlign.center,
+                          style: textStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ]
         ],

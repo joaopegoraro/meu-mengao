@@ -24,7 +24,7 @@ class Partida {
   final DateTime? data;
 
   final String? rodadaName;
-  final String? rodadaIndex;
+  final int? rodadaIndex;
 
   String? get readableDate {
     if (data == null) return null;
@@ -56,7 +56,7 @@ class Partida {
     String? campeonato,
     DateTime? data,
     String? rodadaName,
-    String? rodadaIndex,
+    int? rodadaIndex,
     String? timeCasa,
     int? golsCasa,
     String? timeFora,
@@ -101,7 +101,7 @@ class Partida {
       campeonato: map['campeonato'] as String,
       data: map['data'] != null ? DateTime.fromMillisecondsSinceEpoch(int.tryParse(map['data']) ?? 0) : null,
       rodadaName: map['rodadaName'] != null ? map['rodadaName'] as String : null,
-      rodadaIndex: map['rodadaIndex'] != null ? map['rodadaIndex'] as String : null,
+      rodadaIndex: map['rodadaIndex'] as int?,
       timeCasa: map['timeCasa'] as String,
       golsCasa: int.tryParse(map['golsCasa']),
       timeFora: map['timeFora'] as String,
