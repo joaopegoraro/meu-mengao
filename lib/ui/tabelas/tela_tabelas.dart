@@ -27,7 +27,10 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
       padding: const EdgeInsets.all(20),
       child: Expanded(
         child: FutureBuilder(
-          future: _apiService.getCampeonatos(),
+          future: _apiService.getCampeonatos().then((campeonatos) {
+            campeonatoSelecionadoId ??= campeonatos?.first.id;
+            return campeonatos;
+          }),
           builder: (context, snapshot) {
             final List<Campeonato> campeonatos = snapshot.data ?? [];
             if (campeonatos.isEmpty != false) {

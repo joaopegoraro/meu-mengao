@@ -34,14 +34,14 @@ class TabelaClassificacao extends StatelessWidget {
             if (rodadasComPosicoes.length > 1) Text(rodada.nome),
             Table(
               columnWidths: const {
-                0: FractionColumnWidth(0.1),
-                1: FractionColumnWidth(0.4),
-                2: FractionColumnWidth(0.08),
-                3: FractionColumnWidth(0.08),
-                4: FractionColumnWidth(0.08),
-                5: FractionColumnWidth(0.08),
-                6: FractionColumnWidth(0.08),
-                7: FractionColumnWidth(0.1),
+                0: FractionColumnWidth(0.15),
+                1: FractionColumnWidth(0.35),
+                2: FractionColumnWidth(0.07),
+                3: FractionColumnWidth(0.07),
+                4: FractionColumnWidth(0.07),
+                5: FractionColumnWidth(0.07),
+                6: FractionColumnWidth(0.07),
+                7: FractionColumnWidth(0.15),
               },
               children: [
                 TableRow(
@@ -64,12 +64,22 @@ class TabelaClassificacao extends StatelessWidget {
                 ...posicoes.sortedBy<num>((time) => time.posicao).mapIndexed(
                   (index, time) {
                     final rows = [
-                      Text("${time.posicao}", textAlign: TextAlign.start),
+                      Text("${time.posicao}", textAlign: TextAlign.start, maxLines: 1, overflow: TextOverflow.visible),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           EscudoTime(escudo: time.escudoTime, height: 20),
-                          Text("\t${time.nomeTime}"),
+                          Flexible(
+                            child: Text(
+                              "\t${time.nomeTime}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontWeight: time.nomeTime == "Flamengo" ? FontWeight.w600 : FontWeight.normal,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       Text(time.jogos, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
