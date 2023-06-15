@@ -38,36 +38,47 @@ class _DataPartidaState extends State<DataPartida> {
       padding: const EdgeInsets.all(15),
       child: Row(
         children: [
-          Expanded(
-            child: Row(
-              children: [
-                const Icon(Icons.calendar_month),
-                Expanded(child: Text("\t${widget.data}", style: textStyle)),
-              ],
-            ),
-          ),
           if (widget.nomeCampeonato != null && widget.nomeCampeonato!.isNotEmpty) ...[
             Expanded(
+              flex: 6,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Spacer(),
                   const Icon(IconData(0xe800, fontFamily: "TrophyIcon")),
+                  const SizedBox(width: 10),
                   Expanded(
                     flex: 4,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "\t${widget.nomeCampeonato}",
-                          textAlign: TextAlign.center,
+                          "${widget.nomeCampeonato}",
+                          textAlign: TextAlign.start,
                           style: textStyle,
                         ),
                         Text(
-                          "\t${widget.nomeRodada}",
-                          textAlign: TextAlign.center,
+                          "${widget.nomeRodada}",
+                          textAlign: TextAlign.start,
                           style: textStyle,
                         ),
                       ],
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
+            ),
+            const Spacer(),
+            Expanded(
+              flex: 6,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Icon(Icons.calendar_month),
+                  Expanded(
+                    child: Text(
+                      "\t${widget.data}",
+                      style: textStyle,
                     ),
                   ),
                 ],

@@ -39,7 +39,7 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
                 children: [
                   DropdownButton(
                     isExpanded: true,
-                    value: campeonatos.first.id,
+                    value: campeonatoSelecionadoId,
                     items: campeonatos.map((campeonato) {
                       return DropdownMenuItem<String>(
                         value: campeonato.id,
