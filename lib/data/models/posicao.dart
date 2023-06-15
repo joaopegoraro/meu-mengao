@@ -5,61 +5,58 @@ class Posicao {
   Posicao({
     required this.id,
     this.posicao,
-    required this.nome,
-    this.escudo,
-    this.pontos = 0,
-    this.jogos = 0,
-    this.vitorias = 0,
-    this.empates = 0,
-    this.derrotas = 0,
-    this.golsFeitos = 0,
-    this.golsSofridos = 0,
-    this.saldoGols = 0,
-    required this.classificacaoId,
+    required this.nomeTime,
+    this.escudoTime,
+    required this.pontos,
+    required this.jogos,
+    required this.vitorias,
+    required this.empates,
+    required this.derrotas,
+    required this.golsFeitos,
+    required this.golsSofridos,
+    required this.saldoGols,
     required this.classificacaoName,
     required this.classificacaoIndex,
   });
 
   final String id;
-  final int? posicao;
-  final String nome;
-  final String? escudo;
-  final int pontos;
-  final int jogos;
-  final int vitorias;
-  final int empates;
-  final int derrotas;
-  final int golsFeitos;
-  final int golsSofridos;
-  final int saldoGols;
-  final String classificacaoId;
+  final String? posicao;
+  final String nomeTime;
+  final String? escudoTime;
+  final String pontos;
+  final String jogos;
+  final String vitorias;
+  final String empates;
+  final String derrotas;
+  final String golsFeitos;
+  final String golsSofridos;
+  final String saldoGols;
   final String classificacaoName;
-  final String classificacaoIndex;
+  final int classificacaoIndex;
 
-  bool get isCorrupted => nome.isEmpty;
+  bool get isCorrupted => nomeTime.isEmpty;
 
   Posicao copyWith({
     String? id,
-    int? posicao,
-    String? nome,
-    String? escudo,
-    int? pontos,
-    int? jogos,
-    int? vitorias,
-    int? empates,
-    int? derrotas,
-    int? golsFeitos,
-    int? golsSofridos,
-    int? saldoGols,
-    String? classificacaoId,
+    String? posicao,
+    String? nomeTime,
+    String? escudoTime,
+    String? pontos,
+    String? jogos,
+    String? vitorias,
+    String? empates,
+    String? derrotas,
+    String? golsFeitos,
+    String? golsSofridos,
+    String? saldoGols,
     String? classificacaoName,
-    String? classificacaoIndex,
+    int? classificacaoIndex,
   }) {
     return Posicao(
       id: id ?? this.id,
       posicao: posicao ?? this.posicao,
-      nome: nome ?? this.nome,
-      escudo: escudo ?? this.escudo,
+      nomeTime: nomeTime ?? this.nomeTime,
+      escudoTime: escudoTime ?? this.escudoTime,
       pontos: pontos ?? this.pontos,
       jogos: jogos ?? this.jogos,
       vitorias: vitorias ?? this.vitorias,
@@ -68,7 +65,6 @@ class Posicao {
       golsFeitos: golsFeitos ?? this.golsFeitos,
       golsSofridos: golsSofridos ?? this.golsSofridos,
       saldoGols: saldoGols ?? this.saldoGols,
-      classificacaoId: classificacaoId ?? this.classificacaoId,
       classificacaoName: classificacaoName ?? this.classificacaoName,
       classificacaoIndex: classificacaoIndex ?? this.classificacaoIndex,
     );
@@ -78,8 +74,8 @@ class Posicao {
     return <String, dynamic>{
       'id': id,
       'posicao': posicao,
-      'nome': nome,
-      'escudo': escudo,
+      'nomeTime': nomeTime,
+      'escudoTime': escudoTime,
       'pontos': pontos,
       'jogos': jogos,
       'vitorias': vitorias,
@@ -88,7 +84,6 @@ class Posicao {
       'golsFeitos': golsFeitos,
       'golsSofridos': golsSofridos,
       'saldoGols': saldoGols,
-      'classificacaoId': classificacaoId,
       'classificacaoName': classificacaoName,
       'classificacaoIndex': classificacaoIndex,
     };
@@ -97,26 +92,25 @@ class Posicao {
   factory Posicao.fromMap(Map<String, dynamic> map) {
     return Posicao(
       id: map['id'] as String,
-      posicao: map['posicao'] != null ? map['posicao'] as int : null,
-      nome: map['nome'] as String,
-      escudo: map['escudo'] != null ? map['escudo'] as String : null,
-      pontos: map['pontos'] as int,
-      jogos: map['jogos'] as int,
-      vitorias: map['vitorias'] as int,
-      empates: map['empates'] as int,
-      derrotas: map['derrotas'] as int,
-      golsFeitos: map['golsFeitos'] as int,
-      golsSofridos: map['golsSofridos'] as int,
-      saldoGols: map['saldoGols'] as int,
-      classificacaoId: map['classificacaoId'] as String,
+      posicao: map['posicao'] != null ? map['posicao'] as String : null,
+      nomeTime: map['nomeTime'] as String,
+      escudoTime: map['escudoTime'] != null ? map['escudoTime'] as String : null,
+      pontos: map['pontos'] as String,
+      jogos: map['jogos'] as String,
+      vitorias: map['vitorias'] as String,
+      empates: map['empates'] as String,
+      derrotas: map['derrotas'] as String,
+      golsFeitos: map['golsFeitos'] as String,
+      golsSofridos: map['golsSofridos'] as String,
+      saldoGols: map['saldoGols'] as String,
       classificacaoName: map['classificacaoName'] as String,
-      classificacaoIndex: map['classificacaoIndex'] as String,
+      classificacaoIndex: map['classificacaoIndex'] as int,
     );
   }
 
   @override
   String toString() {
-    return 'Posicao(id: $id, posicao: $posicao, nome: $nome, escudo: $escudo, pontos: $pontos, jogos: $jogos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols, classificacaoId: $classificacaoId, classificacaoName: $classificacaoName, classificacaoIndex: $classificacaoIndex)';
+    return 'Posicao(id: $id, posicao: $posicao, nomeTime: $nomeTime, escudoTime: $escudoTime, pontos: $pontos, jogos: $jogos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols, classificacaoName: $classificacaoName, classificacaoIndex: $classificacaoIndex)';
   }
 
   @override
@@ -125,8 +119,8 @@ class Posicao {
 
     return other.id == id &&
         other.posicao == posicao &&
-        other.nome == nome &&
-        other.escudo == escudo &&
+        other.nomeTime == nomeTime &&
+        other.escudoTime == escudoTime &&
         other.pontos == pontos &&
         other.jogos == jogos &&
         other.vitorias == vitorias &&
@@ -135,7 +129,6 @@ class Posicao {
         other.golsFeitos == golsFeitos &&
         other.golsSofridos == golsSofridos &&
         other.saldoGols == saldoGols &&
-        other.classificacaoId == classificacaoId &&
         other.classificacaoName == classificacaoName &&
         other.classificacaoIndex == classificacaoIndex;
   }
@@ -144,8 +137,8 @@ class Posicao {
   int get hashCode {
     return id.hashCode ^
         posicao.hashCode ^
-        nome.hashCode ^
-        escudo.hashCode ^
+        nomeTime.hashCode ^
+        escudoTime.hashCode ^
         pontos.hashCode ^
         jogos.hashCode ^
         vitorias.hashCode ^
@@ -154,7 +147,6 @@ class Posicao {
         golsFeitos.hashCode ^
         golsSofridos.hashCode ^
         saldoGols.hashCode ^
-        classificacaoId.hashCode ^
         classificacaoName.hashCode ^
         classificacaoIndex.hashCode;
   }

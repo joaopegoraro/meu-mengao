@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/models/campeonato.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/campeonato_item.dart';
 
+import '../../data/api/api_service.dart';
+
 class TelaTabelas extends StatefulWidget {
   const TelaTabelas({super.key});
 
@@ -10,6 +12,8 @@ class TelaTabelas extends StatefulWidget {
 }
 
 class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClientMixin<TelaTabelas> {
+  final ApiService _apiService = ApiService();
+
   String? campeonatoSelecionadoId;
 
   @override
@@ -23,10 +27,10 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
       padding: const EdgeInsets.all(20),
       child: Expanded(
         child: FutureBuilder(
-          future: null,
+          future: _apiService.getCampeonatos(),
           builder: (context, snapshot) {
-            final List<Campeonato> campeonatos = [];
-            if (campeonatos?.isEmpty != false) {
+            final List<Campeonato> campeonatos = snapshot.data ?? [];
+            if (campeonatos.isEmpty != false) {
               return const Placeholder();
             }
 
@@ -35,7 +39,7 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
                 children: [
                   DropdownButton(
                     isExpanded: true,
-                    value: campeonatos!.first.id,
+                    value: campeonatos.first.id,
                     items: campeonatos.map((campeonato) {
                       return DropdownMenuItem<String>(
                         value: campeonato.id,

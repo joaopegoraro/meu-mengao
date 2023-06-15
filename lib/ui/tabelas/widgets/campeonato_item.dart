@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meu_mengao/ui/tabelas/widgets/tabela_classificacao.dart';
 
-import '../../../data/models/campeonato.dart';
+import '../../../data/api/api_service.dart';
 
 class CampeonatoItem extends StatefulWidget {
   const CampeonatoItem({
@@ -15,6 +16,8 @@ class CampeonatoItem extends StatefulWidget {
 }
 
 class CampeonatoItemState extends State<CampeonatoItem> {
+  final ApiService _apiService = ApiService();
+
   @override
   Widget build(BuildContext context) {
     if (widget.campeonatoId?.isEmpty != false) {
@@ -23,25 +26,33 @@ class CampeonatoItemState extends State<CampeonatoItem> {
       );
     }
 
-    return FutureBuilder(
-      future: null,
-      builder: (context, snapshot) {
-        final Campeonato? campeonato = null;
-        return Placeholder();
-
-//        if (campeonato?.hasData != true) {
-//          return const Placeholder(
-//            color: Colors.red,
-//          );
-//        }
-//
-//        return Column(
-//          children: [
-//            if (campeonato!.classificacao.isNotEmpty) TabelaClassificacao(times: campeonato.classificacao),
-//            if (campeonato.mataMata.isNotEmpty) const TabelaMataMata(),
-//          ],
-//        );
-      },
+    return Column(
+      children: [
+        FutureBuilder(
+            future: _apiService.getClassificacao(widget.campeonatoId!),
+            builder: (context, snapshot) {
+              final classificacao = snapshot.data ?? [];
+              if (classificacao.isEmpty) {
+                return const Placeholder(
+                  color: Colors.red,
+                );
+              }
+              return TabelaClassificacao(classificacao: classificacao);
+            }),
+        FutureBuilder(
+            future: _apiService.getRodadas(widget.campeonatoId!),
+            builder: (context, snapshot) {
+              final rodadas = snapshot.data ?? [];
+              if (rodadas.isEmpty) {
+                return const Placeholder(
+                  color: Colors.red,
+                );
+              }
+              return const Placeholder(
+                color: Colors.red,
+              );
+            }),
+      ],
     );
   }
 }
