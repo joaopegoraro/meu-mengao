@@ -29,6 +29,8 @@ class _DataPartidaState extends State<DataPartida> {
       fontWeight: FontWeight.w400,
     );
 
+    final mostrarCampeonato = widget.nomeCampeonato != null && widget.nomeCampeonato!.isNotEmpty;
+
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.background,
@@ -40,7 +42,7 @@ class _DataPartidaState extends State<DataPartida> {
       padding: const EdgeInsets.all(15),
       child: Row(
         children: [
-          if (widget.nomeCampeonato != null && widget.nomeCampeonato!.isNotEmpty) ...[
+          if (mostrarCampeonato) ...[
             Expanded(
               flex: 18,
               child: Row(
@@ -75,7 +77,7 @@ class _DataPartidaState extends State<DataPartida> {
             Expanded(
               flex: 13,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: mostrarCampeonato ? MainAxisAlignment.end : MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Spacer(),
@@ -102,7 +104,26 @@ class _DataPartidaState extends State<DataPartida> {
                 ],
               ),
             ),
-          ]
+          ],
+          if (!mostrarCampeonato)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Icon(Icons.calendar_month),
+                const SizedBox(width: 10),
+                Text(
+                  widget.data,
+                  textAlign: TextAlign.start,
+                  style: textStyle,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  widget.horario,
+                  textAlign: TextAlign.start,
+                  style: textStyle,
+                ),
+              ],
+            ),
         ],
       ),
     );

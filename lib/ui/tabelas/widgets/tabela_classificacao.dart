@@ -64,7 +64,13 @@ class TabelaClassificacao extends StatelessWidget {
                 ...posicoes.sortedBy<num>((time) => time.posicao).mapIndexed(
                   (index, time) {
                     final rows = [
-                      Text("${time.posicao}", textAlign: TextAlign.start, maxLines: 1, overflow: TextOverflow.visible),
+                      Text(
+                        "${time.posicao}",
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,12 +88,43 @@ class TabelaClassificacao extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Text(time.jogos, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
-                      Text(time.vitorias, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
-                      Text(time.empates, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
-                      Text(time.derrotas, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
-                      Text(time.saldoGols, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
-                      Text(time.pontos, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.visible),
+                      Text(
+                        time.jogos,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                      ),
+                      Text(
+                        time.vitorias,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                      ),
+                      Text(
+                        time.empates,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                      ),
+                      Text(
+                        time.derrotas,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                      ),
+                      Text(
+                        time.saldoGols,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                      ),
+                      Text(
+                        time.pontos,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      ),
                     ];
 
                     const double spacing = 1.5;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/tabela_classificacao.dart';
+import 'package:meu_mengao/ui/tabelas/widgets/tabela_rodada.dart';
 
 import '../../../data/api/api_service.dart';
 
@@ -26,33 +27,33 @@ class CampeonatoItemState extends State<CampeonatoItem> {
       );
     }
 
-    return Column(
-      children: [
-        FutureBuilder(
-            future: _apiService.getClassificacao(widget.campeonatoId!),
-            builder: (context, snapshot) {
-              final classificacao = snapshot.data ?? [];
-              if (classificacao.isEmpty) {
-                return const Placeholder(
-                  color: Colors.red,
-                );
-              }
-              return TabelaClassificacao(classificacao: classificacao);
-            }),
-        FutureBuilder(
-            future: _apiService.getRodadas(widget.campeonatoId!),
-            builder: (context, snapshot) {
-              final rodadas = snapshot.data ?? [];
-              if (rodadas.isEmpty) {
-                return const Placeholder(
-                  color: Colors.red,
-                );
-              }
-              return const Placeholder(
-                color: Colors.red,
-              );
-            }),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          FutureBuilder(
+              future: _apiService.getClassificacao(widget.campeonatoId!),
+              builder: (context, snapshot) {
+                final classificacao = snapshot.data ?? [];
+                if (classificacao.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+                return TabelaClassificacao(classificacao: classificacao);
+              }),
+          const SizedBox(height: 30),
+          FutureBuilder(
+              future: _apiService.getRodadas(widget.campeonatoId!),
+              builder: (context, snapshot) {
+                final rodadas = snapshot.data ?? [];
+                if (rodadas.isEmpty) {
+                  return const Placeholder(
+                    color: Colors.black,
+                  );
+                }
+
+                return TabelaRodada(partidas: rodadas);
+              }),
+        ],
+      ),
     );
   }
 }
