@@ -44,7 +44,7 @@ class _DataPartidaState extends State<DataPartida> {
         children: [
           if (mostrarCampeonato) ...[
             Expanded(
-              flex: 18,
+              flex: 17,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,

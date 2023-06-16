@@ -37,7 +37,14 @@ class Placar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               EscudoTime(escudo: partida.escudoCasa),
-              Text("\t${partida.timeCasa}", style: textStyle),
+              Expanded(
+                child: Text(
+                  "\t${partida.timeCasa}",
+                  style: textStyle,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
               const Spacer(),
               if (partida.golsCasa != null) Text("${partida.golsCasa}", style: textStyle),
             ],
@@ -46,7 +53,14 @@ class Placar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               EscudoTime(escudo: partida.escudoFora),
-              Text("\t${partida.timeFora}", style: textStyle),
+              Expanded(
+                child: Text(
+                  "\t${partida.timeFora}",
+                  style: textStyle,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
               const Spacer(),
               if (partida.golsFora != null) Text("${partida.golsFora}", style: textStyle),
             ],
