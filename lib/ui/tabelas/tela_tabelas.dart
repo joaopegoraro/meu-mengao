@@ -14,7 +14,7 @@ class TelaTabelas extends StatefulWidget {
 class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClientMixin<TelaTabelas> {
   final ApiService _apiService = ApiService();
 
-  String? campeonatoSelecionadoId;
+  Campeonato? campeonatoSelecionado;
 
   @override
   bool get wantKeepAlive => true;
@@ -26,7 +26,7 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
     return Expanded(
       child: FutureBuilder(
         future: _apiService.getCampeonatos().then((campeonatos) {
-          campeonatoSelecionadoId ??= campeonatos?.first.id;
+          campeonatoSelecionado ??= campeonatos?.first;
           return campeonatos;
         }),
         builder: (context, snapshot) {
@@ -42,7 +42,7 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
                 children: [
                   DropdownButton(
                     isExpanded: true,
-                    value: campeonatoSelecionadoId,
+                    value: campeonatoSelecionado?.id,
                     items: campeonatos.map((campeonato) {
                       return DropdownMenuItem<String>(
                         value: campeonato.id,
@@ -56,10 +56,14 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
                       );
                     }).toList(),
                     onChanged: (id) {
-                      setState(() => campeonatoSelecionadoId = id);
+                      setState(() {
+                        campeonatoSelecionado = campeonatos.firstWhere((campeonato) {
+                          return campeonato.id == id;
+                        });
+                      });
                     },
                   ),
-                  CampeonatoItem(campeonatoId: campeonatoSelecionadoId),
+                  CampeonatoItem(campeonato: campeonatoSelecionado),
                 ],
               ),
             ),

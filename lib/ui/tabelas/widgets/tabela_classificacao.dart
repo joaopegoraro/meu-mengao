@@ -32,7 +32,14 @@ class TabelaClassificacao extends StatelessWidget {
         final posicoes = rodadaComPosicoes.value;
         return Column(
           children: [
-            if (rodadasComPosicoes.length > 1) Text(rodada.nome),
+            if (rodadasComPosicoes.length > 1)
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  rodada.nome,
+                  style: theme.textTheme.labelMedium,
+                ),
+              ),
             Table(
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               columnWidths: const {

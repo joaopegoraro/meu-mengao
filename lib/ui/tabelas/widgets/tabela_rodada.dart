@@ -8,9 +8,11 @@ class TabelaRodada extends StatefulWidget {
   const TabelaRodada({
     super.key,
     required this.partidas,
+    required this.indexInicial,
   });
 
   final List<Partida> partidas;
+  final int indexInicial;
 
   @override
   State<TabelaRodada> createState() => TabelaRodadaState();
@@ -20,9 +22,15 @@ class TabelaRodadaState extends State<TabelaRodada> {
   int _pageIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    _pageIndex = widget.indexInicial;
+  }
+
+  @override
   void didUpdateWidget(covariant oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _pageIndex = 0;
+    _pageIndex = widget.indexInicial;
   }
 
   @override

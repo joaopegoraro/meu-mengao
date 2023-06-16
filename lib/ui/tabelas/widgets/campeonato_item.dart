@@ -3,14 +3,15 @@ import 'package:meu_mengao/ui/tabelas/widgets/tabela_classificacao.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/tabela_rodada.dart';
 
 import '../../../data/api/api_service.dart';
+import '../../../data/models/campeonato.dart';
 
 class CampeonatoItem extends StatefulWidget {
   const CampeonatoItem({
     super.key,
-    required this.campeonatoId,
+    required this.campeonato,
   });
 
-  final String? campeonatoId;
+  final Campeonato? campeonato;
 
   @override
   State<CampeonatoItem> createState() => CampeonatoItemState();
@@ -21,7 +22,7 @@ class CampeonatoItemState extends State<CampeonatoItem> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.campeonatoId?.isEmpty != false) {
+    if (widget.campeonato?.id.isEmpty != false) {
       return const Placeholder(
         color: Colors.green,
       );
@@ -31,7 +32,7 @@ class CampeonatoItemState extends State<CampeonatoItem> {
       child: Column(
         children: [
           FutureBuilder(
-              future: _apiService.getClassificacao(widget.campeonatoId!),
+              future: _apiService.getClassificacao(widget.campeonato!.id),
               builder: (context, snapshot) {
                 final classificacao = snapshot.data ?? [];
                 if (classificacao.isEmpty) {
@@ -41,7 +42,7 @@ class CampeonatoItemState extends State<CampeonatoItem> {
               }),
           const SizedBox(height: 30),
           FutureBuilder(
-              future: _apiService.getRodadas(widget.campeonatoId!),
+              future: _apiService.getRodadas(widget.campeonato!.id),
               builder: (context, snapshot) {
                 final rodadas = snapshot.data ?? [];
                 if (rodadas.isEmpty) {
@@ -50,7 +51,10 @@ class CampeonatoItemState extends State<CampeonatoItem> {
                   );
                 }
 
-                return TabelaRodada(partidas: rodadas);
+                return TabelaRodada(
+                  partidas: rodadas,
+                  indexInicial: widget.campeonato?.rodadaAtual ?? 0,
+                );
               }),
         ],
       ),

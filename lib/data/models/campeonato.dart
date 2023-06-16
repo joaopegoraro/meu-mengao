@@ -7,6 +7,7 @@ class Campeonato {
     required this.nome,
     required this.ano,
     required this.logo,
+    required this.rodadaAtual,
     required this.possuiClassificacao,
   });
 
@@ -14,6 +15,7 @@ class Campeonato {
   final String nome;
   final String ano;
   final String logo;
+  final int rodadaAtual;
   final bool possuiClassificacao;
 
   bool get isCorrupted => id.isEmpty || nome.isEmpty;
@@ -23,6 +25,7 @@ class Campeonato {
     String? nome,
     String? ano,
     String? logo,
+    int? rodadaAtual,
     bool? possuiClassificacao,
   }) {
     return Campeonato(
@@ -30,6 +33,7 @@ class Campeonato {
       nome: nome ?? this.nome,
       ano: ano ?? this.ano,
       logo: logo ?? this.logo,
+      rodadaAtual: rodadaAtual ?? this.rodadaAtual,
       possuiClassificacao: possuiClassificacao ?? this.possuiClassificacao,
     );
   }
@@ -40,6 +44,7 @@ class Campeonato {
       'nome': nome,
       'ano': ano,
       'logo': logo,
+      'rodadaAtual': rodadaAtual,
       'possuiClassificacao': possuiClassificacao,
     };
   }
@@ -50,13 +55,14 @@ class Campeonato {
       nome: map['nome'] as String,
       ano: map['ano'] as String,
       logo: map['logo'] as String,
+      rodadaAtual: map['rodadaAtual'] as int,
       possuiClassificacao: map['possuiClassificacao'] as bool,
     );
   }
 
   @override
   String toString() {
-    return 'Campeonato(id: $id, nome: $nome, ano: $ano, logo: $logo, possuiClassificacao: $possuiClassificacao)';
+    return 'Campeonato(id: $id, nome: $nome, ano: $ano, logo: $logo, rodadaAtual: $rodadaAtual, possuiClassificacao: $possuiClassificacao)';
   }
 
   @override
@@ -67,12 +73,18 @@ class Campeonato {
         other.nome == nome &&
         other.ano == ano &&
         other.logo == logo &&
+        other.rodadaAtual == rodadaAtual &&
         other.possuiClassificacao == possuiClassificacao;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ nome.hashCode ^ ano.hashCode ^ logo.hashCode ^ possuiClassificacao.hashCode;
+    return id.hashCode ^
+        nome.hashCode ^
+        ano.hashCode ^
+        logo.hashCode ^
+        rodadaAtual.hashCode ^
+        possuiClassificacao.hashCode;
   }
 
   String toJson() => json.encode(toMap());
