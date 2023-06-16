@@ -129,9 +129,8 @@ class TabelaClassificacao extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         children: rows.mapIndexed((index, widget) {
-                          final indexLastOrFirst = index == 0 || index == rows.length - 1;
                           return Padding(
-                            padding: EdgeInsets.symmetric(/*horizontal: indexLastOrFirst ? 16 : 0,*/ vertical: 8),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
                             child: widget,
                           );
                         }).toList(),
