@@ -15,6 +15,7 @@ class TabelaClassificacao extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final rodadasComPosicoes = classificacao
         .groupListsBy((posicao) {
           return Rodada(
@@ -34,109 +35,90 @@ class TabelaClassificacao extends StatelessWidget {
             if (rodadasComPosicoes.length > 1) Text(rodada.nome),
             Table(
               columnWidths: const {
-                0: FractionColumnWidth(0.15),
-                1: FractionColumnWidth(0.35),
-                2: FractionColumnWidth(0.07),
-                3: FractionColumnWidth(0.07),
-                4: FractionColumnWidth(0.07),
-                5: FractionColumnWidth(0.07),
-                6: FractionColumnWidth(0.07),
-                7: FractionColumnWidth(0.15),
+                0: FractionColumnWidth(0.025),
+                2: FractionColumnWidth(0.35),
+                9: FractionColumnWidth(0.025),
               },
               children: [
                 TableRow(
-                  children: const [
-                    Text("POS", textAlign: TextAlign.start),
-                    Text("CLUBE", textAlign: TextAlign.start),
-                    Text("J", textAlign: TextAlign.center),
-                    Text("V", textAlign: TextAlign.center),
-                    Text("E", textAlign: TextAlign.center),
-                    Text("D", textAlign: TextAlign.center),
-                    Text("SG", textAlign: TextAlign.center),
-                    Text("PTS", textAlign: TextAlign.center),
-                  ].map((text) {
+                  children: ["", "", "CLUBE", "J", "V", "D", "E", "SG", "P", ""].map((text) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: text,
+                      child: Text(
+                        text,
+                        textAlign: text == "CLUBE" ? TextAlign.start : TextAlign.center,
+                        overflow: TextOverflow.visible,
+                        maxLines: 1,
+                        style: theme.textTheme.labelSmall,
+                      ),
                     );
                   }).toList(),
                 ),
                 ...posicoes.sortedBy<num>((time) => time.posicao).mapIndexed(
                   (index, time) {
+                    const double horizontalSpacing = 1.5;
+                    const spacingColumn = SizedBox(width: horizontalSpacing);
                     final rows = [
-                      Text(
-                        "${time.posicao}",
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        overflow: TextOverflow.visible,
-                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      spacingColumn,
+                      Expanded(
+                        child: Text("${time.posicao}",
+                            textAlign: TextAlign.start,
+                            maxLines: 1,
+                            overflow: TextOverflow.visible,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            )),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           EscudoTime(escudo: time.escudoTime, height: 20),
-                          Flexible(
+                          Expanded(
                             child: Text(
                               "\t${time.nomeTime}",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: theme.textTheme.bodySmall?.copyWith(
                                 fontWeight: time.nomeTime == "Flamengo" ? FontWeight.w600 : FontWeight.normal,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      Text(
-                        time.jogos,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.visible,
-                      ),
-                      Text(
-                        time.vitorias,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.visible,
-                      ),
-                      Text(
-                        time.empates,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.visible,
-                      ),
-                      Text(
-                        time.derrotas,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.visible,
-                      ),
-                      Text(
-                        time.saldoGols,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.visible,
-                      ),
+                      ...[time.jogos, time.vitorias, time.empates, time.derrotas, time.saldoGols].map((text) {
+                        return Text(
+                          text,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.visible,
+                          style: theme.textTheme.bodySmall,
+                        );
+                      }),
                       Text(
                         time.pontos,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.visible,
-                        style: const TextStyle(fontWeight: FontWeight.w500),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
+                      spacingColumn,
                     ];
 
-                    const double spacing = 1.5;
+                    const double verticalSpacing = 1.5;
                     const spacingRow = TableRow(children: [
-                      SizedBox(height: spacing),
-                      SizedBox(height: spacing),
-                      SizedBox(height: spacing),
-                      SizedBox(height: spacing),
-                      SizedBox(height: spacing),
-                      SizedBox(height: spacing),
-                      SizedBox(height: spacing),
-                      SizedBox(height: spacing),
+                      SizedBox(height: verticalSpacing),
+                      SizedBox(height: verticalSpacing),
+                      SizedBox(height: verticalSpacing),
+                      SizedBox(height: verticalSpacing),
+                      SizedBox(height: verticalSpacing),
+                      SizedBox(height: verticalSpacing),
+                      SizedBox(height: verticalSpacing),
+                      SizedBox(height: verticalSpacing),
+                      SizedBox(height: verticalSpacing),
+                      SizedBox(height: verticalSpacing),
                     ]);
 
                     return [
@@ -149,7 +131,7 @@ class TabelaClassificacao extends StatelessWidget {
                         children: rows.mapIndexed((index, widget) {
                           final indexLastOrFirst = index == 0 || index == rows.length - 1;
                           return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: indexLastOrFirst ? 16 : 0, vertical: 8),
+                            padding: EdgeInsets.symmetric(/*horizontal: indexLastOrFirst ? 16 : 0,*/ vertical: 8),
                             child: widget,
                           );
                         }).toList(),

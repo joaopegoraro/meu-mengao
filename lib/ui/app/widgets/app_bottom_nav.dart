@@ -24,6 +24,8 @@ class AppBottomNav extends StatelessWidget {
       return currentIndex == index ? colorScheme.primary : colorScheme.onBackground;
     }
 
+    const minButtonWidth = 20.0;
+
     return BottomAppBar(
       elevation: 20,
       color: colorScheme.background,
@@ -39,7 +41,7 @@ class AppBottomNav extends StatelessWidget {
                 MaterialButton(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  minWidth: 40,
+                  minWidth: minButtonWidth,
                   onPressed: () => clicarBotao(_noticiasIndex),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -88,7 +90,7 @@ class AppBottomNav extends StatelessWidget {
                 MaterialButton(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  minWidth: 40,
+                  minWidth: minButtonWidth,
                   onPressed: () => clicarBotao(_resultadosIndex),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +112,7 @@ class AppBottomNav extends StatelessWidget {
                 MaterialButton(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  minWidth: 40,
+                  minWidth: minButtonWidth,
                   onPressed: () => clicarBotao(_tabelasIndex),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
