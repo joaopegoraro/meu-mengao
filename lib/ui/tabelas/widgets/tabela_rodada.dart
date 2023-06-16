@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/models/partida.dart';
-import 'package:meu_mengao/ui/widgets/partida/partida_item.dart';
+
+import '../../widgets/partida/partida_item.dart';
 
 class TabelaRodada extends StatefulWidget {
   const TabelaRodada({
@@ -17,22 +18,11 @@ class TabelaRodada extends StatefulWidget {
 
 class TabelaRodadaState extends State<TabelaRodada> {
   int _pageIndex = 0;
-  late final PageController _pagerController;
 
   @override
-  void initState() {
-    super.initState();
-
-    _pagerController = PageController(
-      initialPage: _pageIndex,
-      keepPage: true,
-    );
-  }
-
-  @override
-  void dispose() {
-    _pagerController.dispose();
-    super.dispose();
+  void didUpdateWidget(covariant oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _pageIndex = 0;
   }
 
   @override
@@ -77,26 +67,13 @@ class TabelaRodadaState extends State<TabelaRodada> {
           ],
         ),
         const SizedBox(height: 20),
-        Column(
-          children: rodadas.first.value.map((partida) {
-            return PartidaItem(partida: partida, mostrarCampeonato: false);
-          }).toList(),
-        ),
+        ...rodadas[_pageIndex]
+            .value
+            .sortedByCompare((element) => element, (a, b) => a.timeCasa.compareTo(b.timeFora))
+            .map((partida) {
+          return PartidaItem(partida: partida, mostrarCampeonato: false);
+        }),
       ],
-      //PageView(
-      //  controller: _pagerController,
-      //  onPageChanged: (index) => setState(() {
-      //    _pageIndex = index;
-      //  }),
-      //  children: rodadas.map((rodada) {
-      //    final partidas = rodada.value;
-      //    return Column(
-      //      children: partidas.map((partida) {
-      //        return PartidaItem(partida: partida, mostrarCampeonato: true);
-      //      }).toList(),
-      //    );
-      //  }).toList(),
-      //),
     );
   }
 }

@@ -23,21 +23,21 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Expanded(
-        child: FutureBuilder(
-          future: _apiService.getCampeonatos().then((campeonatos) {
-            campeonatoSelecionadoId ??= campeonatos?.first.id;
-            return campeonatos;
-          }),
-          builder: (context, snapshot) {
-            final List<Campeonato> campeonatos = snapshot.data ?? [];
-            if (campeonatos.isEmpty != false) {
-              return const Placeholder();
-            }
+    return Expanded(
+      child: FutureBuilder(
+        future: _apiService.getCampeonatos().then((campeonatos) {
+          campeonatoSelecionadoId ??= campeonatos?.first.id;
+          return campeonatos;
+        }),
+        builder: (context, snapshot) {
+          final List<Campeonato> campeonatos = snapshot.data ?? [];
+          if (campeonatos.isEmpty != false) {
+            return const Placeholder();
+          }
 
-            return SingleChildScrollView(
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
                   DropdownButton(
@@ -56,9 +56,9 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
                   CampeonatoItem(campeonatoId: campeonatoSelecionadoId),
                 ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

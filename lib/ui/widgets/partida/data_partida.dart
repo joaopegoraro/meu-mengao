@@ -105,25 +105,16 @@ class _DataPartidaState extends State<DataPartida> {
               ),
             ),
           ],
-          if (!mostrarCampeonato)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(Icons.calendar_month),
-                const SizedBox(width: 10),
-                Text(
-                  widget.data,
-                  textAlign: TextAlign.start,
-                  style: textStyle,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  widget.horario,
-                  textAlign: TextAlign.start,
-                  style: textStyle,
-                ),
-              ],
+          if (!mostrarCampeonato) ...[
+            const Spacer(),
+            const Icon(Icons.calendar_month),
+            const SizedBox(width: 10),
+            Text(
+              "${widget.data} ${widget.horario}",
+              style: textStyle,
             ),
+            const Spacer(),
+          ],
         ],
       ),
     );

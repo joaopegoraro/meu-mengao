@@ -73,18 +73,19 @@ class _AppScaffoldState extends State<AppScaffold> {
           _pageIndex = index;
         }),
       ),
-      body: PageView(
-        controller: _pagerController,
-        //physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: (index) => setState(() {
-          _pageIndex = index;
-        }),
-        children: const [
-          TelaNoticias(),
-          TelaCalendario(),
-          TelaResultados(),
-          TelaTabelas(),
-        ],
+      body: SafeArea(
+        child: PageView(
+          controller: _pagerController,
+          onPageChanged: (index) => setState(() {
+            _pageIndex = index;
+          }),
+          children: const [
+            TelaNoticias(),
+            TelaCalendario(),
+            TelaResultados(),
+            TelaTabelas(),
+          ],
+        ),
       ),
     );
   }
