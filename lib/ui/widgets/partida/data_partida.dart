@@ -41,10 +41,11 @@ class _DataPartidaState extends State<DataPartida> {
       ),
       padding: const EdgeInsets.all(15),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (mostrarCampeonato) ...[
             Expanded(
-              flex: 17,
+              //flex: 17,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,32 +60,31 @@ class _DataPartidaState extends State<DataPartida> {
                         Text(
                           "${widget.nomeCampeonato}",
                           textAlign: TextAlign.start,
+                          overflow: TextOverflow.visible,
                           style: textStyle,
                         ),
                         Text(
                           "${widget.nomeRodada}",
+                          overflow: TextOverflow.visible,
                           textAlign: TextAlign.start,
                           style: textStyle,
                         ),
                       ],
                     ),
                   ),
-                  const Spacer(),
                 ],
               ),
             ),
-            const Spacer(),
-            Expanded(
-              flex: 13,
+            const SizedBox(width: 10),
+            Flexible(
+              //flex: 13,
               child: Row(
-                mainAxisAlignment: mostrarCampeonato ? MainAxisAlignment.end : MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Spacer(),
                   const Icon(Icons.calendar_month),
                   const SizedBox(width: 10),
-                  Expanded(
-                    flex: 4,
+                  Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

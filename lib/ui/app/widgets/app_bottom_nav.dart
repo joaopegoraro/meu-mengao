@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meu_mengao/ui/app/widgets/bottom_nav_button.dart';
 
 class AppBottomNav extends StatelessWidget {
   const AppBottomNav({
@@ -24,8 +25,6 @@ class AppBottomNav extends StatelessWidget {
       return currentIndex == index ? colorScheme.primary : colorScheme.onBackground;
     }
 
-    const minButtonWidth = 20.0;
-
     return BottomAppBar(
       elevation: 20,
       color: colorScheme.background,
@@ -33,109 +32,50 @@ class AppBottomNav extends StatelessWidget {
       child: SizedBox(
         height: 60,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                MaterialButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  minWidth: minButtonWidth,
-                  onPressed: () => clicarBotao(_noticiasIndex),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.home,
-                        color: buttonColor(_noticiasIndex),
-                      ),
-                      Text(
-                        "Notícias",
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: buttonColor(_noticiasIndex),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                MaterialButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  minWidth: 40,
-                  onPressed: () => clicarBotao(_calendarioIndex),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.calendar_month,
-                        color: buttonColor(_calendarioIndex),
-                      ),
-                      Text(
-                        "Calendário",
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: buttonColor(_calendarioIndex),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                MaterialButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  minWidth: minButtonWidth,
-                  onPressed: () => clicarBotao(_resultadosIndex),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.sports_soccer,
-                        color: buttonColor(_resultadosIndex),
-                      ),
-                      Text(
-                        "Resultados",
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: buttonColor(_resultadosIndex),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                MaterialButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  minWidth: minButtonWidth,
-                  onPressed: () => clicarBotao(_tabelasIndex),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.table_chart_sharp,
-                        color: buttonColor(_tabelasIndex),
-                      ),
-                      Text(
-                        "Tabelas",
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: buttonColor(_tabelasIndex),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(2, (row) {
+              final firstRow = row == 0;
+              final buttons = firstRow ? [_noticiasIndex, _calendarioIndex] : [_resultadosIndex, _tabelasIndex];
+
+              return Row(
+                mainAxisAlignment: firstRow ? MainAxisAlignment.start : MainAxisAlignment.end,
+                children: buttons.map((buttonIndex) {
+                  return BottomNavButton(
+                    onPressed: () => clicarBotao(buttonIndex),
+                    iconData: _getButtonIcon(buttonIndex),
+                    color: buttonColor(buttonIndex),
+                    text: _getButtonText(buttonIndex),
+                  );
+                }).toList(),
+              );
+            })),
       ),
     );
+  }
+
+  String _getButtonText(int buttonIndex) {
+    switch (buttonIndex) {
+      case _noticiasIndex:
+        return "Notícias";
+      case _calendarioIndex:
+        return "Calendário";
+      case _resultadosIndex:
+        return "Resultados";
+      default:
+        return "Tabelas";
+    }
+  }
+
+  IconData _getButtonIcon(int buttonIndex) {
+    switch (buttonIndex) {
+      case _noticiasIndex:
+        return Icons.newspaper;
+      case _calendarioIndex:
+        return Icons.calendar_month;
+      case _resultadosIndex:
+        return Icons.sports_soccer;
+      default:
+        return Icons.table_chart_sharp;
+    }
   }
 }

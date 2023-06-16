@@ -35,7 +35,7 @@ class Partida {
     if (dayDifference == 1) return "Amanhã";
     if (dayDifference > 1 && dayDifference <= 6) {
       // "Segunda-feira"
-      return DateFormat('EEEE').format(data!);
+      return DateFormat('EEEE').format(data!).split('-').first;
     }
     return DateFormat.MMMd(Platform.localeName).format(data!); // "25 de maio"
   }

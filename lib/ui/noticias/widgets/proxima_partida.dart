@@ -11,7 +11,6 @@ class ProximaPartida extends StatefulWidget {
 }
 
 class _ProximaPartidaState extends State<ProximaPartida> {
-
   final ApiService _apiService = ApiService();
 
   @override
@@ -22,7 +21,7 @@ class _ProximaPartidaState extends State<ProximaPartida> {
     return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: FutureBuilder(
           future: _apiService.getProximaPartida(),
           builder: (context, snapshot) {
@@ -40,13 +39,13 @@ class _ProximaPartidaState extends State<ProximaPartida> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                 Padding(
-                   padding: const EdgeInsets.only(top: 20.0),
-                   child: PartidaItem(
-                     partida: partida,
-                     mostrarCampeonato: true,
-                   ),
-                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: PartidaItem(
+                    partida: partida,
+                    mostrarCampeonato: true,
+                  ),
+                ),
               ],
             );
           },
