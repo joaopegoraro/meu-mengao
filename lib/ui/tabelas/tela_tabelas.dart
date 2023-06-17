@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/models/campeonato.dart';
-import 'package:meu_mengao/data/repositories/campeonatos_repository.dart';
+import 'package:meu_mengao/ui/providers/campeonatos_provider.dart';
+import 'package:meu_mengao/ui/providers/proxima_partida_provider.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/campeonato_item.dart';
+import 'package:provider/provider.dart';
 
 class TelaTabelas extends StatefulWidget {
   const TelaTabelas({super.key});
@@ -11,9 +12,14 @@ class TelaTabelas extends StatefulWidget {
 }
 
 class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClientMixin<TelaTabelas> {
-  final CampeonatosRepository _campeonatosRepository = CampeonatosRepository();
-
-  Campeonato? campeonatoSelecionado;
+  @override
+  void initState() {
+    super.initState();
+    final campeonatosProvider = context.read<CampeonatosProvider>();
+    campeonatosProvider.listarCampeonatos();
+    final proximaPartida = context.read<ProximaPartidaProvider>().proximaPartida;
+    campeonatosProvider.setCampeonatoSelecionado(proximaPartida?.campeonatoId);
+  }
 
   @override
   bool get wantKeepAlive => true;
@@ -23,15 +29,14 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
     super.build(context);
 
     return Expanded(
-      child: FutureBuilder(
-        future: _campeonatosRepository.getAll().then((campeonatos) {
-          campeonatoSelecionado ??= campeonatos.first;
-          return campeonatos;
-        }),
-        builder: (context, snapshot) {
-          final List<Campeonato> campeonatos = snapshot.data ?? [];
-          if (campeonatos.isEmpty != false) {
-            return const Placeholder();
+      child: Consumer<CampeonatosProvider>(
+        builder: (context, campeonatosProvider, _) {
+          final campeonatos = campeonatosProvider.campeonatos;
+          final campeonatoSelecionado = campeonatosProvider.campeonatoSelecionado;
+          final isLoading = campeonatosProvider.isLoading;
+
+          if (isLoading) {
+            return const Center(child: CircularProgressIndicator());
           }
 
           return SingleChildScrollView(
@@ -41,7 +46,7 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
                 children: [
                   DropdownButton(
                     isExpanded: true,
-                    value: campeonatoSelecionado?.id,
+                    value: campeonatoSelecionado?.id ?? campeonatos.firstOrNull?.id,
                     items: campeonatos.map((campeonato) {
                       return DropdownMenuItem<String>(
                         value: campeonato.id,
@@ -54,13 +59,7 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
                         ),
                       );
                     }).toList(),
-                    onChanged: (id) {
-                      setState(() {
-                        campeonatoSelecionado = campeonatos.firstWhere((campeonato) {
-                          return campeonato.id == id;
-                        });
-                      });
-                    },
+                    onChanged: (id) => campeonatosProvider.setCampeonatoSelecionado(id),
                   ),
                   CampeonatoItem(campeonato: campeonatoSelecionado),
                 ],

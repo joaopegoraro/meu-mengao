@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meu_mengao/ui/app/widgets/app_bottom_nav.dart';
 import 'package:meu_mengao/ui/noticias/tela_noticias.dart';
 import 'package:meu_mengao/ui/providers/calendario_provider.dart';
+import 'package:meu_mengao/ui/providers/campeonatos_provider.dart';
 import 'package:meu_mengao/ui/providers/noticias_provider.dart';
 import 'package:meu_mengao/ui/providers/proxima_partida_provider.dart';
 import 'package:meu_mengao/ui/providers/resultados_provider.dart';
@@ -85,6 +86,7 @@ class _AppScaffoldState extends State<AppScaffold> {
             ChangeNotifierProvider<ProximaPartidaProvider>(create: (_) => ProximaPartidaProvider()),
             ChangeNotifierProvider<ResultadosProvider>(create: (_) => ResultadosProvider()),
             ChangeNotifierProvider<CalendarioProvider>(create: (_) => CalendarioProvider()),
+            ChangeNotifierProvider<CampeonatosProvider>(create: (_) => CampeonatosProvider()),
           ],
           child: PageView(
             controller: _pagerController,

@@ -15,15 +15,20 @@ class NoticiasRepository {
       final db = await _database;
       final batch = db.batch();
 
-      for (var noticia in receivedNoticias) {
-        batch.insert(
-          NoticiaEntity.tableName,
-          NoticiaEntity.fromNoticia(noticia).toMap(),
-          conflictAlgorithm: ConflictAlgorithm.replace,
-        );
-      }
+      if (receivedNoticias.isNotEmpty) {
+        await db.delete(NoticiaEntity.tableName);
+        for (var noticia in receivedNoticias) {
+          batch.insert(
+            NoticiaEntity.tableName,
+            NoticiaEntity.fromNoticia(noticia).toMap(),
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          );
+        }
 
-      await batch.commit(noResult: true);
+        await batch.commit(noResult: true);
+
+        return receivedNoticias;
+      }
 
       final savedNoticiasMap = await db.query(
         NoticiaEntity.tableName,

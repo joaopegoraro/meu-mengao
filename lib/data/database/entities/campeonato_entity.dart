@@ -42,41 +42,41 @@ class CampeonatoEntity {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      _idColumn: id,
-      _nomeColumn: nome,
-      _anoColumn: ano,
-      _logoColumn: logo,
-      _rodadaAtualColumn: rodadaAtual,
-      _possuiClassificacaoColumn: possuiClassificacao,
+      idColumn: id,
+      nomeColumn: nome,
+      anoColumn: ano,
+      logoColumn: logo,
+      rodadaAtualColumn: rodadaAtual,
+      possuiClassificacaoColumn: possuiClassificacao,
     };
   }
 
   factory CampeonatoEntity.fromMap(Map<String, dynamic> map) {
     return CampeonatoEntity(
-      id: map[_idColumn] as String?,
-      nome: map[_nomeColumn] as String?,
-      ano: map[_anoColumn] as String?,
-      logo: map[_logoColumn] as String?,
-      rodadaAtual: map[_rodadaAtualColumn] as int?,
-      possuiClassificacao: (map[_possuiClassificacaoColumn] as int?) != 0,
+      id: map[idColumn] as String?,
+      nome: map[nomeColumn] as String?,
+      ano: map[anoColumn] as String?,
+      logo: map[logoColumn] as String?,
+      rodadaAtual: map[rodadaAtualColumn] as int?,
+      possuiClassificacao: (map[possuiClassificacaoColumn] as int?) != 0,
     );
   }
 
-  static const _idColumn = "id";
-  static const _nomeColumn = "nome";
-  static const _anoColumn = "ano";
-  static const _logoColumn = "logo";
-  static const _rodadaAtualColumn = "rodadaAtual";
-  static const _possuiClassificacaoColumn = "possuiClassificacao";
+  static const idColumn = "id";
+  static const nomeColumn = "nome";
+  static const anoColumn = "ano";
+  static const logoColumn = "logo";
+  static const rodadaAtualColumn = "rodadaAtual";
+  static const possuiClassificacaoColumn = "possuiClassificacao";
 
   static const tableName = "campeonatos";
   static const tableCreationStatement = """
   CREATE TABLE $tableName(
-    $_idColumn VARCHAR(255) PRIMARY KEY, 
-    $_anoColumn VARCHAR(255), 
-    $_nomeColumn VARCHAR(255), 
-    $_logoColumn TEXT,
-    $_possuiClassificacaoColumn TINYINT(4), 
-    $_rodadaAtualColumn INT(11))
+    $idColumn VARCHAR(255) PRIMARY KEY, 
+    $anoColumn VARCHAR(255), 
+    $nomeColumn VARCHAR(255), 
+    $logoColumn TEXT,
+    $possuiClassificacaoColumn TINYINT(4), 
+    $rodadaAtualColumn INT(11))
   """;
 }
