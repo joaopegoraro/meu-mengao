@@ -12,7 +12,7 @@ class ListaPartidas extends StatelessWidget {
     required this.mostrarCampeonato,
   });
 
-  final List<Partida> partidas;
+  final List<Partida?> partidas;
   final bool mostrarCampeonato;
 
   @override
@@ -24,10 +24,10 @@ class ListaPartidas extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         final partida = partidas[index];
-        final dataPartida = partida.data;
+        final dataPartida = partida?.data;
         final primeiraPartida = index == 0;
         final primeiraPartidaDoMes =
-            dataPartida != null && index >= 1 && partidas[index - 1].data?.month != partida.data?.month;
+            dataPartida != null && index >= 1 && partidas[index - 1]?.data?.month != partida?.data?.month;
         return Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20.0,
@@ -35,7 +35,7 @@ class ListaPartidas extends StatelessWidget {
           ),
           child: Column(
             children: [
-              if (primeiraPartida || primeiraPartidaDoMes)
+              if (partida != null && (primeiraPartida || primeiraPartidaDoMes))
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Container(
