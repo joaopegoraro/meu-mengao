@@ -31,54 +31,52 @@ class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClie
         final noticias = provider.noticias;
         final isLoading = provider.isLoading;
 
-        return Column(
-          children: [
-            ListView.builder(
-              itemCount: isLoading ? 10 : noticias.length + 1,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return const Padding(
-                    padding: EdgeInsets.only(top: 20.0),
-                    child: ProximaPartida(),
-                  );
-                }
+        return ListView.builder(
+          itemCount: isLoading
+              ? 10
+              : noticias.isEmpty
+                  ? 2
+                  : noticias.length + 1,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return const Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: ProximaPartida(),
+              );
+            }
 
-                if (isLoading) {
-                  return Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.white,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFF3F3F3),
-                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                      ),
-                      padding: const EdgeInsets.all(15),
-                      margin: const EdgeInsets.all(20),
-                      child: Container(
-                        height: 200.0,
-                        width: double.infinity,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  );
-                }
+            if (isLoading) {
+              return Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.white,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFF3F3F3),
+                    borderRadius: BorderRadius.all(Radius.circular(18)),
+                  ),
+                  padding: const EdgeInsets.all(15),
+                  margin: const EdgeInsets.all(20),
+                  child: Container(
+                    height: 200.0,
+                    width: double.infinity,
+                    color: Colors.grey,
+                  ),
+                ),
+              );
+            }
 
-                if (noticias.isNotEmpty) {
-                  return NoticiaItem(noticia: noticias[index - 1]);
-                }
-
-                return const SizedBox.shrink();
-              },
-            ),
-            if (noticias.isEmpty)
-              const Padding(
+            if (noticias.isEmpty) {
+              return const Padding(
                 padding: EdgeInsets.only(top: 20.0),
                 child: Center(
                   child: Text("Não foi encontrada nenhuma notícia."),
                 ),
-              )
-          ],
+              );
+            }
+
+            return NoticiaItem(noticia: noticias[index - 1]);
+          },
         );
       },
     );
