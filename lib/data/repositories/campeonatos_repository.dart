@@ -9,20 +9,31 @@ class CampeonatosRepository {
   Future<Database> get _database async => MeuMengaoDatabase.instance;
 
   Future<List<Campeonato>> getAll() async {
-    final receivedCampeonatos = await _api.getCampeonatos();
+    final receivedCampeonatos = await _api.getCampeonatos() ?? [];
+    try {
+      final db = await _database;
+      final batch = db.batch();
 
-    final db = await _database;
-    final batch = db.batch();
+      for (var campeonato in receivedCampeonatos) {
+        batch.insert(
+          CampeonatoEntity.tableName,
+          CampeonatoEntity.fromCampeonato(campeonato).toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
 
-    receivedCampeonatos?.forEach((campeonato) {
-      batch.insert(CampeonatoEntity.tableName, CampeonatoEntity.fromCampeonato(campeonato).toMap());
-    });
+      await batch.commit(noResult: true);
 
-    await batch.commit(noResult: true);
+      final savedCampeonatosMap = await db.query(CampeonatoEntity.tableName);
+      final savedCampeonatos = savedCampeonatosMap.map((e) => CampeonatoEntity.fromMap(e).toCampeonato());
 
-    final savedCampeonatosMap = await db.query(CampeonatoEntity.tableName);
-    final savedCampeonatos = savedCampeonatosMap.map((e) => CampeonatoEntity.fromMap(e).toCampeonato());
+      if (savedCampeonatos.isEmpty) {
+        return receivedCampeonatos;
+      }
 
-    return savedCampeonatos.toList();
+      return savedCampeonatos.toList();
+    } catch (e) {
+      return receivedCampeonatos;
+    }
   }
 }

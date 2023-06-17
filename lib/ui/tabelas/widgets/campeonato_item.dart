@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meu_mengao/data/repositories/classificacao_repository.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/tabela_classificacao.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/tabela_rodada.dart';
 
@@ -18,7 +19,7 @@ class CampeonatoItem extends StatefulWidget {
 }
 
 class CampeonatoItemState extends State<CampeonatoItem> {
-  final ApiService _apiService = ApiService();
+  final ClassificacaoRepository _classificacaoRepository = ClassificacaoRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class CampeonatoItemState extends State<CampeonatoItem> {
       child: Column(
         children: [
           FutureBuilder(
-              future: _apiService.getClassificacao(widget.campeonato!.id),
+              future: _classificacaoRepository.getWithCampeonatoId(widget.campeonato!.id),
               builder: (context, snapshot) {
                 final classificacao = snapshot.data ?? [];
                 if (classificacao.isEmpty) {

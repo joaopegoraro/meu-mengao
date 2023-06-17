@@ -9,29 +9,31 @@ class NoticiasRepository {
   Future<Database> get _database async => MeuMengaoDatabase.instance;
 
   Future<List<Noticia>> getAll() async {
+    final receivedNoticias = await _api.getNoticias() ?? [];
     try {
-      final receivedNoticias = await _api.getNoticias();
-
       final db = await _database;
       final batch = db.batch();
 
-      receivedNoticias?.forEach((noticia) {
+      for (var noticia in receivedNoticias) {
         batch.insert(
           NoticiaEntity.tableName,
           NoticiaEntity.fromNoticia(noticia).toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
-      });
+      }
 
       await batch.commit(noResult: true);
 
       final savedNoticiasMap = await db.query(NoticiaEntity.tableName);
       final savedNoticias = savedNoticiasMap.map((e) => NoticiaEntity.fromMap(e).toNoticia());
 
+      if (savedNoticias.isEmpty) {
+        return receivedNoticias;
+      }
+
       return savedNoticias.toList();
     } catch (e) {
-      print(e);
-      return [];
+      return receivedNoticias;
     }
   }
 }

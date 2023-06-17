@@ -24,14 +24,10 @@ class MeuMengaoDatabase {
       join(dbPath, _dbName),
       version: _dbVersion,
       onCreate: (db, version) async {
-        try {
-          await db.execute(CampeonatoEntity.tableCreationStatement);
-          await db.execute(NoticiaEntity.tableCreationStatement);
-          await db.execute(PartidaEntity.tableCreationStatement);
-          await db.execute(PosicaoEntity.tableCreationStatement);
-        } catch (e) {
-          print(e);
-        }
+        await db.execute(CampeonatoEntity.tableCreationStatement);
+        await db.execute(NoticiaEntity.tableCreationStatement);
+        await db.execute(PartidaEntity.tableCreationStatement);
+        await db.execute(PosicaoEntity.tableCreationStatement);
       },
     );
   }
