@@ -5,6 +5,7 @@ class PartidaEntity {
   PartidaEntity({
     required this.id,
     required this.campeonato,
+    required this.campeonatoId,
     required this.data,
     this.rodadaName,
     this.rodadaIndex,
@@ -17,6 +18,7 @@ class PartidaEntity {
   });
 
   final String id;
+  final String campeonatoId;
   final String campeonato;
   final String data;
 
@@ -36,6 +38,7 @@ class PartidaEntity {
     return Partida(
       id: id,
       campeonato: campeonato,
+      campeonatoId: campeonatoId,
       data: DateTime.fromMillisecondsSinceEpoch(int.tryParse(data) ?? 0),
       timeCasa: timeCasa,
       timeFora: timeFora,
@@ -48,6 +51,7 @@ class PartidaEntity {
     return PartidaEntity(
       id: partida.id,
       campeonato: partida.campeonato,
+      campeonatoId: partida.campeonatoId,
       data: partida.data?.millisecondsSinceEpoch.toString() ?? "",
       timeCasa: partida.timeCasa,
       timeFora: partida.timeFora,
@@ -58,61 +62,65 @@ class PartidaEntity {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      _idColumn: id,
-      _campeonatoColumn: campeonato,
-      _dataColumn: data,
-      _rodadaNameColumn: rodadaName,
-      _rodadaIndexColumn: rodadaIndex,
-      _timeCasaColumn: timeCasa,
-      _golsCasaColumn: golsCasa,
-      _timeForaColumn: timeFora,
-      _golsForaColumn: golsFora,
-      _escudoCasaColumn: escudoCasa,
-      _escudoForaColumn: escudoFora,
+      idColumn: id,
+      campeonatoColumn: campeonato,
+      campeonatoIdColumn: campeonatoId,
+      dataColumn: data,
+      rodadaNameColumn: rodadaName,
+      rodadaIndexColumn: rodadaIndex,
+      timeCasaColumn: timeCasa,
+      golsCasaColumn: golsCasa,
+      timeForaColumn: timeFora,
+      golsForaColumn: golsFora,
+      escudoCasaColumn: escudoCasa,
+      escudoForaColumn: escudoFora,
     };
   }
 
   factory PartidaEntity.fromMap(Map<String, dynamic> map) {
     return PartidaEntity(
-      id: map[_idColumn] as String,
-      campeonato: map[_campeonatoColumn] as String,
-      data: map[_dataColumn] as String,
-      rodadaName: map[_rodadaNameColumn] != null ? map[_rodadaNameColumn] as String : null,
-      rodadaIndex: map[_rodadaIndexColumn] as int?,
-      timeCasa: map[_timeCasaColumn] as String,
-      golsCasa: int.tryParse(map[_golsCasaColumn]),
-      timeFora: map[_timeForaColumn] as String,
-      golsFora: int.tryParse(map[_golsForaColumn]),
-      escudoCasa: map[_escudoCasaColumn] as String,
-      escudoFora: map[_escudoForaColumn] as String,
+      id: map[idColumn] as String,
+      campeonato: map[campeonatoColumn] as String,
+      campeonatoId: map[campeonatoIdColumn] as String,
+      data: map[dataColumn] as String,
+      rodadaName: map[rodadaNameColumn] != null ? map[rodadaNameColumn] as String : null,
+      rodadaIndex: map[rodadaIndexColumn] as int?,
+      timeCasa: map[timeCasaColumn] as String,
+      golsCasa: int.tryParse(map[golsCasaColumn]),
+      timeFora: map[timeForaColumn] as String,
+      golsFora: int.tryParse(map[golsForaColumn]),
+      escudoCasa: map[escudoCasaColumn] as String,
+      escudoFora: map[escudoForaColumn] as String,
     );
   }
 
-  static const _idColumn = "id";
-  static const _dataColumn = "data";
-  static const _timeCasaColumn = "timeCasa";
-  static const _timeForaColumn = "timeFora";
-  static const _escudoCasaColumn = "escudoCasa";
-  static const _escudoForaColumn = "escudoFora";
-  static const _golsCasaColumn = "golsCasa";
-  static const _golsForaColumn = "golsFora";
-  static const _campeonatoColumn = "campeonato";
-  static const _rodadaNameColumn = "rodadaName";
-  static const _rodadaIndexColumn = "rodadaIndex";
+  static const idColumn = "id";
+  static const dataColumn = "data";
+  static const timeCasaColumn = "timeCasa";
+  static const timeForaColumn = "timeFora";
+  static const escudoCasaColumn = "escudoCasa";
+  static const escudoForaColumn = "escudoFora";
+  static const golsCasaColumn = "golsCasa";
+  static const golsForaColumn = "golsFora";
+  static const campeonatoColumn = "campeonato";
+  static const campeonatoIdColumn = "campeonatoId";
+  static const rodadaNameColumn = "rodadaName";
+  static const rodadaIndexColumn = "rodadaIndex";
 
   static const tableName = "partidas";
   static const tableCreationStatement = """
   CREATE TABLE $tableName(
-    $_idColumn VARCHAR(255) PRIMARY KEY, 
-    $_dataColumn VARCHAR(255), 
-    $_timeCasaColumn VARCHAR(255), 
-    $_timeForaColumn VARCHAR(255), 
-    $_escudoCasaColumn TEXT,
-    $_escudoForaColumn TEXT,
-    $_golsCasaColumn VARCHAR(255), 
-    $_golsForaColumn VARCHAR(255), 
-    $_campeonatoColumn VARCHAR(255), 
-    $_rodadaNameColumn VARCHAR(255), 
-    $_rodadaIndexColumn INT(11))
+    $idColumn VARCHAR(255) PRIMARY KEY, 
+    $dataColumn VARCHAR(255), 
+    $timeCasaColumn VARCHAR(255), 
+    $timeForaColumn VARCHAR(255), 
+    $escudoCasaColumn TEXT,
+    $escudoForaColumn TEXT,
+    $golsCasaColumn VARCHAR(255), 
+    $golsForaColumn VARCHAR(255), 
+    $campeonatoColumn VARCHAR(255), 
+    $campeonatoIdColumn VARCHAR(255), 
+    $rodadaNameColumn VARCHAR(255), 
+    $rodadaIndexColumn INT(11))
   """;
 }

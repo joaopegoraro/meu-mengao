@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/models/partida.dart';
 import 'package:meu_mengao/ui/widgets/partida/lista_partidas.dart';
 
-import '../../data/api/api_service.dart';
+import '../../data/repositories/partidas_repository.dart';
 
 class TelaCalendario extends StatefulWidget {
   const TelaCalendario({super.key});
@@ -12,7 +12,7 @@ class TelaCalendario extends StatefulWidget {
 }
 
 class _TelaCalendarioState extends State<TelaCalendario> with AutomaticKeepAliveClientMixin<TelaCalendario> {
-  final ApiService _apiService = ApiService();
+  final PartidasRepository _partidasRepository = PartidasRepository();
 
   @override
   bool get wantKeepAlive => true;
@@ -22,7 +22,7 @@ class _TelaCalendarioState extends State<TelaCalendario> with AutomaticKeepAlive
     super.build(context);
     return Expanded(
       child: FutureBuilder(
-        future: _apiService.getCalendario(),
+        future: _partidasRepository.getCalendario(),
         builder: (context, snapshot) {
           final List<Partida> partidas = snapshot.data ?? [];
 

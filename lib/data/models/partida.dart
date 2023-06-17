@@ -8,6 +8,7 @@ class Partida {
   Partida({
     required this.id,
     required this.campeonato,
+    required this.campeonatoId,
     this.data,
     this.rodadaName,
     this.rodadaIndex,
@@ -21,6 +22,7 @@ class Partida {
 
   final String id;
   final String campeonato;
+  final String campeonatoId;
   final DateTime? data;
 
   final String? rodadaName;
@@ -59,6 +61,7 @@ class Partida {
   Partida copyWith({
     String? id,
     String? campeonato,
+    String? campeonatoId,
     DateTime? data,
     String? rodadaName,
     int? rodadaIndex,
@@ -72,6 +75,7 @@ class Partida {
     return Partida(
       id: id ?? this.id,
       campeonato: campeonato ?? this.campeonato,
+      campeonatoId: campeonatoId ?? this.campeonatoId,
       data: data ?? this.data,
       rodadaName: rodadaName ?? this.rodadaName,
       rodadaIndex: rodadaIndex ?? this.rodadaIndex,
@@ -88,6 +92,7 @@ class Partida {
     return <String, dynamic>{
       'id': id,
       'campeonato': campeonato,
+      'campeonatoId': campeonatoId,
       'data': data?.millisecondsSinceEpoch.toString(),
       'rodadaName': rodadaName,
       'rodadaIndex': rodadaIndex,
@@ -104,6 +109,7 @@ class Partida {
     return Partida(
       id: map['id'] as String,
       campeonato: map['campeonato'] as String,
+      campeonatoId: map['campeonatoId'] as String,
       data: map['data'] != null ? DateTime.fromMillisecondsSinceEpoch(int.tryParse(map['data']) ?? 0) : null,
       rodadaName: map['rodadaName'] != null ? map['rodadaName'] as String : null,
       rodadaIndex: map['rodadaIndex'] as int?,
@@ -118,7 +124,7 @@ class Partida {
 
   @override
   String toString() {
-    return 'Partida(id: $id, campeonato: $campeonato, data: $data, rodadaName: $rodadaName, rodadaIndex: $rodadaIndex, timeCasa: $timeCasa, golsCasa: $golsCasa, timeFora: $timeFora, golsFora: $golsFora, escudoCasa: $escudoCasa, escudoFora: $escudoFora)';
+    return 'Partida(id: $id, campeonato: $campeonato, campeonatoId: $campeonatoId, data: $data, rodadaName: $rodadaName, rodadaIndex: $rodadaIndex, timeCasa: $timeCasa, golsCasa: $golsCasa, timeFora: $timeFora, golsFora: $golsFora, escudoCasa: $escudoCasa, escudoFora: $escudoFora)';
   }
 
   @override
@@ -127,6 +133,7 @@ class Partida {
 
     return other.id == id &&
         other.campeonato == campeonato &&
+        other.campeonatoId == campeonatoId &&
         other.data == data &&
         other.rodadaName == rodadaName &&
         other.rodadaIndex == rodadaIndex &&
@@ -142,6 +149,7 @@ class Partida {
   int get hashCode {
     return id.hashCode ^
         campeonato.hashCode ^
+        campeonatoId.hashCode ^
         data.hashCode ^
         rodadaName.hashCode ^
         rodadaIndex.hashCode ^

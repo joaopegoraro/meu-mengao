@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meu_mengao/data/repositories/partidas_repository.dart';
 
-import '../../../data/api/api_service.dart';
 import '../../widgets/partida/partida_item.dart';
 
 class ProximaPartida extends StatefulWidget {
@@ -11,7 +11,7 @@ class ProximaPartida extends StatefulWidget {
 }
 
 class _ProximaPartidaState extends State<ProximaPartida> {
-  final ApiService _apiService = ApiService();
+  final PartidasRepository _partidasRepository = PartidasRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class _ProximaPartidaState extends State<ProximaPartida> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: FutureBuilder(
-          future: _apiService.getProximaPartida(),
+          future: _partidasRepository.getProximaPartida(),
           builder: (context, snapshot) {
             final partida = snapshot.data;
 

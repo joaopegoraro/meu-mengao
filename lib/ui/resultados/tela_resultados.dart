@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/models/partida.dart';
+import 'package:meu_mengao/data/repositories/partidas_repository.dart';
 import 'package:meu_mengao/ui/widgets/partida/lista_partidas.dart';
-
-import '../../data/api/api_service.dart';
 
 class TelaResultados extends StatefulWidget {
   const TelaResultados({super.key});
@@ -12,7 +11,7 @@ class TelaResultados extends StatefulWidget {
 }
 
 class _TelaResultadosState extends State<TelaResultados> with AutomaticKeepAliveClientMixin<TelaResultados> {
-  final ApiService _apiService = ApiService();
+  final PartidasRepository _partidasRepository = PartidasRepository();
 
   @override
   bool get wantKeepAlive => true;
@@ -22,7 +21,7 @@ class _TelaResultadosState extends State<TelaResultados> with AutomaticKeepAlive
     super.build(context);
     return Expanded(
       child: FutureBuilder(
-        future: _apiService.getResultados(),
+        future: _partidasRepository.getResultados(),
         builder: (context, snapshot) {
           final List<Partida> partidas = snapshot.data ?? [];
 
