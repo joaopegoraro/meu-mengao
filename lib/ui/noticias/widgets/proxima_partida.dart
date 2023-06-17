@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/repositories/partidas_repository.dart';
+import 'package:meu_mengao/ui/providers/proxima_partida_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/partida/partida_item.dart';
 
@@ -11,7 +12,11 @@ class ProximaPartida extends StatefulWidget {
 }
 
 class _ProximaPartidaState extends State<ProximaPartida> {
-  final PartidasRepository _partidasRepository = PartidasRepository();
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProximaPartidaProvider>().listarProximaPartida();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,33 +27,36 @@ class _ProximaPartidaState extends State<ProximaPartida> {
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: FutureBuilder(
-          future: _partidasRepository.getProximaPartida(),
-          builder: (context, snapshot) {
-            final partida = snapshot.data;
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Próxima Partida",
+              textAlign: TextAlign.start,
+              style: theme.textTheme.titleLarge?.copyWith(
+                color: colorScheme.onBackground,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Consumer<ProximaPartidaProvider>(builder: (context, provider, _) {
+                final proximaPartida = provider.proximaPartida;
+                final isLoading = provider.isLoading;
 
-            if (partida == null) return const SizedBox.shrink();
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Próxima Partida",
-                  textAlign: TextAlign.start,
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: colorScheme.onBackground,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: PartidaItem(
-                    partida: partida,
-                    mostrarCampeonato: true,
-                  ),
-                ),
-              ],
-            );
-          },
+                if (!isLoading && proximaPartida == null) {
+                  return const Center(
+                    child: Text("Não foi encontrada nenhuma partida."),
+                  );
+                }
+
+                return PartidaItem(
+                  partida: proximaPartida,
+                  mostrarCampeonato: true,
+                );
+              }),
+            ),
+          ],
         ),
       ),
     );

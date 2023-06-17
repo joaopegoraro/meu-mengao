@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meu_mengao/ui/noticias/widgets/proxima_partida.dart';
 import 'package:meu_mengao/ui/providers/noticias_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'widgets/noticia_item.dart';
 
@@ -30,14 +31,8 @@ class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClie
         final noticias = provider.noticias;
         final isLoading = provider.isLoading;
 
-        if (isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
         return ListView.builder(
-          itemCount: noticias.length + 1,
+          itemCount: isLoading ? 10 : noticias.length + 1,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             if (index == 0) {
@@ -46,6 +41,27 @@ class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClie
                 child: ProximaPartida(),
               );
             }
+
+            if (isLoading) {
+              return Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.white,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFF3F3F3),
+                    borderRadius: BorderRadius.all(Radius.circular(18)),
+                  ),
+                  padding: const EdgeInsets.all(15),
+                  margin: const EdgeInsets.all(20),
+                  child: Container(
+                    height: 200.0,
+                    width: double.infinity,
+                    color: Colors.grey,
+                  ),
+                ),
+              );
+            }
+
             return NoticiaItem(noticia: noticias[index - 1]);
           },
         );

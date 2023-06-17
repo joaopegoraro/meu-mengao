@@ -9,8 +9,8 @@ class DataPartida extends StatefulWidget {
     required this.horario,
   });
 
-  final String data;
-  final String horario;
+  final String? data;
+  final String? horario;
   final String? nomeCampeonato;
   final String? nomeRodada;
 
@@ -88,16 +88,18 @@ class _DataPartidaState extends State<DataPartida> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.data,
-                          textAlign: TextAlign.start,
-                          style: textStyle,
-                        ),
-                        Text(
-                          widget.horario,
-                          textAlign: TextAlign.start,
-                          style: textStyle,
-                        ),
+                        if (widget.data != null)
+                          Text(
+                            widget.data!,
+                            textAlign: TextAlign.start,
+                            style: textStyle,
+                          ),
+                        if (widget.horario != null)
+                          Text(
+                            widget.horario!,
+                            textAlign: TextAlign.start,
+                            style: textStyle,
+                          ),
                       ],
                     ),
                   ),
