@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/api/api_service.dart';
+import 'package:meu_mengao/data/repositories/noticias_repository.dart';
 import 'package:meu_mengao/ui/noticias/widgets/proxima_partida.dart';
 
 import 'widgets/noticia_item.dart';
@@ -12,7 +12,7 @@ class TelaNoticias extends StatefulWidget {
 }
 
 class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClientMixin<TelaNoticias> {
-  final ApiService _apiService = ApiService();
+  final NoticiasRepository _noticiasRepository = NoticiasRepository();
 
   @override
   bool get wantKeepAlive => true;
@@ -21,7 +21,7 @@ class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClie
   Widget build(BuildContext context) {
     super.build(context);
     return FutureBuilder(
-      future: _apiService.getNoticias(),
+      future: _noticiasRepository.getAll(),
       builder: (context, snapshot) {
         final noticias = snapshot.data ?? [];
 

@@ -6,25 +6,32 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class MeuMengaoDatabase {
-  Database? _db;
+  static Database? _db;
 
-  Future<Database> get instance async {
+  static const _dbName = "meu_mengao.db";
+  static const _dbVersion = 1;
+
+  static Future<Database> get instance async {
     if (_db != null) return _db!;
     _db = await _initDB();
     return _db!;
   }
 
-  Future<Database> _initDB() async {
+  static Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
 
     return await openDatabase(
-      join(dbPath, "meu_mengao.db"),
-      version: 1,
-      onCreate: (db, version) {
-        db.execute(CampeonatoEntity.tableCreationStatement);
-        db.execute(NoticiaEntity.tableCreationStatement);
-        db.execute(PartidaEntity.tableCreationStatement);
-        db.execute(PosicaoEntity.tableCreationStatement);
+      join(dbPath, _dbName),
+      version: _dbVersion,
+      onCreate: (db, version) async {
+        try {
+          await db.execute(CampeonatoEntity.tableCreationStatement);
+          await db.execute(NoticiaEntity.tableCreationStatement);
+          await db.execute(PartidaEntity.tableCreationStatement);
+          await db.execute(PosicaoEntity.tableCreationStatement);
+        } catch (e) {
+          print(e);
+        }
       },
     );
   }

@@ -88,7 +88,7 @@ class Partida {
     return <String, dynamic>{
       'id': id,
       'campeonato': campeonato,
-      'data': data?.millisecondsSinceEpoch,
+      'data': data?.millisecondsSinceEpoch.toString(),
       'rodadaName': rodadaName,
       'rodadaIndex': rodadaIndex,
       'timeCasa': timeCasa,

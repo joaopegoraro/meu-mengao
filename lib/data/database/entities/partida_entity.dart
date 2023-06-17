@@ -5,7 +5,7 @@ class PartidaEntity {
   PartidaEntity({
     required this.id,
     required this.campeonato,
-    this.data,
+    required this.data,
     this.rodadaName,
     this.rodadaIndex,
     required this.timeCasa,
@@ -18,7 +18,7 @@ class PartidaEntity {
 
   final String id;
   final String campeonato;
-  final DateTime? data;
+  final String data;
 
   final String? rodadaName;
   final int? rodadaIndex;
@@ -36,6 +36,7 @@ class PartidaEntity {
     return Partida(
       id: id,
       campeonato: campeonato,
+      data: DateTime.fromMillisecondsSinceEpoch(int.tryParse(data) ?? 0),
       timeCasa: timeCasa,
       timeFora: timeFora,
       escudoCasa: escudoCasa,
@@ -47,6 +48,7 @@ class PartidaEntity {
     return PartidaEntity(
       id: partida.id,
       campeonato: partida.campeonato,
+      data: partida.data?.millisecondsSinceEpoch.toString() ?? "",
       timeCasa: partida.timeCasa,
       timeFora: partida.timeFora,
       escudoCasa: partida.escudoCasa,
@@ -58,7 +60,7 @@ class PartidaEntity {
     return <String, dynamic>{
       _idColumn: id,
       _campeonatoColumn: campeonato,
-      _dataColumn: data?.millisecondsSinceEpoch.toString(),
+      _dataColumn: data,
       _rodadaNameColumn: rodadaName,
       _rodadaIndexColumn: rodadaIndex,
       _timeCasaColumn: timeCasa,
@@ -74,7 +76,7 @@ class PartidaEntity {
     return PartidaEntity(
       id: map[_idColumn] as String,
       campeonato: map[_campeonatoColumn] as String,
-      data: map[_dataColumn] != null ? DateTime.fromMillisecondsSinceEpoch(int.tryParse(map[_dataColumn]) ?? 0) : null,
+      data: map[_dataColumn] as String,
       rodadaName: map[_rodadaNameColumn] != null ? map[_rodadaNameColumn] as String : null,
       rodadaIndex: map[_rodadaIndexColumn] as int?,
       timeCasa: map[_timeCasaColumn] as String,

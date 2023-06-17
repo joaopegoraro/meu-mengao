@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/models/campeonato.dart';
+import 'package:meu_mengao/data/repositories/campeonatos_repository.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/campeonato_item.dart';
-
-import '../../data/api/api_service.dart';
 
 class TelaTabelas extends StatefulWidget {
   const TelaTabelas({super.key});
@@ -12,7 +11,7 @@ class TelaTabelas extends StatefulWidget {
 }
 
 class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClientMixin<TelaTabelas> {
-  final ApiService _apiService = ApiService();
+  final CampeonatosRepository _campeonatosRepository = CampeonatosRepository();
 
   Campeonato? campeonatoSelecionado;
 
@@ -25,8 +24,8 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
 
     return Expanded(
       child: FutureBuilder(
-        future: _apiService.getCampeonatos().then((campeonatos) {
-          campeonatoSelecionado ??= campeonatos?.first;
+        future: _campeonatosRepository.getAll().then((campeonatos) {
+          campeonatoSelecionado ??= campeonatos.first;
           return campeonatos;
         }),
         builder: (context, snapshot) {

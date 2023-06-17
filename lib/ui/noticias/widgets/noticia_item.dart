@@ -37,7 +37,7 @@ class _NoticiaItemState extends State<NoticiaItem> {
             alignment: Alignment.bottomCenter,
             children: [
               Image.memory(
-                ImageUtils.safeBase64Decode(widget.noticia.foto!),
+                ImageUtils.safeBase64Decode(widget.noticia.foto ?? ""),
                 fit: BoxFit.fill,
                 errorBuilder: (_, __, ___) {
                   return Image.asset(
