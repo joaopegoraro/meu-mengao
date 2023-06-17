@@ -15,6 +15,7 @@ class PosicaoEntity {
     required this.golsFeitos,
     required this.golsSofridos,
     required this.saldoGols,
+    required this.campeonatoId,
     required this.classificacaoName,
     required this.classificacaoIndex,
   });
@@ -31,6 +32,7 @@ class PosicaoEntity {
   final String golsFeitos;
   final String golsSofridos;
   final String saldoGols;
+  final String campeonatoId;
   final String classificacaoName;
   final int classificacaoIndex;
 
@@ -47,6 +49,8 @@ class PosicaoEntity {
       golsFeitos: golsFeitos,
       golsSofridos: golsSofridos,
       saldoGols: saldoGols,
+      escudoTime: escudoTime,
+      campeonatoId: campeonatoId,
       classificacaoName: classificacaoName,
       classificacaoIndex: classificacaoIndex,
     );
@@ -65,6 +69,8 @@ class PosicaoEntity {
       golsFeitos: posicao.golsFeitos,
       golsSofridos: posicao.golsSofridos,
       saldoGols: posicao.saldoGols,
+      escudoTime: posicao.escudoTime,
+      campeonatoId: posicao.campeonatoId,
       classificacaoName: posicao.classificacaoName,
       classificacaoIndex: posicao.classificacaoIndex,
     );
@@ -72,73 +78,77 @@ class PosicaoEntity {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      _idColumn: id,
-      _posicaoColumn: posicao,
-      _nomeTimeColumn: nomeTime,
-      _escudoTimeColumn: escudoTime,
-      _pontosColumn: pontos,
-      _jogosColumn: jogos,
-      _vitoriasColumn: vitorias,
-      _empatesColumn: empates,
-      _derrotasColumn: derrotas,
-      _golsFeitosColumn: golsFeitos,
-      _golsSofridosColumn: golsSofridos,
-      _saldoGolsColumn: saldoGols,
-      _classificacaoNameColumn: classificacaoName,
-      _classificacaoIndexColumn: classificacaoIndex,
+      idColumn: id,
+      posicaoColumn: posicao,
+      nomeTimeColumn: nomeTime,
+      escudoTimeColumn: escudoTime,
+      pontosColumn: pontos,
+      jogosColumn: jogos,
+      vitoriasColumn: vitorias,
+      empatesColumn: empates,
+      derrotasColumn: derrotas,
+      golsFeitosColumn: golsFeitos,
+      golsSofridosColumn: golsSofridos,
+      saldoGolsColumn: saldoGols,
+      campeonatoIdColumn: campeonatoId,
+      classificacaoNameColumn: classificacaoName,
+      classificacaoIndexColumn: classificacaoIndex,
     };
   }
 
   factory PosicaoEntity.fromMap(Map<String, dynamic> map) {
     return PosicaoEntity(
-      id: map[_idColumn] as String,
-      posicao: int.tryParse(map[_posicaoColumn]) ?? 0,
-      nomeTime: map[_nomeTimeColumn] as String,
-      escudoTime: map[_escudoTimeColumn] != null ? map[_escudoTimeColumn] as String : null,
-      pontos: map[_pontosColumn] as String,
-      jogos: map[_jogosColumn] as String,
-      vitorias: map[_vitoriasColumn] as String,
-      empates: map[_empatesColumn] as String,
-      derrotas: map[_derrotasColumn] as String,
-      golsFeitos: map[_golsFeitosColumn] as String,
-      golsSofridos: map[_golsSofridosColumn] as String,
-      saldoGols: map[_saldoGolsColumn] as String,
-      classificacaoName: map[_classificacaoNameColumn] as String,
-      classificacaoIndex: map[_classificacaoIndexColumn] as int,
+      id: map[idColumn] as String,
+      posicao: int.tryParse(map[posicaoColumn]) ?? 0,
+      nomeTime: map[nomeTimeColumn] as String,
+      escudoTime: map[escudoTimeColumn] != null ? map[escudoTimeColumn] as String : null,
+      pontos: map[pontosColumn] as String,
+      jogos: map[jogosColumn] as String,
+      vitorias: map[vitoriasColumn] as String,
+      empates: map[empatesColumn] as String,
+      derrotas: map[derrotasColumn] as String,
+      golsFeitos: map[golsFeitosColumn] as String,
+      golsSofridos: map[golsSofridosColumn] as String,
+      saldoGols: map[saldoGolsColumn] as String,
+      campeonatoId: map[campeonatoIdColumn] as String,
+      classificacaoName: map[classificacaoNameColumn] as String,
+      classificacaoIndex: map[classificacaoIndexColumn] as int,
     );
   }
 
-  static const _idColumn = "id";
-  static const _posicaoColumn = "posicao";
-  static const _nomeTimeColumn = "nomeTime";
-  static const _escudoTimeColumn = "escudoTime";
-  static const _pontosColumn = "pontos";
-  static const _jogosColumn = "jogos";
-  static const _vitoriasColumn = "vitorias";
-  static const _empatesColumn = "empates";
-  static const _derrotasColumn = "derrotas";
-  static const _golsFeitosColumn = "golsFeitos";
-  static const _golsSofridosColumn = "golsSofridos";
-  static const _saldoGolsColumn = "saldoGols";
-  static const _classificacaoNameColumn = "classificacaoName";
-  static const _classificacaoIndexColumn = "classificacaoIndex";
+  static const idColumn = "id";
+  static const posicaoColumn = "posicao";
+  static const nomeTimeColumn = "nomeTime";
+  static const escudoTimeColumn = "escudoTime";
+  static const pontosColumn = "pontos";
+  static const jogosColumn = "jogos";
+  static const vitoriasColumn = "vitorias";
+  static const empatesColumn = "empates";
+  static const derrotasColumn = "derrotas";
+  static const golsFeitosColumn = "golsFeitos";
+  static const golsSofridosColumn = "golsSofridos";
+  static const saldoGolsColumn = "saldoGols";
+  static const campeonatoIdColumn = "campeonatoId";
+  static const classificacaoNameColumn = "classificacaoName";
+  static const classificacaoIndexColumn = "classificacaoIndex";
 
   static const tableName = "posicao";
   static const tableCreationStatement = """
   CREATE TABLE $tableName(
-    $_idColumn VARCHAR(255) PRIMARY KEY, 
-    $_posicaoColumn VARCHAR(255), 
-    $_nomeTimeColumn VARCHAR(255), 
-    $_escudoTimeColumn TEXT,
-    $_pontosColumn VARCHAR(255), 
-    $_jogosColumn VARCHAR(255), 
-    $_vitoriasColumn VARCHAR(255), 
-    $_empatesColumn VARCHAR(255), 
-    $_derrotasColumn VARCHAR(255), 
-    $_golsFeitosColumn VARCHAR(255), 
-    $_golsSofridosColumn VARCHAR(255), 
-    $_saldoGolsColumn VARCHAR(255), 
-    $_classificacaoNameColumn VARCHAR(255), 
-    $_classificacaoIndexColumn INT(11))
+    $idColumn VARCHAR(255) PRIMARY KEY, 
+    $posicaoColumn VARCHAR(255), 
+    $nomeTimeColumn VARCHAR(255), 
+    $escudoTimeColumn TEXT,
+    $pontosColumn VARCHAR(255), 
+    $jogosColumn VARCHAR(255), 
+    $vitoriasColumn VARCHAR(255), 
+    $empatesColumn VARCHAR(255), 
+    $derrotasColumn VARCHAR(255), 
+    $golsFeitosColumn VARCHAR(255), 
+    $golsSofridosColumn VARCHAR(255), 
+    $saldoGolsColumn VARCHAR(255), 
+    $campeonatoIdColumn VARCHAR(255), 
+    $classificacaoNameColumn VARCHAR(255), 
+    $classificacaoIndexColumn INT(11))
   """;
 }

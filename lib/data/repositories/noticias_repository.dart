@@ -24,7 +24,10 @@ class NoticiasRepository {
 
       await batch.commit(noResult: true);
 
-      final savedNoticiasMap = await db.query(NoticiaEntity.tableName);
+      final savedNoticiasMap = await db.query(
+        NoticiaEntity.tableName,
+        orderBy: "${NoticiaEntity.dataColumn} DESC",
+      );
       final savedNoticias = savedNoticiasMap.map((e) => NoticiaEntity.fromMap(e).toNoticia());
 
       if (savedNoticias.isEmpty) {

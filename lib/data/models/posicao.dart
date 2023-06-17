@@ -15,6 +15,7 @@ class Posicao {
     required this.golsFeitos,
     required this.golsSofridos,
     required this.saldoGols,
+    required this.campeonatoId,
     required this.classificacaoName,
     required this.classificacaoIndex,
   });
@@ -31,6 +32,7 @@ class Posicao {
   final String golsFeitos;
   final String golsSofridos;
   final String saldoGols;
+  final String campeonatoId;
   final String classificacaoName;
   final int classificacaoIndex;
 
@@ -49,6 +51,7 @@ class Posicao {
     String? golsFeitos,
     String? golsSofridos,
     String? saldoGols,
+    String? campeonatoId,
     String? classificacaoName,
     int? classificacaoIndex,
   }) {
@@ -65,6 +68,7 @@ class Posicao {
       golsFeitos: golsFeitos ?? this.golsFeitos,
       golsSofridos: golsSofridos ?? this.golsSofridos,
       saldoGols: saldoGols ?? this.saldoGols,
+      campeonatoId: campeonatoId ?? this.campeonatoId,
       classificacaoName: classificacaoName ?? this.classificacaoName,
       classificacaoIndex: classificacaoIndex ?? this.classificacaoIndex,
     );
@@ -84,6 +88,7 @@ class Posicao {
       'golsFeitos': golsFeitos,
       'golsSofridos': golsSofridos,
       'saldoGols': saldoGols,
+      'campeonatoId': campeonatoId,
       'classificacaoName': classificacaoName,
       'classificacaoIndex': classificacaoIndex,
     };
@@ -103,6 +108,7 @@ class Posicao {
       golsFeitos: map['golsFeitos'] as String,
       golsSofridos: map['golsSofridos'] as String,
       saldoGols: map['saldoGols'] as String,
+      campeonatoId: map['campeonatoId'] as String,
       classificacaoName: map['classificacaoName'] as String,
       classificacaoIndex: map['classificacaoIndex'] as int,
     );
@@ -110,7 +116,7 @@ class Posicao {
 
   @override
   String toString() {
-    return 'Posicao(id: $id, posicao: $posicao, nomeTime: $nomeTime, escudoTime: $escudoTime, pontos: $pontos, jogos: $jogos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols, classificacaoName: $classificacaoName, classificacaoIndex: $classificacaoIndex)';
+    return 'Posicao(id: $id, posicao: $posicao, nomeTime: $nomeTime, escudoTime: $escudoTime, pontos: $pontos, jogos: $jogos, vitorias: $vitorias, empates: $empates, derrotas: $derrotas, golsFeitos: $golsFeitos, golsSofridos: $golsSofridos, saldoGols: $saldoGols, campeonatoId: $campeonatoId, classificacaoName: $classificacaoName, classificacaoIndex: $classificacaoIndex)';
   }
 
   @override
@@ -129,6 +135,7 @@ class Posicao {
         other.golsFeitos == golsFeitos &&
         other.golsSofridos == golsSofridos &&
         other.saldoGols == saldoGols &&
+        other.campeonatoId == campeonatoId &&
         other.classificacaoName == classificacaoName &&
         other.classificacaoIndex == classificacaoIndex;
   }
@@ -147,6 +154,7 @@ class Posicao {
         golsFeitos.hashCode ^
         golsSofridos.hashCode ^
         saldoGols.hashCode ^
+        campeonatoId.hashCode ^
         classificacaoName.hashCode ^
         classificacaoIndex.hashCode;
   }

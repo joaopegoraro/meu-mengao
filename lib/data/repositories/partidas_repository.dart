@@ -28,7 +28,7 @@ class PartidasRepository {
         PartidaEntity.tableName,
         where: '${PartidaEntity.dataColumn} >= ?',
         whereArgs: [DateTime.now().millisecondsSinceEpoch.toString()],
-        orderBy: "ASC",
+        orderBy: "${PartidaEntity.dataColumn} ASC",
       );
       final savedPartida = savedPartidaMap.map((e) => PartidaEntity.fromMap(e).toPartida());
       return savedPartida.toList().first;
@@ -61,7 +61,7 @@ class PartidasRepository {
         PartidaEntity.tableName,
         where: '${PartidaEntity.dataColumn} < ?',
         whereArgs: [DateTime.now().millisecondsSinceEpoch.toString()],
-        orderBy: "DESC",
+        orderBy: "${PartidaEntity.dataColumn} DESC",
       );
       final savedPartidas = savedPartidaMap.map((e) => PartidaEntity.fromMap(e).toPartida());
       return savedPartidas.toList();
@@ -94,7 +94,7 @@ class PartidasRepository {
         PartidaEntity.tableName,
         where: '${PartidaEntity.dataColumn} >= ?',
         whereArgs: [DateTime.now().millisecondsSinceEpoch.toString()],
-        orderBy: "DESC",
+        orderBy: "${PartidaEntity.dataColumn} DESC",
       );
       final savedPartidas = savedPartidaMap.map((e) => PartidaEntity.fromMap(e).toPartida());
       return savedPartidas.toList();

@@ -14,22 +14,26 @@ class ClassificacaoRepository {
       final db = await _database;
       final batch = db.batch();
 
-      for (var posicao in receivedClassificacao) {
-        batch.insert(
-          PosicaoEntity.tableName,
-          PosicaoEntity.fromPosicao(posicao).toMap(),
-          conflictAlgorithm: ConflictAlgorithm.replace,
-        );
-      }
+      if (receivedClassificacao.isNotEmpty) {
+        for (var posicao in receivedClassificacao) {
+          batch.insert(
+            PosicaoEntity.tableName,
+            PosicaoEntity.fromPosicao(posicao).toMap(),
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          );
+        }
 
-      await batch.commit(noResult: true);
+        await batch.commit(noResult: true);
 
-      final savedClassificacaoMap = await db.query(PosicaoEntity.tableName);
-      final savedClassificacao = savedClassificacaoMap.map((e) => PosicaoEntity.fromMap(e).toPosicao());
-
-      if (savedClassificacao.isEmpty) {
         return receivedClassificacao;
       }
+
+      final savedClassificacaoMap = await db.query(
+        PosicaoEntity.tableName,
+        where: '${PosicaoEntity.campeonatoIdColumn} = ?',
+        whereArgs: [campeonatoId],
+      );
+      final savedClassificacao = savedClassificacaoMap.map((e) => PosicaoEntity.fromMap(e).toPosicao());
 
       return savedClassificacao.toList();
     } catch (e) {

@@ -40,41 +40,41 @@ class NoticiaEntity {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      _idColumn: id,
-      _dataColumn: data,
-      _linkColumn: link,
-      _tituloColumn: titulo,
-      _logoSiteColumn: logoSite,
-      _fotoColumn: foto,
+      idColumn: id,
+      dataColumn: data,
+      linkColumn: link,
+      tituloColumn: titulo,
+      logoSiteColumn: logoSite,
+      fotoColumn: foto,
     };
   }
 
   factory NoticiaEntity.fromMap(Map<String, dynamic> map) {
     return NoticiaEntity(
-      id: map[_idColumn] as int,
-      data: map[_dataColumn] as String,
-      link: map[_linkColumn] as String,
-      titulo: map[_tituloColumn] as String,
-      logoSite: map[_logoSiteColumn] as String,
-      foto: map[_fotoColumn] != null ? map[_fotoColumn] as String : null,
+      id: map[idColumn] as int,
+      data: map[dataColumn] as String,
+      link: map[linkColumn] as String,
+      titulo: map[tituloColumn] as String,
+      logoSite: map[logoSiteColumn] as String,
+      foto: map[fotoColumn] != null ? map[fotoColumn] as String : null,
     );
   }
 
-  static const _idColumn = "id";
-  static const _dataColumn = "data";
-  static const _linkColumn = "link";
-  static const _tituloColumn = "titulo";
-  static const _logoSiteColumn = "logoSite";
-  static const _fotoColumn = "foto";
+  static const idColumn = "id";
+  static const dataColumn = "data";
+  static const linkColumn = "link";
+  static const tituloColumn = "titulo";
+  static const logoSiteColumn = "logoSite";
+  static const fotoColumn = "foto";
 
   static const tableName = "noticias";
   static const tableCreationStatement = """
   CREATE TABLE $tableName(
-    $_idColumn INT(11) PRIMARY KEY, 
-    $_dataColumn VARCHAR(255), 
-    $_linkColumn VARCHAR(255), 
-    $_tituloColumn VARCHAR(255), 
-    $_logoSiteColumn TEXT,
-    $_fotoColumn TEXT)
+    $idColumn INT(11) PRIMARY KEY, 
+    $dataColumn VARCHAR(255), 
+    $linkColumn VARCHAR(255), 
+    $tituloColumn VARCHAR(255), 
+    $logoSiteColumn TEXT,
+    $fotoColumn TEXT)
   """;
 }
