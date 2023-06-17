@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/models/partida.dart';
+import 'package:meu_mengao/ui/providers/calendario_provider.dart';
 import 'package:meu_mengao/ui/widgets/partida/lista_partidas.dart';
-
-import '../../data/repositories/partidas_repository.dart';
+import 'package:provider/provider.dart';
 
 class TelaCalendario extends StatefulWidget {
   const TelaCalendario({super.key});
@@ -12,7 +11,11 @@ class TelaCalendario extends StatefulWidget {
 }
 
 class _TelaCalendarioState extends State<TelaCalendario> with AutomaticKeepAliveClientMixin<TelaCalendario> {
-  final PartidasRepository _partidasRepository = PartidasRepository();
+  @override
+  void initState() {
+    super.initState();
+    context.read<CalendarioProvider>().listarCalendario();
+  }
 
   @override
   bool get wantKeepAlive => true;
@@ -21,15 +24,19 @@ class _TelaCalendarioState extends State<TelaCalendario> with AutomaticKeepAlive
   Widget build(BuildContext context) {
     super.build(context);
     return Expanded(
-      child: FutureBuilder(
-        future: _partidasRepository.getCalendario(),
-        builder: (context, snapshot) {
-          final List<Partida> partidas = snapshot.data ?? [];
+      child: Consumer<CalendarioProvider>(
+        builder: (context, provider, _) {
+          final resultados = provider.calendario;
+          final isLoading = provider.isLoading;
 
-          if (partidas.isEmpty || snapshot.hasError) return const Center(child: CircularProgressIndicator());
+          if (!isLoading && resultados.isEmpty) {
+            return const Center(
+              child: Text("Não foi encontrada nenhuma partida."),
+            );
+          }
 
           return ListaPartidas(
-            partidas: partidas,
+            partidas: isLoading ? List.generate(10, (_) => null) : resultados,
             mostrarCampeonato: true,
           );
         },
