@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/data/repositories/noticias_repository.dart';
 import 'package:meu_mengao/ui/noticias/widgets/proxima_partida.dart';
+import 'package:meu_mengao/ui/providers/noticias_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'widgets/noticia_item.dart';
 
@@ -12,7 +13,11 @@ class TelaNoticias extends StatefulWidget {
 }
 
 class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClientMixin<TelaNoticias> {
-  final NoticiasRepository _noticiasRepository = NoticiasRepository();
+  @override
+  void initState() {
+    super.initState();
+    context.read<NoticiasProvider>().listarNoticias();
+  }
 
   @override
   bool get wantKeepAlive => true;
@@ -20,12 +25,16 @@ class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClie
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return FutureBuilder(
-      future: _noticiasRepository.getAll(),
-      builder: (context, snapshot) {
-        final noticias = snapshot.data ?? [];
+    return Consumer<NoticiasProvider>(
+      builder: (context, provider, _) {
+        final noticias = provider.noticias;
+        final isLoading = provider.isLoading;
 
-        if (noticias.isEmpty || snapshot.hasError) return const Center(child: CircularProgressIndicator());
+        if (isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
         return ListView.builder(
           itemCount: noticias.length + 1,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/ui/app/widgets/app_bottom_nav.dart';
 import 'package:meu_mengao/ui/noticias/tela_noticias.dart';
+import 'package:meu_mengao/ui/providers/noticias_provider.dart';
 import 'package:meu_mengao/ui/widgets/topbar.dart';
+import 'package:provider/provider.dart';
 
 import '../../calendario/tela_calendario.dart';
 import '../../resultados/tela_resultados.dart';
@@ -74,17 +76,22 @@ class _AppScaffoldState extends State<AppScaffold> {
         }),
       ),
       body: SafeArea(
-        child: PageView(
-          controller: _pagerController,
-          onPageChanged: (index) => setState(() {
-            _pageIndex = index;
-          }),
-          children: const [
-            TelaNoticias(),
-            TelaCalendario(),
-            TelaResultados(),
-            TelaTabelas(),
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<NoticiasProvider>(create: (_) => NoticiasProvider()),
           ],
+          child: PageView(
+            controller: _pagerController,
+            onPageChanged: (index) => setState(() {
+              _pageIndex = index;
+            }),
+            children: const [
+              TelaNoticias(),
+              TelaCalendario(),
+              TelaResultados(),
+              TelaTabelas(),
+            ],
+          ),
         ),
       ),
     );
