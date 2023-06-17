@@ -11,21 +11,21 @@ class CampeonatoEntity {
     required this.possuiClassificacao,
   });
 
-  final String id;
-  final String nome;
-  final String ano;
-  final String logo;
-  final int rodadaAtual;
-  final bool possuiClassificacao;
+  final String? id;
+  final String? nome;
+  final String? ano;
+  final String? logo;
+  final int? rodadaAtual;
+  final bool? possuiClassificacao;
 
   Campeonato toCampeonato() {
     return Campeonato(
-      id: id,
-      nome: nome,
-      ano: ano,
-      logo: logo,
-      rodadaAtual: rodadaAtual,
-      possuiClassificacao: possuiClassificacao,
+      id: id ?? "",
+      nome: nome ?? "",
+      ano: ano ?? "",
+      logo: logo ?? "",
+      rodadaAtual: rodadaAtual ?? 0,
+      possuiClassificacao: possuiClassificacao ?? false,
     );
   }
 
@@ -53,12 +53,12 @@ class CampeonatoEntity {
 
   factory CampeonatoEntity.fromMap(Map<String, dynamic> map) {
     return CampeonatoEntity(
-      id: map[_idColumn] as String,
-      nome: map[_nomeColumn] as String,
-      ano: map[_anoColumn] as String,
-      logo: map[_logoColumn] as String,
-      rodadaAtual: map[_rodadaAtualColumn] as int,
-      possuiClassificacao: map[_possuiClassificacaoColumn] as bool,
+      id: map[_idColumn] as String?,
+      nome: map[_nomeColumn] as String?,
+      ano: map[_anoColumn] as String?,
+      logo: map[_logoColumn] as String?,
+      rodadaAtual: map[_rodadaAtualColumn] as int?,
+      possuiClassificacao: (map[_possuiClassificacaoColumn] as int?) != 0,
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:meu_mengao/data/api/api_service.dart';
 import 'package:meu_mengao/data/database/entities/noticia_entity.dart';
 import 'package:meu_mengao/data/database/meumengao_database.dart';
@@ -36,6 +37,9 @@ class NoticiasRepository {
 
       return savedNoticias.toList();
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return receivedNoticias;
     }
   }

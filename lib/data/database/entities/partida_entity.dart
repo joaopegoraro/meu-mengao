@@ -17,33 +17,37 @@ class PartidaEntity {
     required this.escudoFora,
   });
 
-  final String id;
-  final String campeonatoId;
-  final String campeonato;
-  final String data;
+  final String? id;
+  final String? campeonatoId;
+  final String? campeonato;
+  final String? data;
 
   final String? rodadaName;
   final int? rodadaIndex;
 
-  final String timeCasa;
+  final String? timeCasa;
   final int? golsCasa;
 
-  final String timeFora;
+  final String? timeFora;
   final int? golsFora;
 
-  final String escudoCasa;
-  final String escudoFora;
+  final String? escudoCasa;
+  final String? escudoFora;
 
   Partida toPartida() {
     return Partida(
-      id: id,
-      campeonato: campeonato,
-      campeonatoId: campeonatoId,
-      data: DateTime.fromMillisecondsSinceEpoch(int.tryParse(data) ?? 0),
-      timeCasa: timeCasa,
-      timeFora: timeFora,
-      escudoCasa: escudoCasa,
-      escudoFora: escudoFora,
+      id: id ?? "",
+      campeonato: campeonato ?? "",
+      campeonatoId: campeonatoId ?? "",
+      data: DateTime.fromMillisecondsSinceEpoch(int.tryParse(data ?? "") ?? 0),
+      timeCasa: timeCasa ?? "",
+      timeFora: timeFora ?? "",
+      golsCasa: golsCasa,
+      golsFora: golsFora,
+      escudoCasa: escudoCasa ?? "",
+      escudoFora: escudoFora ?? "",
+      rodadaName: rodadaName,
+      rodadaIndex: rodadaIndex,
     );
   }
 

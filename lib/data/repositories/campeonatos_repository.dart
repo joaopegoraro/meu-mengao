@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:meu_mengao/data/api/api_service.dart';
 import 'package:meu_mengao/data/database/entities/campeonato_entity.dart';
 import 'package:meu_mengao/data/database/meumengao_database.dart';
@@ -33,6 +34,9 @@ class CampeonatosRepository {
 
       return savedCampeonatos.toList();
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return receivedCampeonatos;
     }
   }

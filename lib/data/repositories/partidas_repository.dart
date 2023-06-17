@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:meu_mengao/data/api/api_service.dart';
 import 'package:meu_mengao/data/database/meumengao_database.dart';
 import 'package:sqflite/sqflite.dart';
@@ -33,6 +34,9 @@ class PartidasRepository {
       final savedPartida = savedPartidaMap.map((e) => PartidaEntity.fromMap(e).toPartida());
       return savedPartida.toList().first;
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return receivedPartida;
     }
   }
@@ -66,6 +70,9 @@ class PartidasRepository {
       final savedPartidas = savedPartidaMap.map((e) => PartidaEntity.fromMap(e).toPartida());
       return savedPartidas.toList();
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return receivedPartidas;
     }
   }
@@ -99,6 +106,9 @@ class PartidasRepository {
       final savedPartidas = savedPartidaMap.map((e) => PartidaEntity.fromMap(e).toPartida());
       return savedPartidas.toList();
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return receivedPartidas;
     }
   }
@@ -131,6 +141,9 @@ class PartidasRepository {
       final savedPartidas = savedPartidaMap.map((e) => PartidaEntity.fromMap(e).toPartida());
       return savedPartidas.toList();
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return receivedPartidas;
     }
   }

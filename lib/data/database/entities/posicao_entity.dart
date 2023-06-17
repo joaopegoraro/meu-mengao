@@ -20,39 +20,39 @@ class PosicaoEntity {
     required this.classificacaoIndex,
   });
 
-  final String id;
-  final int posicao;
-  final String nomeTime;
+  final String? id;
+  final int? posicao;
+  final String? nomeTime;
   final String? escudoTime;
-  final String pontos;
-  final String jogos;
-  final String vitorias;
-  final String empates;
-  final String derrotas;
-  final String golsFeitos;
-  final String golsSofridos;
-  final String saldoGols;
-  final String campeonatoId;
-  final String classificacaoName;
-  final int classificacaoIndex;
+  final String? pontos;
+  final String? jogos;
+  final String? vitorias;
+  final String? empates;
+  final String? derrotas;
+  final String? golsFeitos;
+  final String? golsSofridos;
+  final String? saldoGols;
+  final String? campeonatoId;
+  final String? classificacaoName;
+  final int? classificacaoIndex;
 
   Posicao toPosicao() {
     return Posicao(
-      id: id,
-      posicao: posicao,
-      nomeTime: nomeTime,
-      pontos: pontos,
-      jogos: jogos,
-      vitorias: vitorias,
-      empates: empates,
-      derrotas: derrotas,
-      golsFeitos: golsFeitos,
-      golsSofridos: golsSofridos,
-      saldoGols: saldoGols,
+      id: id ?? "",
+      posicao: posicao ?? 0,
+      nomeTime: nomeTime ?? "",
+      pontos: pontos ?? "",
+      jogos: jogos ?? "",
+      vitorias: vitorias ?? "",
+      empates: empates ?? "",
+      derrotas: derrotas ?? "",
+      golsFeitos: golsFeitos ?? "",
+      golsSofridos: golsSofridos ?? "",
+      saldoGols: saldoGols ?? "",
       escudoTime: escudoTime,
-      campeonatoId: campeonatoId,
-      classificacaoName: classificacaoName,
-      classificacaoIndex: classificacaoIndex,
+      campeonatoId: campeonatoId ?? "",
+      classificacaoName: classificacaoName ?? "",
+      classificacaoIndex: classificacaoIndex ?? 0,
     );
   }
 

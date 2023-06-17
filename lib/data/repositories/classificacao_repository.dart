@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:meu_mengao/data/api/api_service.dart';
 import 'package:meu_mengao/data/database/entities/posicao_entity.dart';
 import 'package:meu_mengao/data/database/meumengao_database.dart';
@@ -37,6 +38,9 @@ class ClassificacaoRepository {
 
       return savedClassificacao.toList();
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return receivedClassificacao;
     }
   }
