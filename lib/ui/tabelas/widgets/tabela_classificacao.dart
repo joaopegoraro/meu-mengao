@@ -2,6 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:meu_mengao/data/models/posicao.dart';
 import 'package:meu_mengao/ui/widgets/partida/escudo_time.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../data/models/rodada.dart';
 
@@ -9,12 +11,33 @@ class TabelaClassificacao extends StatelessWidget {
   const TabelaClassificacao({
     super.key,
     required this.classificacao,
+    required this.isLoading,
   });
 
   final List<Posicao> classificacao;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.white,
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Color(0xFFF3F3F3),
+            borderRadius: BorderRadius.all(Radius.circular(18)),
+          ),
+          padding: const EdgeInsets.all(15),
+          child: Container(
+            height: 80.h,
+            width: double.infinity,
+            color: Colors.grey,
+          ),
+        ),
+      );
+    }
+
     final theme = Theme.of(context);
     final rodadasComPosicoes = classificacao
         .groupListsBy((posicao) {
@@ -68,21 +91,19 @@ class TabelaClassificacao extends StatelessWidget {
                     const spacingColumn = SizedBox(width: horizontalSpacing);
                     final rows = [
                       spacingColumn,
-                      Expanded(
-                        child: Text("${time.posicao}",
-                            textAlign: TextAlign.start,
-                            maxLines: 1,
-                            overflow: TextOverflow.visible,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              fontWeight: FontWeight.w500,
-                            )),
-                      ),
+                      Text("${time.posicao}",
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          overflow: TextOverflow.visible,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w500,
+                          )),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           EscudoTime(escudo: time.escudoTime, height: 20),
-                          Expanded(
+                          Flexible(
                             child: Text(
                               "\t${time.nomeTime}",
                               maxLines: 1,

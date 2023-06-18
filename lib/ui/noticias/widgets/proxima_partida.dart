@@ -15,7 +15,9 @@ class _ProximaPartidaState extends State<ProximaPartida> {
   @override
   void initState() {
     super.initState();
-    context.read<ProximaPartidaProvider>().listarProximaPartida();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProximaPartidaProvider>().listarProximaPartida();
+    });
   }
 
   @override

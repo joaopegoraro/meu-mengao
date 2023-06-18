@@ -11,6 +11,24 @@ class CampeonatosRepository {
   final ApiService _api = ApiService();
   Future<Database> get _database async => MeuMengaoDatabase.instance;
 
+  Future<Campeonato?> get(String id) async {
+    try {
+      final db = await _database;
+      final savedCampeonatoMap = await db.query(
+        CampeonatoEntity.tableName,
+        where: "${CampeonatoEntity.idColumn} = ?",
+        whereArgs: [id],
+      );
+      final savedCampeonato = savedCampeonatoMap.map((e) => CampeonatoEntity.fromMap(e).toCampeonato()).firstOrNull;
+      return savedCampeonato;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
   Future<List<Campeonato>> getAll() async {
     final receivedCampeonatos = await _api.getCampeonatos() ?? [];
     try {

@@ -15,10 +15,13 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
   @override
   void initState() {
     super.initState();
-    final campeonatosProvider = context.read<CampeonatosProvider>();
-    campeonatosProvider.listarCampeonatos();
-    final proximaPartida = context.read<ProximaPartidaProvider>().proximaPartida;
-    campeonatosProvider.setCampeonatoSelecionado(proximaPartida?.campeonatoId);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final campeonatosProvider = context.read<CampeonatosProvider>();
+      final proximaPartida = context.read<ProximaPartidaProvider>().proximaPartida;
+      campeonatosProvider.listarCampeonatos().then((_) {
+        campeonatosProvider.setCampeonatoSelecionado(proximaPartida?.campeonatoId);
+      });
+    });
   }
 
   @override
@@ -28,46 +31,51 @@ class _TelaTabelasState extends State<TelaTabelas> with AutomaticKeepAliveClient
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Expanded(
-      child: Consumer<CampeonatosProvider>(
-        builder: (context, campeonatosProvider, _) {
-          final campeonatos = campeonatosProvider.campeonatos;
-          final campeonatoSelecionado = campeonatosProvider.campeonatoSelecionado;
-          final isLoading = campeonatosProvider.isLoading;
+    return Consumer<CampeonatosProvider>(
+      builder: (context, campeonatosProvider, _) {
+        final campeonatos = campeonatosProvider.campeonatos;
+        final campeonatoSelecionado = campeonatosProvider.campeonatoSelecionado;
+        final isLoading = campeonatosProvider.isLoading;
 
-          if (isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
+        if (isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  DropdownButton(
-                    isExpanded: true,
-                    value: campeonatoSelecionado?.id ?? campeonatos.firstOrNull?.id,
-                    items: campeonatos.map((campeonato) {
-                      return DropdownMenuItem<String>(
-                        value: campeonato.id,
-                        child: Expanded(
-                          child: Text(
-                            campeonato.nome,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (id) => campeonatosProvider.setCampeonatoSelecionado(id),
-                  ),
-                  CampeonatoItem(campeonato: campeonatoSelecionado),
-                ],
-              ),
-            ),
+        if (campeonatos.isEmpty) {
+          return const Center(
+            child: Text("Não foi encontrado nehum campeonato."),
           );
-        },
-      ),
+        }
+
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                DropdownButton(
+                  isExpanded: true,
+                  value: campeonatoSelecionado?.id ?? campeonatos.firstOrNull?.id,
+                  items: campeonatos.map((campeonato) {
+                    return DropdownMenuItem<String>(
+                      value: campeonato.id,
+                      child: Text(
+                        campeonato.nome,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (id) => campeonatosProvider.setCampeonatoSelecionado(id),
+                ),
+                CampeonatoItem(
+                  key: Key(campeonatoSelecionado?.id ?? ""),
+                  campeonato: campeonatoSelecionado,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

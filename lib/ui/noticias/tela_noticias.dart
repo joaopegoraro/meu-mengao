@@ -17,7 +17,9 @@ class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClie
   @override
   void initState() {
     super.initState();
-    context.read<NoticiasProvider>().listarNoticias();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NoticiasProvider>().listarNoticias();
+    });
   }
 
   @override
@@ -68,7 +70,7 @@ class _TelaNoticiasState extends State<TelaNoticias> with AutomaticKeepAliveClie
 
             if (noticias.isEmpty) {
               return const Padding(
-                padding: EdgeInsets.only(top: 20.0),
+                padding: EdgeInsets.only(top: 50.0),
                 child: Center(
                   child: Text("Não foi encontrada nenhuma notícia."),
                 ),

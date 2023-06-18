@@ -47,7 +47,7 @@ class CampeonatoEntity {
       anoColumn: ano,
       logoColumn: logo,
       rodadaAtualColumn: rodadaAtual,
-      possuiClassificacaoColumn: possuiClassificacao,
+      possuiClassificacaoColumn: possuiClassificacao == true ? 1 : 0,
     };
   }
 

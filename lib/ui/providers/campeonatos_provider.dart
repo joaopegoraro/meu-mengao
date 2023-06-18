@@ -15,17 +15,22 @@ class CampeonatosProvider extends ChangeNotifier {
   Campeonato? get campeonatoSelecionado => _campeonatoSelecionado;
 
   void setCampeonatoSelecionado(String? campeonatoId) {
-    _campeonatoSelecionado = campeonatos.firstWhere((campeonato) {
-      return campeonato.id == campeonatoId;
-    });
-    notifyListeners();
+    if (campeonatoId == null) {
+      _campeonatoSelecionado = null;
+      notifyListeners();
+    } else {
+      _campeonatosRepository.get(campeonatoId).then((campeonato) {
+        _campeonatoSelecionado = campeonato;
+        notifyListeners();
+      });
+    }
   }
 
-  void listarCampeonatos() {
+  Future<void> listarCampeonatos() async {
     _isLoading = true;
     notifyListeners();
 
-    _campeonatosRepository.getAll().then((lista) {
+    await _campeonatosRepository.getAll().then((lista) {
       _campeonatos = lista;
       notifyListeners();
     }).whenComplete(() {

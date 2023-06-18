@@ -9,10 +9,12 @@ class TabelaRodada extends StatefulWidget {
     super.key,
     required this.partidas,
     required this.indexInicial,
+    required this.isLoading,
   });
 
   final List<Partida> partidas;
   final int indexInicial;
+  final bool isLoading;
 
   @override
   State<TabelaRodada> createState() => TabelaRodadaState();
@@ -35,6 +37,17 @@ class TabelaRodadaState extends State<TabelaRodada> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isLoading) {
+      return Column(
+        children: List.generate(10, (_) {
+          return const PartidaItem(
+            partida: null,
+            mostrarCampeonato: false,
+          );
+        }),
+      );
+    }
+
     final theme = Theme.of(context);
 
     final rodadas = widget.partidas
