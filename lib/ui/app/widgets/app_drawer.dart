@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:meu_mengao/ui/notifiers/dark_mode_notifier.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -41,28 +42,33 @@ class AppDrawerState extends State<AppDrawer> {
               ...[
                 {
                   "icon": Icons.favorite,
-                  "text": "Doar para o desenvolvedor",
-                  "link": "",
+                  "text": "Apoie o desenvolvedor",
+                  "link": () {
+                    final Uri url = Uri.parse("https://liberapay.com/joao_pegoraro/");
+                    launchUrl(url);
+                  },
                 },
                 {
                   "icon": Icons.star,
                   "text": "Avaliar o aplicativo",
-                  "link": "",
+                  "link": () {
+                    LaunchReview.launch();
+                  },
                 },
                 {
                   "icon": Icons.code,
                   "text": "Ver no GitHub",
-                  "link": "https://github.com/joaopegoraro/meu-mengao",
+                  "link": () {
+                    final Uri url = Uri.parse("https://github.com/joaopegoraro/meu-mengao");
+                    launchUrl(url);
+                  },
                 },
               ].map((item) {
                 final icon = item['icon'] as IconData;
                 final text = item['text'] as String;
-                final link = item['link'] as String;
+                final action = item['link'] as VoidCallback;
                 return GestureDetector(
-                  onTap: () {
-                    final Uri url = Uri.parse(link);
-                    launchUrl(url);
-                  },
+                  onTap: action,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Row(

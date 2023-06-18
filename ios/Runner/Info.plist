@@ -52,5 +52,10 @@
 			<string>sms</string>
 			<string>tel</string>
 		</array>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>itms-beta</string>
+			<string>itms</string>
+		</array>
 	</dict>
 </plist>
