@@ -35,8 +35,14 @@ class CampeonatoItemState extends ConsumerState<CampeonatoItem> {
   @override
   Widget build(BuildContext context) {
     if (widget.campeonato?.id.isEmpty != false) {
-      return const Center(
-        child: Text("Não foi encontrada nenhuma tabela para esse campeonato"),
+      return const Padding(
+        padding: EdgeInsets.all(50.0),
+        child: Center(
+          child: Text(
+            "Não foi encontrada nenhuma tabela para esse campeonato",
+            textAlign: TextAlign.center,
+          ),
+        ),
       );
     }
 
@@ -52,8 +58,14 @@ class CampeonatoItemState extends ConsumerState<CampeonatoItem> {
           final isLoadingRodadas = rodadasNotifier.isLoading;
 
           if (!isLoadingRodadas && !isLoadingClassificacao && classificacao.isEmpty && rodadas.isEmpty) {
-            return const Center(
-              child: Text("Não foi encontrada nenhuma tabela para esse campeonato"),
+            return const Padding(
+              padding: EdgeInsets.all(50.0),
+              child: Center(
+                child: Text(
+                  "Não foi encontrada nenhuma tabela para esse campeonato",
+                  textAlign: TextAlign.center,
+                ),
+              ),
             );
           }
 

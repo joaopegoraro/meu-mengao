@@ -30,8 +30,14 @@ class _TelaCalendarioState extends ConsumerState<TelaCalendario> with AutomaticK
     final isLoading = notifier.isLoading;
 
     if (!isLoading && resultados.isEmpty) {
-      return const Center(
-        child: Text("Não foi encontrada nenhuma partida."),
+      return const Padding(
+        padding: EdgeInsets.all(50.0),
+        child: Center(
+          child: Text(
+            "Não foi encontrada nenhuma partida.",
+            textAlign: TextAlign.center,
+          ),
+        ),
       );
     }
 

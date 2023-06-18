@@ -69,9 +69,12 @@ class _TelaNoticiasState extends ConsumerState<TelaNoticias> with AutomaticKeepA
 
         if (noticias.isEmpty) {
           return const Padding(
-            padding: EdgeInsets.only(top: 50.0),
+            padding: EdgeInsets.all(50.0),
             child: Center(
-              child: Text("Não foi encontrada nenhuma notícia."),
+              child: Text(
+                "Não foi encontrada nenhuma notícia.",
+                textAlign: TextAlign.center,
+              ),
             ),
           );
         }

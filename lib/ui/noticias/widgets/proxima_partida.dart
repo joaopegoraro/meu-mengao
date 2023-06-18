@@ -47,8 +47,14 @@ class _ProximaPartidaState extends ConsumerState<ProximaPartida> {
               padding: const EdgeInsets.only(top: 20.0),
               child: Builder(builder: (_) {
                 if (!isLoading && proximaPartida == null) {
-                  return const Center(
-                    child: Text("Não foi encontrada nenhuma partida."),
+                  return const Padding(
+                    padding: EdgeInsets.all(50.0),
+                    child: Center(
+                      child: Text(
+                        "Não foi encontrada nenhuma partida.",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   );
                 }
 

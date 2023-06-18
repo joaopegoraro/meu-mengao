@@ -41,8 +41,14 @@ class _TelaTabelasState extends ConsumerState<TelaTabelas> with AutomaticKeepAli
     }
 
     if (campeonatos.isEmpty) {
-      return const Center(
-        child: Text("Não foi encontrado nehum campeonato."),
+      return const Padding(
+        padding: EdgeInsets.all(50.0),
+        child: Center(
+          child: Text(
+            "Não foi encontrado nehum campeonato.",
+            textAlign: TextAlign.center,
+          ),
+        ),
       );
     }
 
