@@ -75,7 +75,11 @@ class _AppScaffoldState extends ConsumerState<AppScaffold> {
       bottomNavigationBar: AppBottomNav(
         currentIndex: _pageIndex,
         clicarBotao: (index) => setState(() {
-          _pagerController.jumpToPage(index);
+          _pagerController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.fastEaseInToSlowEaseOut,
+          );
           _pageIndex = index;
         }),
       ),
