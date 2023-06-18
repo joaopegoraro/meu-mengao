@@ -25,7 +25,7 @@ class _DataPartidaState extends State<DataPartida> {
     final colorScheme = theme.colorScheme;
 
     final textStyle = theme.textTheme.labelLarge?.copyWith(
-      color: colorScheme.onBackground,
+      color: colorScheme.onSurface,
       fontWeight: FontWeight.w400,
     );
 
@@ -50,7 +50,10 @@ class _DataPartidaState extends State<DataPartida> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(IconData(0xe800, fontFamily: "TrophyIcon")),
+                  Icon(
+                    const IconData(0xe800, fontFamily: "TrophyIcon"),
+                    color: colorScheme.onSurface,
+                  ),
                   const SizedBox(width: 10),
                   Expanded(
                     flex: 4,
@@ -82,7 +85,10 @@ class _DataPartidaState extends State<DataPartida> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(Icons.calendar_month),
+                  Icon(
+                    Icons.calendar_month,
+                    color: colorScheme.onSurface,
+                  ),
                   const SizedBox(width: 10),
                   Flexible(
                     child: Column(
@@ -109,7 +115,10 @@ class _DataPartidaState extends State<DataPartida> {
           ],
           if (!mostrarCampeonato) ...[
             const Spacer(),
-            const Icon(Icons.calendar_month),
+            Icon(
+              Icons.calendar_month,
+              color: colorScheme.onSurface,
+            ),
             const SizedBox(width: 10),
             Text(
               "${widget.data} ${widget.horario}",

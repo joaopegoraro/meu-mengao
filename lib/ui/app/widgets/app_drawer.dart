@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:meu_mengao/ui/notifiers/dark_mode_notifier.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -102,10 +104,13 @@ class AppDrawerState extends State<AppDrawer> {
                       Icons.dark_mode,
                       color: theme.colorScheme.primary,
                     ),
-                    Switch(
-                      value: true,
-                      onChanged: (_) {},
-                    ),
+                    Consumer(builder: (_, ref, __) {
+                      final darkModeNotifier = ref.watch(darkModeNotifierProvider);
+                      return Switch(
+                        value: darkModeNotifier.isDarkMode,
+                        onChanged: darkModeNotifier.setDarkMode,
+                      );
+                    }),
                   ],
                 ),
               ),

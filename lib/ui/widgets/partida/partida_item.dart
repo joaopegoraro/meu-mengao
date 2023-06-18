@@ -17,13 +17,15 @@ class PartidaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
+      color: theme.colorScheme.background,
       child: Column(
         children: [
           if (partida == null)
             Shimmer.fromColors(
               baseColor: Colors.grey.shade300,
-              highlightColor: Colors.white,
+              highlightColor: theme.colorScheme.background,
               child: Container(
                 decoration: const BoxDecoration(
                   color: Color(0xFFF3F3F3),

@@ -17,14 +17,14 @@ class Placar extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     final textStyle = theme.textTheme.bodyLarge?.copyWith(
-      color: colorScheme.onBackground,
+      color: colorScheme.onSurface,
       fontWeight: FontWeight.w600,
     );
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xFFF3F3F3),
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(18),
           topRight: Radius.circular(18),
         ),

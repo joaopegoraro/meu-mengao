@@ -154,7 +154,7 @@ class TabelaClassificacao extends StatelessWidget {
                       if (index != 0) spacingRow,
                       TableRow(
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF3F3F3),
+                          color: theme.colorScheme.surface,
                           borderRadius: BorderRadius.circular(4),
                         ),
                         children: rows.mapIndexed((index, widget) {

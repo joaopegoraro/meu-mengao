@@ -41,13 +41,15 @@ class ListaPartidas extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF3F3F3),
+                      color: theme.colorScheme.surface,
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Text(
                       DateFormat.MMMM(Platform.localeName).format(dataPartida!).toUpperCase(),
                       textAlign: TextAlign.start,
-                      style: theme.textTheme.titleMedium,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                      ),
                     ),
                   ),
                 ),

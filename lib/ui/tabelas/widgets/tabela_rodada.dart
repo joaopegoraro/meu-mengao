@@ -61,7 +61,10 @@ class TabelaRodadaState extends State<TabelaRodada> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
-              child: const Icon(Icons.arrow_left),
+              child: Icon(
+                Icons.arrow_left,
+                color: theme.colorScheme.onBackground,
+              ),
               onTap: () {
                 final newIndex = _pageIndex - 1;
                 if (newIndex >= 0 && newIndex < rodadas.length) {
@@ -77,7 +80,10 @@ class TabelaRodadaState extends State<TabelaRodada> {
               ),
             ),
             GestureDetector(
-              child: const Icon(Icons.arrow_right),
+              child: Icon(
+                Icons.arrow_right,
+                color: theme.colorScheme.onBackground,
+              ),
               onTap: () {
                 final newIndex = _pageIndex + 1;
                 if (newIndex >= 0 && newIndex < rodadas.length) {
