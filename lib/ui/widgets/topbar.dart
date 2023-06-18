@@ -4,9 +4,11 @@ class TopBar extends StatelessWidget {
   const TopBar({
     super.key,
     required this.titulo,
+    required this.toggleDrawer,
   });
 
   final String titulo;
+  final VoidCallback toggleDrawer;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +36,12 @@ class TopBar extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Icon(
-              Icons.menu,
-              color: colorScheme.onPrimary,
+            GestureDetector(
+              onTap: toggleDrawer,
+              child: Icon(
+                Icons.menu,
+                color: colorScheme.onPrimary,
+              ),
             ),
           ],
         ),
