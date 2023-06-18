@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/ui/providers/resultados_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meu_mengao/ui/notifiers/resultados_notifier.dart';
 import 'package:meu_mengao/ui/widgets/partida/lista_partidas.dart';
-import 'package:provider/provider.dart';
 
-class TelaResultados extends StatefulWidget {
+class TelaResultados extends ConsumerStatefulWidget {
   const TelaResultados({super.key});
 
   @override
-  State<TelaResultados> createState() => _TelaResultadosState();
+  ConsumerState<TelaResultados> createState() => _TelaResultadosState();
 }
 
-class _TelaResultadosState extends State<TelaResultados> with AutomaticKeepAliveClientMixin<TelaResultados> {
+class _TelaResultadosState extends ConsumerState<TelaResultados> with AutomaticKeepAliveClientMixin<TelaResultados> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ResultadosProvider>().listarResultados();
+      ref.read(resultadosNotifierProvider).listarResultados();
     });
   }
 
@@ -25,22 +25,19 @@ class _TelaResultadosState extends State<TelaResultados> with AutomaticKeepAlive
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Consumer<ResultadosProvider>(
-      builder: (context, provider, _) {
-        final resultados = provider.resultados;
-        final isLoading = provider.isLoading;
+    final notifier = ref.watch(resultadosNotifierProvider);
+    final resultados = notifier.resultados;
+    final isLoading = notifier.isLoading;
 
-        if (!isLoading && resultados.isEmpty) {
-          return const Center(
-            child: Text("Não foi encontrada nenhuma partida."),
-          );
-        }
+    if (!isLoading && resultados.isEmpty) {
+      return const Center(
+        child: Text("Não foi encontrada nenhuma partida."),
+      );
+    }
 
-        return ListaPartidas(
-          partidas: isLoading ? List.generate(10, (_) => null) : resultados,
-          mostrarCampeonato: true,
-        );
-      },
+    return ListaPartidas(
+      partidas: isLoading ? List.generate(10, (_) => null) : resultados,
+      mostrarCampeonato: true,
     );
   }
 }

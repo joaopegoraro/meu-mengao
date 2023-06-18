@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/ui/app/widgets/app_bottom_nav.dart';
 import 'package:meu_mengao/ui/noticias/tela_noticias.dart';
-import 'package:meu_mengao/ui/providers/calendario_provider.dart';
-import 'package:meu_mengao/ui/providers/campeonatos_provider.dart';
-import 'package:meu_mengao/ui/providers/classificacao_provider.dart';
-import 'package:meu_mengao/ui/providers/noticias_provider.dart';
-import 'package:meu_mengao/ui/providers/proxima_partida_provider.dart';
-import 'package:meu_mengao/ui/providers/resultados_provider.dart';
-import 'package:meu_mengao/ui/providers/rodadas_provider.dart';
+import 'package:meu_mengao/ui/notifiers/auth_notifier.dart';
 import 'package:meu_mengao/ui/widgets/topbar.dart';
-import 'package:provider/provider.dart';
 
 import '../../calendario/tela_calendario.dart';
 import '../../resultados/tela_resultados.dart';
 import '../../tabelas/tela_tabelas.dart';
 
-class AppScaffold extends StatefulWidget {
+class AppScaffold extends ConsumerStatefulWidget {
   const AppScaffold({super.key});
 
   @override
-  State<AppScaffold> createState() => _AppScaffoldState();
+  ConsumerState<AppScaffold> createState() => _AppScaffoldState();
 }
 
-class _AppScaffoldState extends State<AppScaffold> {
+class _AppScaffoldState extends ConsumerState<AppScaffold> {
   int _pageIndex = 0;
   late final PageController _pagerController;
 
@@ -42,6 +36,10 @@ class _AppScaffoldState extends State<AppScaffold> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(authNotifierProvider).signIn();
+    });
 
     _pagerController = PageController(
       initialPage: _pageIndex,
@@ -82,17 +80,26 @@ class _AppScaffoldState extends State<AppScaffold> {
         }),
       ),
       body: SafeArea(
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider<NoticiasProvider>(create: (_) => NoticiasProvider()),
-            ChangeNotifierProvider<ProximaPartidaProvider>(create: (_) => ProximaPartidaProvider()),
-            ChangeNotifierProvider<ResultadosProvider>(create: (_) => ResultadosProvider()),
-            ChangeNotifierProvider<CalendarioProvider>(create: (_) => CalendarioProvider()),
-            ChangeNotifierProvider<CampeonatosProvider>(create: (_) => CampeonatosProvider()),
-            ChangeNotifierProvider<ClassificacaoProvider>(create: (_) => ClassificacaoProvider()),
-            ChangeNotifierProvider<RodadasProvider>(create: (_) => RodadasProvider()),
-          ],
-          child: PageView(
+        child: Builder(builder: (_) {
+          final authNotifier = ref.watch(authNotifierProvider);
+          final isLoading = authNotifier.isLoading;
+          final authToken = authNotifier.token;
+
+          if (isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (authToken == null || authToken.isEmpty) {
+            return const Center(
+              child: Text(
+                "Ocorreu um erro ao tentar se conectar ao servidor. Tente novamente mais tarde ou entre em contato com o suporte",
+              ),
+            );
+          }
+
+          return PageView(
             controller: _pagerController,
             onPageChanged: (index) => setState(() {
               _pageIndex = index;
@@ -103,8 +110,8 @@ class _AppScaffoldState extends State<AppScaffold> {
               TelaResultados(),
               TelaTabelas(),
             ],
-          ),
-        ),
+          );
+        }),
       ),
     );
   }

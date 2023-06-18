@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/data/repositories/partidas_repository.dart';
 
 import '../../data/models/partida.dart';
 
-class RodadasProvider extends ChangeNotifier {
-  final _partidasRepository = PartidasRepository();
+class RodadasNotifier extends ChangeNotifier {
+  RodadasNotifier(this._partidasRepository);
+  final PartidasRepository _partidasRepository;
 
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   List<Partida> _rodadas = [];
@@ -26,3 +29,8 @@ class RodadasProvider extends ChangeNotifier {
     });
   }
 }
+
+final rodadasNotifierProvider = ChangeNotifierProvider<RodadasNotifier>((ref) {
+  final partidasRepository = ref.watch(partidasRepositoryProvider);
+  return RodadasNotifier(partidasRepository);
+});

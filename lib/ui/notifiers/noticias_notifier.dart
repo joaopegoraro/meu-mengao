@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/data/models/noticia.dart';
 import 'package:meu_mengao/data/repositories/noticias_repository.dart';
 
-class NoticiasProvider extends ChangeNotifier {
-  final _noticiasRepository = NoticiasRepository();
+class NoticiasNotifier extends ChangeNotifier {
+  NoticiasNotifier(this._noticiasRepository);
+  final NoticiasRepository _noticiasRepository;
 
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   List<Noticia> _noticias = [];
@@ -24,3 +27,8 @@ class NoticiasProvider extends ChangeNotifier {
     });
   }
 }
+
+final noticiasNotifierProvider = ChangeNotifierProvider<NoticiasNotifier>((ref) {
+  final noticiasRepository = ref.watch(noticiasRepositoryProvider);
+  return NoticiasNotifier(noticiasRepository);
+});

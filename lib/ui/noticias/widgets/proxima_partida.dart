@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/ui/providers/proxima_partida_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meu_mengao/ui/notifiers/proxima_partida_notifier.dart';
 
 import '../../widgets/partida/partida_item.dart';
 
-class ProximaPartida extends StatefulWidget {
+class ProximaPartida extends ConsumerStatefulWidget {
   const ProximaPartida({super.key});
 
   @override
-  State<ProximaPartida> createState() => _ProximaPartidaState();
+  ConsumerState<ProximaPartida> createState() => _ProximaPartidaState();
 }
 
-class _ProximaPartidaState extends State<ProximaPartida> {
+class _ProximaPartidaState extends ConsumerState<ProximaPartida> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ProximaPartidaProvider>().listarProximaPartida();
+      ref.read(proximaPartidaNotifierProvider).listarProximaPartida();
     });
   }
 
@@ -24,6 +24,9 @@ class _ProximaPartidaState extends State<ProximaPartida> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final notifier = ref.watch(proximaPartidaNotifierProvider);
+    final proximaPartida = notifier.proximaPartida;
+    final isLoading = notifier.isLoading;
 
     return SizedBox(
       width: double.infinity,
@@ -42,10 +45,7 @@ class _ProximaPartidaState extends State<ProximaPartida> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: Consumer<ProximaPartidaProvider>(builder: (context, provider, _) {
-                final proximaPartida = provider.proximaPartida;
-                final isLoading = provider.isLoading;
-
+              child: Builder(builder: (_) {
                 if (!isLoading && proximaPartida == null) {
                   return const Center(
                     child: Text("Não foi encontrada nenhuma partida."),

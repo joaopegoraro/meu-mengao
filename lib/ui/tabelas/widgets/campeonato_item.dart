@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:meu_mengao/ui/providers/classificacao_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meu_mengao/ui/notifiers/classificacao_notifier.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/tabela_classificacao.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/tabela_rodada.dart';
-import 'package:provider/provider.dart';
 
 import '../../../data/models/campeonato.dart';
-import '../../providers/rodadas_provider.dart';
+import '../../notifiers/rodadas_notifier.dart';
 
-class CampeonatoItem extends StatefulWidget {
+class CampeonatoItem extends ConsumerStatefulWidget {
   const CampeonatoItem({
     super.key,
     required this.campeonato,
@@ -16,18 +16,18 @@ class CampeonatoItem extends StatefulWidget {
   final Campeonato? campeonato;
 
   @override
-  State<CampeonatoItem> createState() => CampeonatoItemState();
+  ConsumerState<CampeonatoItem> createState() => CampeonatoItemState();
 }
 
-class CampeonatoItemState extends State<CampeonatoItem> {
+class CampeonatoItemState extends ConsumerState<CampeonatoItem> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final campeonatoId = widget.campeonato?.id;
       if (campeonatoId != null) {
-        context.read<ClassificacaoProvider>().listarClassificacao(campeonatoId);
-        context.read<RodadasProvider>().listarRodadas(campeonatoId);
+        ref.read(classificacaoNotifierProvider).listarClassificacao(campeonatoId);
+        ref.read(rodadasNotifierProvider).listarRodadas(campeonatoId);
       }
     });
   }
@@ -41,13 +41,15 @@ class CampeonatoItemState extends State<CampeonatoItem> {
     }
 
     return SingleChildScrollView(
-      child: Consumer2<ClassificacaoProvider, RodadasProvider>(
-        builder: (context, classificacaoProvider, rodadasProvider, _) {
-          final classificacao = classificacaoProvider.classificacao;
-          final isLoadingClassificacao = classificacaoProvider.isLoading;
+      child: Builder(
+        builder: (context) {
+          final classificacaoNotifier = ref.watch(classificacaoNotifierProvider);
+          final classificacao = classificacaoNotifier.classificacao;
+          final isLoadingClassificacao = classificacaoNotifier.isLoading;
 
-          final rodadas = rodadasProvider.rodadas;
-          final isLoadingRodadas = rodadasProvider.isLoading;
+          final rodadasNotifier = ref.watch(rodadasNotifierProvider);
+          final rodadas = rodadasNotifier.rodadas;
+          final isLoadingRodadas = rodadasNotifier.isLoading;
 
           if (!isLoadingRodadas && !isLoadingClassificacao && classificacao.isEmpty && rodadas.isEmpty) {
             return const Center(

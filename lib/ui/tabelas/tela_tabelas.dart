@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meu_mengao/ui/providers/campeonatos_provider.dart';
-import 'package:meu_mengao/ui/providers/proxima_partida_provider.dart';
+import 'package:meu_mengao/ui/notifiers/campeonatos_notifier.dart';
+import 'package:meu_mengao/ui/notifiers/proxima_partida_notifier.dart';
 import 'package:meu_mengao/ui/tabelas/widgets/campeonato_item.dart';
 
 class TelaTabelas extends ConsumerStatefulWidget {
@@ -16,8 +16,8 @@ class _TelaTabelasState extends ConsumerState<TelaTabelas> with AutomaticKeepAli
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final campeonatosProvider = context.read<CampeonatosProvider>();
-      final proximaPartida = context.read<ProximaPartidaProvider>().proximaPartida;
+      final campeonatosProvider = ref.read(campeonatosNotifierProvider);
+      final proximaPartida = ref.read(proximaPartidaNotifierProvider).proximaPartida;
       campeonatosProvider.listarCampeonatos().then((_) {
         campeonatosProvider.setCampeonatoSelecionado(proximaPartida?.campeonatoId);
       });
@@ -31,9 +31,10 @@ class _TelaTabelasState extends ConsumerState<TelaTabelas> with AutomaticKeepAli
   Widget build(BuildContext context) {
     super.build(context);
 
-    final campeonatos = campeonatosProvider.campeonatos;
-    final campeonatoSelecionado = campeonatosProvider.campeonatoSelecionado;
-    final isLoading = campeonatosProvider.isLoading;
+    final notifier = ref.watch(campeonatosNotifierProvider);
+    final campeonatos = notifier.campeonatos;
+    final campeonatoSelecionado = notifier.campeonatoSelecionado;
+    final isLoading = notifier.isLoading;
 
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -63,7 +64,7 @@ class _TelaTabelasState extends ConsumerState<TelaTabelas> with AutomaticKeepAli
                   ),
                 );
               }).toList(),
-              onChanged: (id) => campeonatosProvider.setCampeonatoSelecionado(id),
+              onChanged: (id) => notifier.setCampeonatoSelecionado(id),
             ),
             CampeonatoItem(
               key: Key(campeonatoSelecionado?.id ?? ""),

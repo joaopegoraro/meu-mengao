@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/data/models/campeonato.dart';
 import 'package:meu_mengao/data/repositories/campeonatos_repository.dart';
 
-class CampeonatosProvider extends ChangeNotifier {
-  final _campeonatosRepository = CampeonatosRepository();
+class CampeonatosNotifier extends ChangeNotifier {
+  CampeonatosNotifier(this._campeonatosRepository);
+  final CampeonatosRepository _campeonatosRepository;
 
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   List<Campeonato> _campeonatos = [];
@@ -39,3 +42,8 @@ class CampeonatosProvider extends ChangeNotifier {
     });
   }
 }
+
+final campeonatosNotifierProvider = ChangeNotifierProvider<CampeonatosNotifier>((ref) {
+  final campeonatosRepository = ref.watch(campeonatosRepositoryProvider);
+  return CampeonatosNotifier(campeonatosRepository);
+});

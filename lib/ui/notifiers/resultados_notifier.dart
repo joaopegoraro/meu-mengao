@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/data/models/partida.dart';
 import 'package:meu_mengao/data/repositories/partidas_repository.dart';
 
-class ResultadosProvider extends ChangeNotifier {
-  final _partidasRepository = PartidasRepository();
+class ResultadosNotifier extends ChangeNotifier {
+  ResultadosNotifier(this._partidasRepository);
+  final PartidasRepository _partidasRepository;
 
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   List<Partida> _resultados = [];
@@ -24,3 +27,8 @@ class ResultadosProvider extends ChangeNotifier {
     });
   }
 }
+
+final resultadosNotifierProvider = ChangeNotifierProvider<ResultadosNotifier>((ref) {
+  final partidasRepository = ref.watch(partidasRepositoryProvider);
+  return ResultadosNotifier(partidasRepository);
+});

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/data/models/partida.dart';
 import 'package:meu_mengao/data/repositories/partidas_repository.dart';
 
-class CalendarioProvider extends ChangeNotifier {
-  final _partidasRepository = PartidasRepository();
+class CalendarioNotifier extends ChangeNotifier {
+  CalendarioNotifier(this._partidasRepository);
+  final PartidasRepository _partidasRepository;
 
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   List<Partida> _calendario = [];
@@ -24,3 +27,8 @@ class CalendarioProvider extends ChangeNotifier {
     });
   }
 }
+
+final calendarioNotifierProvider = ChangeNotifierProvider<CalendarioNotifier>((ref) {
+  final partidasRepository = ref.watch(partidasRepositoryProvider);
+  return CalendarioNotifier(partidasRepository);
+});
