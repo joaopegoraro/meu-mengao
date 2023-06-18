@@ -1,14 +1,22 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/data/api/api_service.dart';
 import 'package:meu_mengao/data/database/entities/noticia_entity.dart';
 import 'package:meu_mengao/data/database/meumengao_database.dart';
 import 'package:meu_mengao/data/models/noticia.dart';
 import 'package:sqflite/sqflite.dart';
 
-class NoticiasRepository {
-  final ApiService _api = ApiService();
+abstract class NoticiasRepository {
+  Future<List<Noticia>> getAll();
+}
+
+class NoticiasRepositoryImpl extends NoticiasRepository {
+  NoticiasRepositoryImpl(this._api);
+  final ApiService _api;
+
   Future<Database> get _database async => MeuMengaoDatabase.instance;
 
+  @override
   Future<List<Noticia>> getAll() async {
     final receivedNoticias = await _api.getNoticias() ?? [];
     try {
@@ -49,3 +57,8 @@ class NoticiasRepository {
     }
   }
 }
+
+final noticiasRepositoryProvider = Provider<NoticiasRepository>((ref) {
+  final apiService = ref.watch(apiServiceProvider);
+  return NoticiasRepositoryImpl(apiService);
+});

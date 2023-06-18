@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/data/api/api_service.dart';
 import 'package:meu_mengao/data/database/meumengao_database.dart';
 import 'package:sqflite/sqflite.dart';
@@ -6,10 +7,23 @@ import 'package:sqflite/sqflite.dart';
 import '../database/entities/partida_entity.dart';
 import '../models/partida.dart';
 
-class PartidasRepository {
-  final ApiService _api = ApiService();
+abstract class PartidasRepository {
+  Future<Partida?> getProximaPartida();
+
+  Future<List<Partida>> getResultados();
+
+  Future<List<Partida>> getCalendario();
+
+  Future<List<Partida>> getRodadas(String campeonatoId);
+}
+
+class PartidasRepositoryImpl extends PartidasRepository {
+  PartidasRepositoryImpl(this._api);
+  final ApiService _api;
+
   Future<Database> get _database async => MeuMengaoDatabase.instance;
 
+  @override
   Future<Partida?> getProximaPartida() async {
     final receivedPartida = await _api.getProximaPartida();
     try {
@@ -41,6 +55,7 @@ class PartidasRepository {
     }
   }
 
+  @override
   Future<List<Partida>> getResultados() async {
     final receivedPartidas = await _api.getResultados() ?? [];
     try {
@@ -77,6 +92,7 @@ class PartidasRepository {
     }
   }
 
+  @override
   Future<List<Partida>> getCalendario() async {
     final receivedPartidas = await _api.getCalendario() ?? [];
     try {
@@ -113,6 +129,7 @@ class PartidasRepository {
     }
   }
 
+  @override
   Future<List<Partida>> getRodadas(String campeonatoId) async {
     final receivedPartidas = await _api.getRodadas(campeonatoId) ?? [];
     try {
@@ -148,3 +165,8 @@ class PartidasRepository {
     }
   }
 }
+
+final partidasRepositoryProvider = Provider<PartidasRepository>((ref) {
+  final apiService = ref.watch(apiServiceProvider);
+  return PartidasRepositoryImpl(apiService);
+});

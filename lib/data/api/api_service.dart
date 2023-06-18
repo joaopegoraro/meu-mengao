@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:meu_mengao/data/models/campeonato.dart';
@@ -9,10 +10,30 @@ import 'package:meu_mengao/data/models/partida.dart';
 import 'package:meu_mengao/data/models/posicao.dart';
 import 'package:meu_mengao/data/repositories/auth_repository.dart';
 
-class ApiService {
-  final _authRepository = AuthRepository();
+abstract class ApiService {
+  Future<List<Noticia>?> getNoticias();
+
+  Future<Partida?> getProximaPartida();
+
+  Future<List<Partida>?> getResultados();
+
+  Future<List<Partida>?> getCalendario();
+
+  Future<List<Campeonato>?> getCampeonatos();
+
+  Future<List<Posicao>?> getClassificacao(String campeonatoId);
+
+  Future<List<Partida>?> getRodadas(String campeonatoId);
+}
+
+class ApiServiceImpl extends ApiService {
+  ApiServiceImpl(this._authRepository);
+
+  final AuthRepository _authRepository;
+
   static const _baseUrl = "http://192.168.3.9:3000/";
 
+  @override
   Future<List<Noticia>?> getNoticias() async {
     return _getData("noticias", (response) {
       final List noticias = jsonDecode(response.body);
@@ -20,12 +41,14 @@ class ApiService {
     });
   }
 
+  @override
   Future<Partida?> getProximaPartida() async {
     return _getData("partidas/proxima", (response) {
       return Partida.fromJson(response.body);
     });
   }
 
+  @override
   Future<List<Partida>?> getResultados() async {
     return _getData("partidas/resultados", (response) {
       final List jsonList = jsonDecode(response.body);
@@ -33,6 +56,7 @@ class ApiService {
     });
   }
 
+  @override
   Future<List<Partida>?> getCalendario() async {
     return _getData("partidas/calendario", (response) {
       final List jsonList = jsonDecode(response.body);
@@ -40,6 +64,7 @@ class ApiService {
     });
   }
 
+  @override
   Future<List<Campeonato>?> getCampeonatos() async {
     return _getData("campeonatos", (response) {
       final List jsonList = jsonDecode(response.body);
@@ -47,6 +72,7 @@ class ApiService {
     });
   }
 
+  @override
   Future<List<Posicao>?> getClassificacao(String campeonatoId) async {
     return _getData("posicao/campeonato/$campeonatoId", (response) {
       final List jsonList = jsonDecode(response.body);
@@ -54,6 +80,7 @@ class ApiService {
     });
   }
 
+  @override
   Future<List<Partida>?> getRodadas(String campeonatoId) async {
     return _getData("partidas/campeonato/$campeonatoId", (response) {
       final List jsonList = jsonDecode(response.body);
@@ -76,3 +103,8 @@ class ApiService {
     }
   }
 }
+
+final apiServiceProvider = Provider<ApiService>((ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return ApiServiceImpl(authRepository);
+});

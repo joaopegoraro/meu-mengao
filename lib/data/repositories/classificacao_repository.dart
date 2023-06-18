@@ -1,14 +1,22 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/data/api/api_service.dart';
 import 'package:meu_mengao/data/database/entities/posicao_entity.dart';
 import 'package:meu_mengao/data/database/meumengao_database.dart';
 import 'package:meu_mengao/data/models/posicao.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ClassificacaoRepository {
-  final ApiService _api = ApiService();
+abstract class ClassificacaoRepository {
+  Future<List<Posicao>> getWithCampeonatoId(String campeonatoId);
+}
+
+class ClassificacaoRepositoryImpl extends ClassificacaoRepository {
+  ClassificacaoRepositoryImpl(this._api);
+  final ApiService _api;
+
   Future<Database> get _database async => MeuMengaoDatabase.instance;
 
+  @override
   Future<List<Posicao>> getWithCampeonatoId(String campeonatoId) async {
     final receivedClassificacao = await _api.getClassificacao(campeonatoId) ?? [];
     try {
@@ -45,3 +53,8 @@ class ClassificacaoRepository {
     }
   }
 }
+
+final classificacaoRepositoryProvider = Provider<ClassificacaoRepository>((ref) {
+  final apiService = ref.watch(apiServiceProvider);
+  return ClassificacaoRepositoryImpl(apiService);
+});

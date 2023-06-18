@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meu_mengao/data/api/api_service.dart';
 import 'package:meu_mengao/data/database/entities/campeonato_entity.dart';
 import 'package:meu_mengao/data/database/entities/partida_entity.dart';
@@ -7,10 +8,19 @@ import 'package:meu_mengao/data/database/meumengao_database.dart';
 import 'package:meu_mengao/data/models/campeonato.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CampeonatosRepository {
-  final ApiService _api = ApiService();
+abstract class CampeonatosRepository {
+  Future<Campeonato?> get(String id);
+
+  Future<List<Campeonato>> getAll();
+}
+
+class CampeonatosRepositoryImpl extends CampeonatosRepository {
+  CampeonatosRepositoryImpl(this._api);
+  final ApiService _api;
+
   Future<Database> get _database async => MeuMengaoDatabase.instance;
 
+  @override
   Future<Campeonato?> get(String id) async {
     try {
       final db = await _database;
@@ -29,6 +39,7 @@ class CampeonatosRepository {
     }
   }
 
+  @override
   Future<List<Campeonato>> getAll() async {
     final receivedCampeonatos = await _api.getCampeonatos() ?? [];
     try {
@@ -80,3 +91,8 @@ class CampeonatosRepository {
     }
   }
 }
+
+final campeonatosRepositoryProvider = Provider<CampeonatosRepository>((ref) {
+  final apiService = ref.watch(apiServiceProvider);
+  return CampeonatosRepositoryImpl(apiService);
+});

@@ -72,7 +72,7 @@ class TabelaClassificacao extends StatelessWidget {
               },
               children: [
                 TableRow(
-                  children: ["", "", "CLUBE", "J", "V", "D", "E", "SG", "P", ""].map((text) {
+                  children: ["", "", "CLUBE", "J", "V", "E", "D", "SG", "P", ""].map((text) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Text(
