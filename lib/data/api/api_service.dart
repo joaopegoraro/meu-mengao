@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -30,8 +31,6 @@ class ApiServiceImpl extends ApiService {
   ApiServiceImpl(this._authRepository);
 
   final AuthRepository _authRepository;
-
-  static const _baseUrl = "http://192.168.3.9:3000/";
 
   @override
   Future<List<Noticia>?> getNoticias() async {
@@ -93,7 +92,8 @@ class ApiServiceImpl extends ApiService {
     T Function(Response response) parseResponse,
   ) async {
     try {
-      final url = Uri.parse(_baseUrl + endpoint);
+      final baseUrl = dotenv.env['BASE_URL'];
+      final url = Uri.parse("$baseUrl$endpoint");
       final token = await _authRepository.getToken();
       final response = await http.get(url, headers: {'Authorization': 'Bearer $token'});
       return response.statusCode == 200 ? parseResponse(response) : null;
