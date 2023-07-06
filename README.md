@@ -9,7 +9,7 @@ Made with Flutter, uses the
 [Meu Mengão API](https://github.com/joaopegoraro/meu-mengao-api) as the backend.
 
 #### PT-BR
-Aplicativo com a últimas notícias, resultados e tabelas do Flamengo, 
+Aplicativo com as últimas notícias, resultados e tabelas do Flamengo, 
 gratuito e sem anúncios.
 Feito em Flutter, utiliza o 
 [Meu Mengão API](https://github.com/joaopegoraro/meu-mengao-api) como backend.
@@ -33,7 +33,7 @@ The app is available for free in the
 ## Configuration
 ### API
 
-The app is made to be used with the 
+The app is supposed to be used with the 
 [Meu Mengão API](https://github.com/joaopegoraro/meu-mengao-api), which 
 expects a valid Firebase Token when receiving requests. You can learn 
 more about Firebase ID Tokens 
