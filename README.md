@@ -1,7 +1,6 @@
 # Meu Mengão
 [![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
-![Static Badge](https://img.shields.io/badge/Download%20in%20Play%20Store?style=social&logo=googleplay&link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.joaopegoraro.meu_mengao)
-
+[![Static Badge](https://img.shields.io/badge/Download%20in%20Play%20Store?style=social&logo=googleplay)](https://play.google.com/store/apps/details?id=com.joaopegoraro.meu_mengao)
 
 App with the latest Flamengo news, fixtures, results and standings, free and 
 with no ads.
