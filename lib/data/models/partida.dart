@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:intl/intl.dart';
 
+import '../../utils/date_utils.dart';
+
 class Partida {
   Partida({
     required this.id,
@@ -31,10 +33,12 @@ class Partida {
   String? get readableDate {
     if (data == null) return null;
     final now = DateTime.now();
+    final yesterday = now.subtract(const Duration(days: 1));
+    final tomorrow = now.add(const Duration(days: 1));
     final dayDifference = data!.difference(now).inDays;
-    if (dayDifference == -1) return "Ontem";
-    if (dayDifference == 0) return "Hoje";
-    if (dayDifference == 1) return "Amanhã";
+    if (DateUtils.areDatesSameDay(data!, yesterday)) return "Ontem";
+    if (DateUtils.areDatesSameDay(data!, now)) return "Hoje";
+    if (DateUtils.areDatesSameDay(data!, tomorrow)) return "Amanhã";
     if (dayDifference > 1 && dayDifference <= 6) {
       // "Segunda-feira"
       return DateFormat('EEEE').format(data!).split('-').first;
