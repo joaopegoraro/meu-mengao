@@ -14,6 +14,7 @@ class MeuMengaoApp extends ConsumerWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp(
           title: 'Meu Mengão',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
               seedColor: const Color(0xFFc22a1e),
