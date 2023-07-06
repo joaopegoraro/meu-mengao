@@ -20,14 +20,14 @@ The app is available for free in the
 
 ## Screenshots
 <p float="left">
-  <img src="./screenshots/Screenshot1.jpeg?raw=true" width="32%" />
-  <img src="./screenshots/Screenshot2.jpeg?raw=true" width="32%" />
-  <img src="./screenshots/Screenshot3.jpeg?raw=true" width="32%" />
+  <img src="./screenshots/Screenshot1.png?raw=true" width="32%" />
+  <img src="./screenshots/Screenshot2.png?raw=true" width="32%" />
+  <img src="./screenshots/Screenshot3.png?raw=true" width="32%" />
 </p>
 <p float="left">
-  <img src="./screenshots/Screenshot4.jpeg?raw=true" width="32%" />
-  <img src="./screenshots/Screenshot5.jpeg?raw=true" width="32%" />
-  <img src="./screenshots/Screenshot6.jpeg?raw=true" width="32%" />
+  <img src="./screenshots/Screenshot4.png?raw=true" width="32%" />
+  <img src="./screenshots/Screenshot5.png?raw=true" width="32%" />
+  <img src="./screenshots/Screenshot6.png?raw=true" width="32%" />
 </p>
 
 ## Configuration
