@@ -52,7 +52,7 @@ class AppDrawerState extends State<AppDrawer> {
                   "icon": Icons.star,
                   "text": "Avaliar o aplicativo",
                   "link": () {
-                    LaunchReview.launch();
+                    LaunchReview.launch(androidAppId: "com.joaopegoraro.meu_mengao");
                   },
                 },
                 {

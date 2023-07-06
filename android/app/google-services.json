@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:446728464883:android:2fdc9f88ed7581218d0a86",
+        "mobilesdk_app_id": "1:446728464883:android:79e920184e811d7a8d0a86",
         "android_client_info": {
-          "package_name": "xyz.joaopegoraro.meu_mengao"
+          "package_name": "com.joaopegoraro.meu_mengao"
         }
       },
       "oauth_client": [
