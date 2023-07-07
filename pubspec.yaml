@@ -27,6 +27,7 @@ dependencies:
   launch_review: ^3.0.1
   flutter_launcher_icons: ^0.13.1
   flutter_dotenv: ^5.1.0
+  firebase_crashlytics: ^3.3.3
 
 dev_dependencies:
   flutter_test:
