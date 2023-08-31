@@ -6,7 +6,6 @@ class Campeonato {
     required this.id,
     required this.nome,
     required this.ano,
-    required this.logo,
     required this.rodadaAtual,
     required this.possuiClassificacao,
   });
@@ -14,7 +13,6 @@ class Campeonato {
   final String id;
   final String nome;
   final String ano;
-  final String logo;
   final int rodadaAtual;
   final bool possuiClassificacao;
 
@@ -24,7 +22,6 @@ class Campeonato {
     String? id,
     String? nome,
     String? ano,
-    String? logo,
     int? rodadaAtual,
     bool? possuiClassificacao,
   }) {
@@ -32,7 +29,6 @@ class Campeonato {
       id: id ?? this.id,
       nome: nome ?? this.nome,
       ano: ano ?? this.ano,
-      logo: logo ?? this.logo,
       rodadaAtual: rodadaAtual ?? this.rodadaAtual,
       possuiClassificacao: possuiClassificacao ?? this.possuiClassificacao,
     );
@@ -43,7 +39,6 @@ class Campeonato {
       'id': id,
       'nome': nome,
       'ano': ano,
-      'logo': logo,
       'rodada_atual': rodadaAtual,
       'possui_classificacao': possuiClassificacao,
     };
@@ -54,7 +49,6 @@ class Campeonato {
       id: map['id'] as String,
       nome: map['nome'] as String,
       ano: map['ano'] as String,
-      logo: map['logo'] as String,
       rodadaAtual: map['rodada_atual'] as int,
       possuiClassificacao: map['possui_classificacao'] as bool,
     );
@@ -62,7 +56,7 @@ class Campeonato {
 
   @override
   String toString() {
-    return 'Campeonato(id: $id, nome: $nome, ano: $ano, logo: $logo, rodadaAtual: $rodadaAtual, possuiClassificacao: $possuiClassificacao)';
+    return 'Campeonato(id: $id, nome: $nome, ano: $ano, rodadaAtual: $rodadaAtual, possuiClassificacao: $possuiClassificacao)';
   }
 
   @override
@@ -72,7 +66,6 @@ class Campeonato {
     return other.id == id &&
         other.nome == nome &&
         other.ano == ano &&
-        other.logo == logo &&
         other.rodadaAtual == rodadaAtual &&
         other.possuiClassificacao == possuiClassificacao;
   }
@@ -82,7 +75,6 @@ class Campeonato {
     return id.hashCode ^
         nome.hashCode ^
         ano.hashCode ^
-        logo.hashCode ^
         rodadaAtual.hashCode ^
         possuiClassificacao.hashCode;
   }

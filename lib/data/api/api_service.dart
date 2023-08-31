@@ -92,8 +92,10 @@ class ApiServiceImpl extends ApiService {
       final response = await http.get(url);
       return response.statusCode == 200 ? parseResponse(response) : null;
     } catch (e, stackTrace) {
-      if (kDebugMode) print(e);
-      print(stackTrace);
+      if (kDebugMode) {
+        print(e);
+        print(stackTrace);
+      }
       return null;
     }
   }

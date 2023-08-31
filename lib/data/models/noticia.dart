@@ -45,7 +45,7 @@ class Noticia {
       'data': data?.millisecondsSinceEpoch,
       'titulo': titulo,
       'logo_site': logoSite,
-      'foto': foto,
+      'foto_base_64': foto,
     };
   }
 
@@ -58,7 +58,7 @@ class Noticia {
           : null,
       titulo: map['titulo'] as String,
       logoSite: map['logo_site'] as String,
-      foto: map['foto'] != null ? map['foto'] as String : null,
+      foto: map['foto_base_64'] != null ? map['foto_base_64'] as String : null,
     );
   }
 
