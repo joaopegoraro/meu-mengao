@@ -78,19 +78,19 @@ class Posicao {
     return <String, dynamic>{
       'id': id,
       'posicao': posicao,
-      'nomeTime': nomeTime,
-      'escudoTime': escudoTime,
+      'nome_time': nomeTime,
+      'escudo_time': escudoTime,
       'pontos': pontos,
       'jogos': jogos,
       'vitorias': vitorias,
       'empates': empates,
       'derrotas': derrotas,
-      'golsFeitos': golsFeitos,
-      'golsSofridos': golsSofridos,
-      'saldoGols': saldoGols,
-      'campeonatoId': campeonatoId,
-      'classificacaoName': classificacaoName,
-      'classificacaoIndex': classificacaoIndex,
+      'gols_feitos': golsFeitos,
+      'gols_sofridos': golsSofridos,
+      'saldo_gols': saldoGols,
+      'campeonato_id': campeonatoId,
+      'classificacao_name': classificacaoName,
+      'classificacao_index': classificacaoIndex,
     };
   }
 
@@ -98,19 +98,19 @@ class Posicao {
     return Posicao(
       id: map['id'] as String,
       posicao: int.tryParse(map['posicao']) ?? 0,
-      nomeTime: map['nomeTime'] as String,
-      escudoTime: map['escudoTime'] != null ? map['escudoTime'] as String : null,
+      nomeTime: map['nome_time'] as String,
+      escudoTime: map['escudo_time'] != null ? map['escudo_time'] as String : null,
       pontos: map['pontos'] as String,
       jogos: map['jogos'] as String,
       vitorias: map['vitorias'] as String,
       empates: map['empates'] as String,
       derrotas: map['derrotas'] as String,
-      golsFeitos: map['golsFeitos'] as String,
-      golsSofridos: map['golsSofridos'] as String,
-      saldoGols: map['saldoGols'] as String,
-      campeonatoId: map['campeonatoId'] as String,
-      classificacaoName: map['classificacaoName'] as String,
-      classificacaoIndex: map['classificacaoIndex'] as int,
+      golsFeitos: map['gols_feitos'] as String,
+      golsSofridos: map['gols_sofridos'] as String,
+      saldoGols: map['saldo_gols'] as String,
+      campeonatoId: map['campeonato_id'] as String,
+      classificacaoName: map['classificacao_name'] as String,
+      classificacaoIndex: map['classificacao_index'] as int,
     );
   }
 
@@ -161,5 +161,6 @@ class Posicao {
 
   String toJson() => json.encode(toMap());
 
-  factory Posicao.fromJson(String source) => Posicao.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Posicao.fromJson(String source) =>
+      Posicao.fromMap(json.decode(source) as Map<String, dynamic>);
 }

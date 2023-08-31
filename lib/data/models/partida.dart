@@ -96,16 +96,16 @@ class Partida {
     return <String, dynamic>{
       'id': id,
       'campeonato': campeonato,
-      'campeonatoId': campeonatoId,
+      'campeonato_id': campeonatoId,
       'data': data?.millisecondsSinceEpoch.toString(),
-      'rodadaName': rodadaName,
-      'rodadaIndex': rodadaIndex,
-      'timeCasa': timeCasa,
-      'golsCasa': golsCasa,
-      'timeFora': timeFora,
-      'golsFora': golsFora,
-      'escudoCasa': escudoCasa,
-      'escudoFora': escudoFora,
+      'rodada_name': rodadaName,
+      'rodada_index': rodadaIndex,
+      'time_casa': timeCasa,
+      'gols_casa': golsCasa,
+      'time_fora': timeFora,
+      'gols_fora': golsFora,
+      'escudo_casa': escudoCasa,
+      'escudo_fora': escudoFora,
     };
   }
 
@@ -113,16 +113,18 @@ class Partida {
     return Partida(
       id: map['id'] as String,
       campeonato: map['campeonato'] as String,
-      campeonatoId: map['campeonatoId'] as String,
-      data: map['data'] != null ? DateTime.fromMillisecondsSinceEpoch(int.tryParse(map['data']) ?? 0) : null,
-      rodadaName: map['rodadaName'] != null ? map['rodadaName'] as String : null,
-      rodadaIndex: map['rodadaIndex'] as int?,
-      timeCasa: map['timeCasa'] as String,
-      golsCasa: int.tryParse(map['golsCasa']),
-      timeFora: map['timeFora'] as String,
-      golsFora: int.tryParse(map['golsFora']),
-      escudoCasa: map['escudoCasa'] as String,
-      escudoFora: map['escudoFora'] as String,
+      campeonatoId: map['campeonato_id'] as String,
+      data: map['data'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(int.tryParse(map['data']) ?? 0)
+          : null,
+      rodadaName: map['rodada_name'] != null ? map['rodada_name'] as String : null,
+      rodadaIndex: map['rodada_index'] as int?,
+      timeCasa: map['time_casa'] as String,
+      golsCasa: int.tryParse(map['gols_casa']),
+      timeFora: map['time_fora'] as String,
+      golsFora: int.tryParse(map['gols_fora']),
+      escudoCasa: map['escudo_casa'] as String,
+      escudoFora: map['escudo_fora'] as String,
     );
   }
 
@@ -167,5 +169,6 @@ class Partida {
 
   String toJson() => json.encode(toMap());
 
-  factory Partida.fromJson(String source) => Partida.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Partida.fromJson(String source) =>
+      Partida.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -44,7 +44,7 @@ class Noticia {
       'link': link,
       'data': data?.millisecondsSinceEpoch,
       'titulo': titulo,
-      'logoSite': logoSite,
+      'logo_site': logoSite,
       'foto': foto,
     };
   }
@@ -53,9 +53,11 @@ class Noticia {
     return Noticia(
       id: map['id'] as int,
       link: map['link'] as String,
-      data: map['data'] != null ? DateTime.fromMillisecondsSinceEpoch(int.tryParse(map['data']) ?? 0) : null,
+      data: map['data'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(int.tryParse(map['data']) ?? 0)
+          : null,
       titulo: map['titulo'] as String,
-      logoSite: map['logoSite'] as String,
+      logoSite: map['logo_site'] as String,
       foto: map['foto'] != null ? map['foto'] as String : null,
     );
   }
@@ -79,10 +81,16 @@ class Noticia {
 
   @override
   int get hashCode {
-    return id.hashCode ^ link.hashCode ^ data.hashCode ^ titulo.hashCode ^ logoSite.hashCode ^ foto.hashCode;
+    return id.hashCode ^
+        link.hashCode ^
+        data.hashCode ^
+        titulo.hashCode ^
+        logoSite.hashCode ^
+        foto.hashCode;
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Noticia.fromJson(String source) => Noticia.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Noticia.fromJson(String source) =>
+      Noticia.fromMap(json.decode(source) as Map<String, dynamic>);
 }

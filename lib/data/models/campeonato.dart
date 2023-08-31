@@ -44,8 +44,8 @@ class Campeonato {
       'nome': nome,
       'ano': ano,
       'logo': logo,
-      'rodadaAtual': rodadaAtual,
-      'possuiClassificacao': possuiClassificacao,
+      'rodada_atual': rodadaAtual,
+      'possui_classificacao': possuiClassificacao,
     };
   }
 
@@ -55,8 +55,8 @@ class Campeonato {
       nome: map['nome'] as String,
       ano: map['ano'] as String,
       logo: map['logo'] as String,
-      rodadaAtual: map['rodadaAtual'] as int,
-      possuiClassificacao: map['possuiClassificacao'] as bool,
+      rodadaAtual: map['rodada_atual'] as int,
+      possuiClassificacao: map['possui_classificacao'] as bool,
     );
   }
 
@@ -89,5 +89,6 @@ class Campeonato {
 
   String toJson() => json.encode(toMap());
 
-  factory Campeonato.fromJson(String source) => Campeonato.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Campeonato.fromJson(String source) =>
+      Campeonato.fromMap(json.decode(source) as Map<String, dynamic>);
 }
