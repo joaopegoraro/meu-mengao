@@ -9,7 +9,6 @@ import 'package:meu_mengao/data/models/campeonato.dart';
 import 'package:meu_mengao/data/models/noticia.dart';
 import 'package:meu_mengao/data/models/partida.dart';
 import 'package:meu_mengao/data/models/posicao.dart';
-import 'package:meu_mengao/data/repositories/auth_repository.dart';
 
 abstract class ApiService {
   Future<List<Noticia>?> getNoticias();
@@ -28,10 +27,6 @@ abstract class ApiService {
 }
 
 class ApiServiceImpl extends ApiService {
-  ApiServiceImpl(this._authRepository);
-
-  final AuthRepository _authRepository;
-
   @override
   Future<List<Noticia>?> getNoticias() async {
     return _getData("noticias", (response) {
@@ -94,17 +89,18 @@ class ApiServiceImpl extends ApiService {
     try {
       final baseUrl = dotenv.env['BASE_URL'];
       final url = Uri.parse("$baseUrl$endpoint");
-      final token = await _authRepository.getToken();
-      final response = await http.get(url, headers: {'Authorization': 'Bearer $token'});
+      final response = await http.get(url);
       return response.statusCode == 200 ? parseResponse(response) : null;
-    } catch (e) {
-      if (kDebugMode) print(e);
+    } catch (e, stackTrace) {
+      if (kDebugMode) {
+        print(e);
+        print(stackTrace);
+      }
       return null;
     }
   }
 }
 
 final apiServiceProvider = Provider<ApiService>((ref) {
-  final authRepository = ref.watch(authRepositoryProvider);
-  return ApiServiceImpl(authRepository);
+  return ApiServiceImpl();
 });

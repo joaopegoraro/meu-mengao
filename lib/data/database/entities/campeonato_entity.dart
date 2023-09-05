@@ -6,7 +6,6 @@ class CampeonatoEntity {
     required this.id,
     required this.nome,
     required this.ano,
-    required this.logo,
     required this.rodadaAtual,
     required this.possuiClassificacao,
   });
@@ -14,7 +13,6 @@ class CampeonatoEntity {
   final String? id;
   final String? nome;
   final String? ano;
-  final String? logo;
   final int? rodadaAtual;
   final bool? possuiClassificacao;
 
@@ -23,7 +21,6 @@ class CampeonatoEntity {
       id: id ?? "",
       nome: nome ?? "",
       ano: ano ?? "",
-      logo: logo ?? "",
       rodadaAtual: rodadaAtual ?? 0,
       possuiClassificacao: possuiClassificacao ?? false,
     );
@@ -34,7 +31,6 @@ class CampeonatoEntity {
       id: campeonato.id,
       nome: campeonato.nome,
       ano: campeonato.ano,
-      logo: campeonato.logo,
       rodadaAtual: campeonato.rodadaAtual,
       possuiClassificacao: campeonato.possuiClassificacao,
     );
@@ -45,7 +41,6 @@ class CampeonatoEntity {
       idColumn: id,
       nomeColumn: nome,
       anoColumn: ano,
-      logoColumn: logo,
       rodadaAtualColumn: rodadaAtual,
       possuiClassificacaoColumn: possuiClassificacao == true ? 1 : 0,
     };
@@ -56,7 +51,6 @@ class CampeonatoEntity {
       id: map[idColumn] as String?,
       nome: map[nomeColumn] as String?,
       ano: map[anoColumn] as String?,
-      logo: map[logoColumn] as String?,
       rodadaAtual: map[rodadaAtualColumn] as int?,
       possuiClassificacao: (map[possuiClassificacaoColumn] as int?) != 0,
     );
